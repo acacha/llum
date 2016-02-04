@@ -8,6 +8,6 @@ if (file_exists(__DIR__.'/../../autoload.php')) {
 }
 
 $app = new Symfony\Component\Console\Application('Acacha llum illuminates your laravel packages', '0.1');
-$app->add(new Acacha\Llum\Console\InstallCommand);
+$app->add(new Acacha\Llum\Console\SqliteCommand);
 
 $app->run();
