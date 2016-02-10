@@ -7,3 +7,23 @@ Installer for https://github.com/acacha/llum
 ```bash
 composer global require "acacha/llum=~1.0"
 ```
+
+# Working notes
+
+Update value in .env file with sed:
+
+```bash
+sed -i '/^MAIL_DRIVER=/s/=.*/=log/' .env
+```
+
+Comment database entries:
+
+```bash
+sed -i 's/^DB_/#DB_/g' .env
+```
+
+Add sqlite before database entries:
+
+```bash
+sed 's/.*DB_HOST.*/DB_CONNECTION=sqlite\n&/' .env
+```

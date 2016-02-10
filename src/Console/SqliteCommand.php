@@ -16,7 +16,7 @@ class SqliteCommand extends Command
         $this->ignoreValidationErrors();
 
         $this->setName('sqlite')
-                ->setDescription('Sqlite utilities for Laravel');
+                ->setDescription('Touch sqlite file and enable sqlite on .env');
     }
 
     /**
@@ -27,12 +27,43 @@ class SqliteCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $sqlite_file = 'database/database.sqlite';
-        passthru('touch '.$sqlite_file, $error);
+        $this->touchSqliteFile($output);
+        $this->configEnv($output);
+    }
+
+    /**
+     * Touch sqlite database file.
+     *
+     * @param OutputInterface $output
+     * @param $error
+     */
+    protected function touchSqliteFile(OutputInterface $output, $file = 'database/database.sqlite')
+    {
+        passthru('touch '.$file, $error);
         if ($error) {
-            $output->writeln('<error>Error creating file'.$sqlite_file.'</error>');
+            $output->writeln('<error>Error creating file'.$file.'</error>');
         } else {
-            $output->writeln('File '.$sqlite_file.' created successfully');
+            $output->writeln('File '.$file.' created successfully');
+        }
+    }
+
+    /**
+     * Config .env file.
+     *
+     * @param OutputInterface $output
+     * @param $error
+     */
+    protected function configEnv(OutputInterface $output)
+    {
+        passthru('sed -i \'s/^DB_/#DB_/g\' .env ', $error);
+        if ($error) {
+            $output->writeln('<error>Error commenting DB_ entries in .env file </error>');
+        }
+        passthru('sed -i \'s/.*DB_HOST.*/DB_CONNECTION=sqlite\n&/\' .env', $error);
+        if ($error) {
+            $output->writeln('<error>Error adding DB_CONNECTION=sqlite to .env file </error>');
+        } else {
+            $output->writeln('.env file updated successfully');
         }
     }
 }
