@@ -21,6 +21,7 @@ Once you've installed a new laravel project use sqlite command to active sqlite
 
 ```bash
 laravel new larapp
+cd larapp
 llum sqlite
 File database/database.sqlite created successfully
 .env file updated successfully
