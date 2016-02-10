@@ -13,6 +13,10 @@ Installer for https://github.com/acacha/llum
 composer global require "acacha/llum=~0.1"
 ```
 
+# Requirements
+
+Some commands use [GNU sed](https://www.gnu.org/software/sed/)
+
 # Commands
 
 ## Sqlite
