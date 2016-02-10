@@ -1,6 +1,7 @@
 # llum
 
-Installer for https://github.com/acacha/llum
+Speed up you laravel development workflow illuminating packages with llum:
+
 
 [![Total Downloads](https://poser.pugx.org/acacha/llum/downloads.png)](https://packagist.org/packages/acacha/llum)
 [![Latest Stable Version](https://poser.pugx.org/acacha/llum/v/stable.png)](https://packagist.org/packages/acacha/llum)
