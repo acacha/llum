@@ -2,7 +2,7 @@
 
 Speed up you laravel development workflow illuminating packages with llum:
 
-<a href="http://asciinema.org/a/bym5od3j6qtqh5liv8uwx1qy41"><img src="https://asciinema.org/a/bym5od3j6qtqh5liv8uwx1qy4.png?autoplay=1" width="600"/></a>
+<a href="http://asciinema.org/a/bym5od3j6qtqh5liv8uwx1qy4"><img src="https://asciinema.org/a/bym5od3j6qtqh5liv8uwx1qy4.png?autoplay=1" width="600"/></a>
 
 [![Total Downloads](https://poser.pugx.org/acacha/llum/downloads.png)](https://packagist.org/packages/acacha/llum)
 [![Latest Stable Version](https://poser.pugx.org/acacha/llum/v/stable.png)](https://packagist.org/packages/acacha/llum)
