@@ -52,12 +52,6 @@ class DevToolsCommandTest extends \PHPUnit_Framework_TestCase
             $this->fileHasContent("'Debugbar' => Barryvdh\Debugbar\Facade::class")
         );
 
-
-
-
-        //$this->assertRegExp('/successfully/', $commandTester->getDisplay());
-        //$this->assert ('/.../', $commandTester->getStatusCode());
-
     }
 
     private function fileHasContent($content) {

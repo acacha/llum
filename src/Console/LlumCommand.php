@@ -92,6 +92,8 @@ abstract class LlumCommand extends Command
 
     /**
      * Install /stubs/app.php into /config/app.php.
+     *
+     * @param OutputInterface $output
      */
     protected function installConfigAppFile(OutputInterface $output)
     {
@@ -119,6 +121,11 @@ abstract class LlumCommand extends Command
         return false;
     }
 
+    /**
+     * Execute devtools command.
+     *
+     * @param OutputInterface $output
+     */
     protected function devtools(OutputInterface $output)
     {
         $this->installConfigAppFile($output);
@@ -140,43 +147,87 @@ abstract class LlumCommand extends Command
         } else {
             $output->writeln('<info>Laravel Debugbar alias added to config/app.php file</info>');
         }
-
     }
 
+    /**
+     * Add Laravel IDE Helper provider to config/app.php file.
+     *
+     * @return mixed
+     */
     protected function addLaravelIdeHelperProvider()
     {
         return $this->addProvider('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class');
     }
 
+    /**
+     * Add Laravel Debugbar provider to config/app.php file.
+     *
+     * @return mixed
+     */
     private function addLaravelDebugbarProvider()
     {
         return $this->addProvider('Barryvdh\Debugbar\ServiceProvider::class');
     }
 
+    /**
+     * Add Laravel Debugbar alias to config/app.php file.
+     *
+     * @return mixed
+     */
     private function addLaravelDebugbarAlias()
     {
-        return $this->addAlias("Debugbar", "Barryvdh\Debugbar\Facade::class");
+        return $this->addAlias("'Debugbar' => Barryvdh\Debugbar\Facade::class");
     }
 
+    /**
+     *  Add provider to config/app.php file.
+     *
+     * @param $provider
+     *
+     * @return mixed
+     */
     private function addProvider($provider)
     {
-        return $this->addTextIntoMountPoint('#llum_providers',$provider);
+        return $this->addTextIntoMountPoint('#llum_providers', $provider);
     }
 
-    private function addAlias($alias,$aliasClass)
+    /**
+     * Add alias to config/app.php file.
+     *
+     * @param $alias
+     *
+     * @return mixed
+     */
+    private function addAlias($alias)
     {
-        $mountpoint="#llum_aliases";
+        return $this->addTextIntoMountPoint('#llum_aliases', $alias);
+    }
+
+    /**
+     * Insert text into file using mountpoint. Mountpoint is maintained at file.
+     *
+     * @param $mountpoint
+     * @param $textToAdd
+     *
+     * @return mixed
+     */
+    private function addTextIntoMountPoint($mountpoint, $textToAdd)
+    {
         passthru(
-            'sed -i \'s/.*' . $mountpoint  . '.*/ \ \ \ \ \ \ \ \x27' . $alias . '\x27' . preg_quote(" => " . $aliasClass).',\n \ \ \ \ \ \ \ ' . $mountpoint . '/\' config/app.php', $error);
+            'sed -i \'s/.*'.$mountpoint.'.*/ \ \ \ \ \ \ \ '.$this->scapeSingleQuotes(preg_quote($textToAdd)).',\n \ \ \ \ \ \ \ '.$mountpoint.'/\' config/app.php', $error);
 
         return $error;
     }
 
-    private function addTextIntoMountPoint($mountpoint,$textToAdd)
+    /**
+     * scape single quotes for sed using \x27.
+     *
+     * @param $str
+     *
+     * @return mixed
+     */
+    private function scapeSingleQuotes($str)
     {
-        passthru(
-            'sed -i \'s/.*' . $mountpoint  . '.*/ \ \ \ \ \ \ \ ' . preg_quote($textToAdd).',\n \ \ \ \ \ \ \ ' . $mountpoint . '/\' config/app.php', $error);
-
-        return $error;
+        return str_replace("'", '\\x27', $str);
     }
 }
