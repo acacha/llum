@@ -4,6 +4,7 @@ namespace Acacha\Llum\Console;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
 
 /**
  * Class LlumCommand.
@@ -129,6 +130,10 @@ abstract class LlumCommand extends Command
     protected function devtools(OutputInterface $output)
     {
         $this->installConfigAppFile($output);
+
+        $this->requireComposerPackage($output,'barryvdh/laravel-ide-helper');
+        $this->requireComposerPackage($output,'barryvdh/laravel-debugbar');
+
         $error = $this->addLaravelIdeHelperProvider();
         if ($error) {
             $output->writeln('<error>Error adding Laravel ide helper provider</error>');
@@ -147,6 +152,9 @@ abstract class LlumCommand extends Command
         } else {
             $output->writeln('<info>Laravel Debugbar alias added to config/app.php file</info>');
         }
+
+        passthru('php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"');
+        passthru('php artisan ide-helper:generate');
     }
 
     /**
@@ -229,5 +237,29 @@ abstract class LlumCommand extends Command
     private function scapeSingleQuotes($str)
     {
         return str_replace("'", '\\x27', $str);
+    }
+
+    private function requireComposerPackage(OutputInterface$output, $package) {
+        $composer = $this->findComposer();
+
+        $process = new Process($composer . ' require ' . $package . '', null, null, null, null);
+        $output->write('Executing composer require ' . $package);
+        $process->run(function ($type, $line) use ($output) {
+            $output->write($line);
+        });
+    }
+
+
+    /**
+     * Get the composer command for the environment.
+     *
+     * @return string
+     */
+    private function findComposer()
+    {
+        if (file_exists(getcwd() . '/composer.phar')) {
+            return '"' . PHP_BINARY . '" composer.phar"';
+        }
+        return 'composer';
     }
 }
