@@ -131,8 +131,8 @@ abstract class LlumCommand extends Command
     {
         $this->installConfigAppFile($output);
 
-        $this->requireComposerPackage($output,'barryvdh/laravel-ide-helper');
-        $this->requireComposerPackage($output,'barryvdh/laravel-debugbar');
+        $this->requireComposerPackage($output, 'barryvdh/laravel-ide-helper');
+        $this->requireComposerPackage($output, 'barryvdh/laravel-debugbar');
 
         $error = $this->addLaravelIdeHelperProvider();
         if ($error) {
@@ -239,16 +239,16 @@ abstract class LlumCommand extends Command
         return str_replace("'", '\\x27', $str);
     }
 
-    private function requireComposerPackage(OutputInterface$output, $package) {
+    private function requireComposerPackage(OutputInterface $output, $package)
+    {
         $composer = $this->findComposer();
 
-        $process = new Process($composer . ' require ' . $package . '', null, null, null, null);
-        $output->write('Executing composer require ' . $package);
+        $process = new Process($composer.' require '.$package.'', null, null, null, null);
+        $output->write('Executing composer require '.$package);
         $process->run(function ($type, $line) use ($output) {
             $output->write($line);
         });
     }
-
 
     /**
      * Get the composer command for the environment.
@@ -257,9 +257,10 @@ abstract class LlumCommand extends Command
      */
     private function findComposer()
     {
-        if (file_exists(getcwd() . '/composer.phar')) {
-            return '"' . PHP_BINARY . '" composer.phar"';
+        if (file_exists(getcwd().'/composer.phar')) {
+            return '"'.PHP_BINARY.'" composer.phar"';
         }
+
         return 'composer';
     }
 }
