@@ -20,7 +20,7 @@ abstract class LlumCommand extends Command
     protected function touchSqliteFile(OutputInterface $output, $file = 'database/database.sqlite')
     {
         passthru('touch '.$file, $error);
-        if ($error) {
+        if ($error  != 0) {
             $output->writeln('<error>Error creating file'.$file.'</error>');
         } else {
             $output->writeln('File '.$file.' created successfully');
@@ -35,11 +35,11 @@ abstract class LlumCommand extends Command
     protected function configEnv(OutputInterface $output)
     {
         passthru('sed -i \'s/^DB_/#DB_/g\' .env ', $error);
-        if ($error) {
+        if ($error != 0) {
             $output->writeln('<error>Error commenting DB_ entries in .env file </error>');
         }
         passthru('sed -i \'s/.*DB_HOST.*/DB_CONNECTION=sqlite\n&/\' .env', $error);
-        if ($error) {
+        if ($error != 0) {
             $output->writeln('<error>Error adding DB_CONNECTION=sqlite to .env file </error>');
         } else {
             $output->writeln('.env file updated successfully');
@@ -135,19 +135,19 @@ abstract class LlumCommand extends Command
         $this->requireComposerPackage($output, 'barryvdh/laravel-debugbar');
 
         $error = $this->addLaravelIdeHelperProvider();
-        if ($error) {
+        if ($error != 0) {
             $output->writeln('<error>Error adding Laravel ide helper provider</error>');
         } else {
             $output->writeln('<info>Laravel ide helper provider added to config/app.php file</info>');
         }
         $error = $this->addLaravelDebugbarProvider();
-        if ($error) {
+        if ($error  != 0) {
             $output->writeln('<error>Error adding Laravel Debugbar provider</error>');
         } else {
             $output->writeln('<info>Laravel Debugbar provider added to config/app.php file</info>');
         }
         $error = $this->addLaravelDebugbarAlias();
-        if ($error) {
+        if ($error  != 0) {
             $output->writeln('<error>Error adding Laravel Debugbar alias</error>');
         } else {
             $output->writeln('<info>Laravel Debugbar alias added to config/app.php file</info>');
