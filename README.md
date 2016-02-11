@@ -67,3 +67,10 @@ Add sqlite before database entries:
 ```bash
 sed 's/.*DB_HOST.*/DB_CONNECTION=sqlite\n&/' .env
 ```
+
+Solution with php preg_replace function
+
+```php
+file_put_contents(base_path('.env'), preg_replace("/(MAIL_DRIVER)=(.*)/", "$1=log", file_get_contents(base_path('.env'))));
+```
+
