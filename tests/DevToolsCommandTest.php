@@ -19,8 +19,6 @@ class DevToolsCommandTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         passthru('rm -rf config');
-        passthru('rm composer.json');
-        passthru('rm composer.lock');
         passthru('composer remove barryvdh/laravel-ide-helper');
         passthru('composer remove barryvdh/laravel-debugbar');
     }
