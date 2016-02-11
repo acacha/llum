@@ -41,6 +41,22 @@ Install and configure amazing debug tools [Laravel Debugbar](https://github.com/
 llum devtools
 ```
 
+#debugbar
+
+You can install only [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar) devtool with:
+
+```bash
+llum debugbar
+```
+
+#idehelper
+
+You can install only [Laravel-ide-helper](https://github.com/barryvdh/laravel-ide-helper) devtool with:
+
+```bash
+llum idehelper
+```
+
 ##sqlite
 
 Once you've installed a new laravel project use sqlite command to active sqlite
