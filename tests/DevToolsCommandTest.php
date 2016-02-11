@@ -21,7 +21,8 @@ class DevToolsCommandTest extends \PHPUnit_Framework_TestCase
         passthru('rm -rf config');
         passthru('rm composer.json');
         passthru('rm composer.lock');
-        passthru('rm -rf vendor/barryvdh');
+        passthru('composer remove barryvdh/laravel-ide-helper');
+        passthru('composer remove barryvdh/laravel-debugbar');
     }
 
     /**
