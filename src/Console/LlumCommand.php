@@ -89,4 +89,94 @@ abstract class LlumCommand extends Command
             return false;
         }
     }
+
+    /**
+     * Install /stubs/app.php into /config/app.php.
+     */
+    protected function installConfigAppFile(OutputInterface $output)
+    {
+        $laravel_config_file = getcwd().'/config/app.php';
+        if (!file_exists($laravel_config_file)) {
+            $output->writeln('<error>File '.$laravel_config_file.' doesn\'t exists');
+        }
+        if (!$this->configAppFileAlreadyInstalled()) {
+            copy(__DIR__.'/stubs/app.php', $laravel_config_file);
+        }
+        $output->writeln('<infp>File '.$laravel_config_file.' updated correctly');
+    }
+
+    /**
+     * Check if config/app.php stub file is already installed.
+     *
+     * @return bool
+     */
+    protected function configAppFileAlreadyInstalled()
+    {
+        if (strpos(file_get_contents(getcwd().'/config/app.php'), '#llum_providers') !== false) {
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function devtools(OutputInterface $output)
+    {
+        $this->installConfigAppFile($output);
+        $error = $this->addLaravelIdeHelperProvider();
+        if ($error) {
+            $output->writeln('<error>Error adding Laravel ide helper provider</error>');
+        } else {
+            $output->writeln('<info>Laravel ide helper provider added to config/app.php file</info>');
+        }
+        $error = $this->addLaravelDebugbarProvider();
+        if ($error) {
+            $output->writeln('<error>Error adding Laravel Debugbar provider</error>');
+        } else {
+            $output->writeln('<info>Laravel Debugbar provider added to config/app.php file</info>');
+        }
+        $error = $this->addLaravelDebugbarAlias();
+        if ($error) {
+            $output->writeln('<error>Error adding Laravel Debugbar alias</error>');
+        } else {
+            $output->writeln('<info>Laravel Debugbar alias added to config/app.php file</info>');
+        }
+
+    }
+
+    protected function addLaravelIdeHelperProvider()
+    {
+        return $this->addProvider('Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class');
+    }
+
+    private function addLaravelDebugbarProvider()
+    {
+        return $this->addProvider('Barryvdh\Debugbar\ServiceProvider::class');
+    }
+
+    private function addLaravelDebugbarAlias()
+    {
+        return $this->addAlias("Debugbar", "Barryvdh\Debugbar\Facade::class");
+    }
+
+    private function addProvider($provider)
+    {
+        return $this->addTextIntoMountPoint('#llum_providers',$provider);
+    }
+
+    private function addAlias($alias,$aliasClass)
+    {
+        $mountpoint="#llum_aliases";
+        passthru(
+            'sed -i \'s/.*' . $mountpoint  . '.*/ \ \ \ \ \ \ \ \x27' . $alias . '\x27' . preg_quote(" => " . $aliasClass).',\n \ \ \ \ \ \ \ ' . $mountpoint . '/\' config/app.php', $error);
+
+        return $error;
+    }
+
+    private function addTextIntoMountPoint($mountpoint,$textToAdd)
+    {
+        passthru(
+            'sed -i \'s/.*' . $mountpoint  . '.*/ \ \ \ \ \ \ \ ' . preg_quote($textToAdd).',\n \ \ \ \ \ \ \ ' . $mountpoint . '/\' config/app.php', $error);
+
+        return $error;
+    }
 }

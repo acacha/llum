@@ -156,10 +156,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        # Providers installed below are installed by acacha llum:
-        # https://github.com/acacha/llum
-        #llum_providers
-
     ],
 
     /*
@@ -205,10 +201,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
-        # Alias installed below are installed by acacha llum:
-        # https://github.com/acacha/llum
-        #llum_aliases
 
     ],
 
