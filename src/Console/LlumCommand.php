@@ -123,7 +123,7 @@ abstract class LlumCommand extends Command
     }
 
     /**
-     *  Install Laravel ide helper package
+     *  Install Laravel ide helper package.
      *
      * @param OutputInterface $output
      */
@@ -143,7 +143,7 @@ abstract class LlumCommand extends Command
     }
 
     /**
-     * Install Laravel debugbar package
+     * Install Laravel debugbar package.
      *
      * @param OutputInterface $output
      */
@@ -288,5 +288,15 @@ abstract class LlumCommand extends Command
         }
 
         return 'composer';
+    }
+
+    /**
+     * Migrate database with php artisan migrate.
+     *
+     * @param $output
+     */
+    protected function migrate($output)
+    {
+        passthru('php artisan migrate');
     }
 }

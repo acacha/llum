@@ -6,9 +6,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class BootCommand.
+ * Class MigrateCommand.
  */
-class BootCommand extends LlumCommand
+class MigrateCommand extends LlumCommand
 {
     /**
      * Configure the command options.
@@ -17,8 +17,8 @@ class BootCommand extends LlumCommand
     {
         $this->ignoreValidationErrors();
 
-        $this->setName('boot')
-                ->setDescription('Execute all common first tasks in laravel project');
+        $this->setName('migrate')
+                ->setDescription('execute migrations with php artisan migrate');
     }
 
     /**
@@ -29,10 +29,6 @@ class BootCommand extends LlumCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->devtools($output);
-        $this->touchSqliteFile($output);
-        $this->configEnv($output);
         $this->migrate($output);
-        $this->serve($output);
     }
 }
