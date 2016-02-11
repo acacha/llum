@@ -13,5 +13,6 @@ $app->add(new Acacha\Llum\Console\SqliteTouchCommand);
 $app->add(new Acacha\Llum\Console\SqliteEnvCommand);
 $app->add(new Acacha\Llum\Console\ServeCommand);
 $app->add(new Acacha\Llum\Console\DevToolsCommand);
+$app->add(new Acacha\Llum\Console\BootCommand);
 
 $app->run();

@@ -56,7 +56,7 @@ abstract class LlumCommand extends Command
     {
         $continue = true;
         do {
-            if (check_port($port)) {
+            if ($this->check_port($port)) {
                 $output->writeln('<info>Executing php artisan serve --port='.$port.'</info>');
                 exec('php artisan serve --port='.$port.' > /dev/null 2>&1 &');
                 sleep(1);
@@ -105,7 +105,7 @@ abstract class LlumCommand extends Command
         if (!$this->configAppFileAlreadyInstalled()) {
             copy(__DIR__.'/stubs/app.php', $laravel_config_file);
         }
-        $output->writeln('<infp>File '.$laravel_config_file.' updated correctly');
+        $output->writeln('<info>File '.$laravel_config_file.' updated correctly</info>');
     }
 
     /**
@@ -244,7 +244,7 @@ abstract class LlumCommand extends Command
         $composer = $this->findComposer();
 
         $process = new Process($composer.' require '.$package.'', null, null, null, null);
-        $output->write('Executing composer require '.$package);
+        $output->writeln('<info>Executing composer require '.$package . '</info>');
         $process->run(function ($type, $line) use ($output) {
             $output->write($line);
         });
