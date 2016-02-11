@@ -8,8 +8,8 @@ Speed up you laravel development workflow illuminating packages with llum:
 
 [![Total Downloads](https://poser.pugx.org/acacha/llum/downloads.png)](https://packagist.org/packages/acacha/llum)
 [![Latest Stable Version](https://poser.pugx.org/acacha/llum/v/stable.png)](https://packagist.org/packages/acacha/llum)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/acacha/llum/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/acacha/adminlte-laravel/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/acacha/llum/badges/build.png?b=master)](https://scrutinizer-ci.com/g/acacha/adminlte-laravel/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/acacha/llum/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/acacha/llum/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/acacha/llum/badges/build.png?b=master)](https://scrutinizer-ci.com/g/acacha/llum/build-status/master)
 
 # Install notes
 
@@ -22,6 +22,24 @@ composer global require "acacha/llum=~0.1"
 Some commands use [GNU sed](https://www.gnu.org/software/sed/)
 
 # Commands
+
+##boot
+
+Execute commands:
+
+- devtools
+- sqlite
+- serve
+
+And your are ready to go!
+
+##devtools
+
+Install and configure amazing debug tools [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar) and [Laravel-ide-helper](https://github.com/barryvdh/laravel-ide-helper)
+
+```bash
+llum devtools
+```
 
 ##sqlite
 
@@ -51,7 +69,9 @@ Similar to php artisan serve but some enhacements:
 - If sensible-browser command is available then starts browser
 
 ```bash
- llum serve
+llum serve
+Executing php artisan serve --port=8002
+Opening http://localhost:8002 with default browser
  ```
 
 #Packagist
