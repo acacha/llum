@@ -19,9 +19,9 @@ class DevToolsCommandTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         passthru('rm -rf config');
-//        passthru('rm composer.json');
-//        passthru('rm composer.lock');
-//        passthru('rm -rf vendor');
+        passthru('rm composer.json');
+        passthru('rm composer.lock');
+        passthru('rm -rf vendor');
     }
 
     /**
