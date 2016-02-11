@@ -11,5 +11,6 @@ $app = new Symfony\Component\Console\Application('Acacha llum illuminates your l
 $app->add(new Acacha\Llum\Console\SqliteCommand);
 $app->add(new Acacha\Llum\Console\SqliteTouchCommand);
 $app->add(new Acacha\Llum\Console\SqliteEnvCommand);
+$app->add(new Acacha\Llum\Console\ServeCommand);
 
 $app->run();

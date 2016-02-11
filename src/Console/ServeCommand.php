@@ -6,9 +6,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class SqliteCommand.
+ * Class ServeCommand.
  */
-class SqliteCommand extends LlumCommand
+class ServeCommand extends LlumCommand
 {
     /**
      * Configure the command options.
@@ -17,8 +17,8 @@ class SqliteCommand extends LlumCommand
     {
         $this->ignoreValidationErrors();
 
-        $this->setName('sqlite')
-                ->setDescription('Touch sqlite file and enable sqlite on .env');
+        $this->setName('serve')
+                ->setDescription('artisan serve with some improvements');
     }
 
     /**
@@ -29,7 +29,6 @@ class SqliteCommand extends LlumCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->touchSqliteFile($output);
-        $this->configEnv($output);
+        $this->serve($output);
     }
 }
