@@ -295,8 +295,18 @@ abstract class LlumCommand extends Command
      *
      * @param $output
      */
-    protected function migrate($output)
+    protected function migrate(OutputInterface $output)
     {
         passthru('php artisan migrate');
+    }
+
+    /**
+     * Installs provider in laravel config/app.php file
+     *
+     * @param OutputInterface $output
+     */
+    protected function provider(OutputInterface $output,$provider) {
+        $this->installConfigAppFile($output);
+        $this->addProvider($provider);
     }
 }

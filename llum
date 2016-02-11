@@ -17,5 +17,6 @@ $app->add(new Acacha\Llum\Console\DebugBarCommand);
 $app->add(new Acacha\Llum\Console\IdeHelperCommand);
 $app->add(new Acacha\Llum\Console\BootCommand);
 $app->add(new Acacha\Llum\Console\MigrateCommand);
+$app->add(new Acacha\Llum\Console\ProviderCommand);
 
 $app->run();
