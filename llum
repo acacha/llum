@@ -7,12 +7,14 @@ if (file_exists(__DIR__.'/../../autoload.php')) {
     require __DIR__.'/vendor/autoload.php';
 }
 
-$app = new Symfony\Component\Console\Application('Acacha llum illuminates your laravel packages', '0.1');
+$app = new Symfony\Component\Console\Application('Acacha llum illuminates your laravel packages', '0.4');
 $app->add(new Acacha\Llum\Console\SqliteCommand);
 $app->add(new Acacha\Llum\Console\SqliteTouchCommand);
 $app->add(new Acacha\Llum\Console\SqliteEnvCommand);
 $app->add(new Acacha\Llum\Console\ServeCommand);
 $app->add(new Acacha\Llum\Console\DevToolsCommand);
+$app->add(new Acacha\Llum\Console\DebugBarCommand);
+$app->add(new Acacha\Llum\Console\IdeHelperCommand);
 $app->add(new Acacha\Llum\Console\BootCommand);
 
 $app->run();

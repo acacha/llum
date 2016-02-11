@@ -123,16 +123,14 @@ abstract class LlumCommand extends Command
     }
 
     /**
-     * Execute devtools command.
+     *  Install Laravel ide helper package
      *
      * @param OutputInterface $output
      */
-    protected function devtools(OutputInterface $output)
+    protected function idehelper(OutputInterface $output)
     {
-        $this->installConfigAppFile($output);
-
         $this->requireComposerPackage($output, 'barryvdh/laravel-ide-helper');
-        $this->requireComposerPackage($output, 'barryvdh/laravel-debugbar');
+        $this->installConfigAppFile($output);
 
         $error = $this->addLaravelIdeHelperProvider();
         if ($error !== 0) {
@@ -140,6 +138,20 @@ abstract class LlumCommand extends Command
         } else {
             $output->writeln('<info>Laravel ide helper provider added to config/app.php file</info>');
         }
+
+        passthru('php artisan ide-helper:generate');
+    }
+
+    /**
+     * Install Laravel debugbar package
+     *
+     * @param OutputInterface $output
+     */
+    protected function debugbar(OutputInterface $output)
+    {
+        $this->installConfigAppFile($output);
+        $this->requireComposerPackage($output, 'barryvdh/laravel-debugbar');
+
         $error = $this->addLaravelDebugbarProvider();
         if ($error  !== 0) {
             $output->writeln('<error>Error adding Laravel Debugbar provider</error>');
@@ -154,7 +166,17 @@ abstract class LlumCommand extends Command
         }
 
         passthru('php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"');
-        passthru('php artisan ide-helper:generate');
+    }
+
+    /**
+     * Execute devtools command.
+     *
+     * @param OutputInterface $output
+     */
+    protected function devtools(OutputInterface $output)
+    {
+        $this->idehelper($output);
+        $this->debugbar($output);
     }
 
     /**
@@ -239,6 +261,10 @@ abstract class LlumCommand extends Command
         return str_replace("'", '\\x27', $str);
     }
 
+    /**
+     * @param OutputInterface $output
+     * @param $package
+     */
     private function requireComposerPackage(OutputInterface $output, $package)
     {
         $composer = $this->findComposer();
