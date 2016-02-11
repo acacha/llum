@@ -23,7 +23,7 @@ Some commands use [GNU sed](https://www.gnu.org/software/sed/)
 
 # Commands
 
-## Sqlite
+##sqlite
 
 Once you've installed a new laravel project use sqlite command to active sqlite
 
@@ -43,6 +43,16 @@ Migrated: 2014_10_12_000000_create_users_table
 Migrated: 2014_10_12_100000_create_password_resets_table
 ```
 
+##serve
+
+Similar to php artisan serve but some enhacements:
+
+- First tyry to use port 8000 but if is already in use (in mi case so many times this occurs because Laravel homestead is up) then tries with following port numbers (8001, 8002, 8003)
+- If sensible-browser command is available then starts browser
+
+```bash
+ llum serve
+ ```
 
 #Packagist
 
