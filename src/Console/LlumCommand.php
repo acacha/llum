@@ -244,7 +244,7 @@ abstract class LlumCommand extends Command
         $composer = $this->findComposer();
 
         $process = new Process($composer.' require '.$package.'', null, null, null, null);
-        $output->writeln('<info>Executing composer require '.$package . '</info>');
+        $output->writeln('<info>Executing composer require '.$package.'</info>');
         $process->run(function ($type, $line) use ($output) {
             $output->write($line);
         });
