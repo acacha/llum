@@ -23,6 +23,24 @@ Some commands use [GNU sed](https://www.gnu.org/software/sed/)
 
 # Commands
 
+##boot
+
+Execute commands:
+
+- devtools
+- sqlite
+- serve
+
+And your are ready to go!
+
+##devtools
+
+Install and configure amazing debug tools [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar) and [Laravel-ide-helper](https://github.com/barryvdh/laravel-ide-helper)
+
+```bash
+llum devtools
+```
+
 ##sqlite
 
 Once you've installed a new laravel project use sqlite command to active sqlite
@@ -51,7 +69,9 @@ Similar to php artisan serve but some enhacements:
 - If sensible-browser command is available then starts browser
 
 ```bash
- llum serve
+llum serve
+Executing php artisan serve --port=8002
+Opening http://localhost:8002 with default browser
  ```
 
 #Packagist
