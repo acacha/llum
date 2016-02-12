@@ -29,6 +29,7 @@ Execute commands:
 
 - devtools
 - sqlite
+- migrate
 - serve
 
 And your are ready to go!
@@ -75,6 +76,14 @@ php artisan migrate
 Migration table created successfully.
 Migrated: 2014_10_12_000000_create_users_table
 Migrated: 2014_10_12_100000_create_password_resets_table
+```
+
+##provider
+
+Add a provider to config/app.php file:
+
+```bash
+llum provider Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class
 ```
 
 ##serve
