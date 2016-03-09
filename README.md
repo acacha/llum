@@ -104,7 +104,9 @@ Opening http://localhost:8002 with default browser
 
 Runs php artisan migrate
 
- llum migrate
+```bash
+llum migrate
+```
 
 #Packagist
 
