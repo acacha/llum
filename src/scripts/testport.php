@@ -4,7 +4,7 @@ $continue = true;
 $port = 8000;
 do {
     if (check_port($port)) {
-        echo 'Executing php artisan serve --port='.$port." &\n";
+        echo 'Running php artisan serve --port='.$port." &\n";
         exec('php artisan serve --port='.$port.' > /dev/null 2>&1 &');
         sleep(1);
         if (file_exists('/usr/bin/sensible-browser')) {

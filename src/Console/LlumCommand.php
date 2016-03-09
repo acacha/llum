@@ -57,7 +57,7 @@ abstract class LlumCommand extends Command
         $continue = true;
         do {
             if ($this->check_port($port)) {
-                $output->writeln('<info>Executing php artisan serve --port='.$port.'</info>');
+                $output->writeln('<info>Running php artisan serve --port='.$port.'</info>');
                 exec('php artisan serve --port='.$port.' > /dev/null 2>&1 &');
                 sleep(1);
                 if (file_exists('/usr/bin/sensible-browser')) {
@@ -270,7 +270,7 @@ abstract class LlumCommand extends Command
         $composer = $this->findComposer();
 
         $process = new Process($composer.' require '.$package.'', null, null, null, null);
-        $output->writeln('<info>Executing composer require '.$package.'</info>');
+        $output->writeln('<info>Running composer require '.$package.'</info>');
         $process->run(function ($type, $line) use ($output) {
             $output->write($line);
         });
@@ -297,6 +297,7 @@ abstract class LlumCommand extends Command
      */
     protected function migrate(OutputInterface $output)
     {
+        $output->writeln('<info>Running php artisan migrate...</info>');
         passthru('php artisan migrate');
     }
 

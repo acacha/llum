@@ -95,9 +95,15 @@ Similar to php artisan serve but some enhacements:
 
 ```bash
 llum serve
-Executing php artisan serve --port=8002
+Running php artisan serve --port=8002
 Opening http://localhost:8002 with default browser
  ```
+ 
+##migrate
+
+Runs php artisan migrate
+
+ llum migrate
 
 #Packagist
 
