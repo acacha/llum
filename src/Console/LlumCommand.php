@@ -23,7 +23,7 @@ abstract class LlumCommand extends Command
         if ($error  !== 0) {
             $output->writeln('<error>Error creating file'.$file.'</error>');
         } else {
-            $output->writeln('File '.$file.' created successfully');
+            $output->writeln('<info>File '.$file.' created successfully</info>');
         }
     }
 
@@ -301,11 +301,12 @@ abstract class LlumCommand extends Command
     }
 
     /**
-     * Installs provider in laravel config/app.php file
+     * Installs provider in laravel config/app.php file.
      *
      * @param OutputInterface $output
      */
-    protected function provider(OutputInterface $output,$provider) {
+    protected function provider(OutputInterface $output, $provider)
+    {
         $this->installConfigAppFile($output);
         $this->addProvider($provider);
     }

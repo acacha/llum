@@ -20,7 +20,7 @@ class ProviderCommand extends LlumCommand
 
         $this->setName('provider')
                 ->setDescription('Adds a provider to Laravel config/app.php file')
-                ->addArgument('provider',InputArgument::REQUIRED,'the provider to install');
+                ->addArgument('provider', InputArgument::REQUIRED, 'the provider to install');
     }
 
     /**
@@ -32,6 +32,6 @@ class ProviderCommand extends LlumCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $provider = $input->getArgument('provider');
-        $this->provider($output,$provider);
+        $this->provider($output, $provider);
     }
 }
