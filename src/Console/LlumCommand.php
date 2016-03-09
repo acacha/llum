@@ -341,6 +341,7 @@ abstract class LlumCommand extends Command
 
         if ($package == null) {
             $output->writeln('<error>Package ' . $name . ' not found in file ' . $configPath . 'packages.php</error>');
+            return;
         }
 
         $this->requireComposerPackage($output, $composerPackageName);
