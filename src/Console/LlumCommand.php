@@ -331,16 +331,17 @@ abstract class LlumCommand extends Command
      */
     protected function package(OutputInterface $output, $name)
     {
-        $configPath = __DIR__ . '/../config/';
-        $config = new Repository(require $configPath . 'packages.php');
+        $configPath = __DIR__.'/../config/';
+        $config = new Repository(require $configPath.'packages.php');
 
         $package = $config->get($name);
-        $composerPackageName = $config->get($name . '.name');
-        $providers = $config->get($name . '.providers');
-        $aliases = $config->get($name . '.aliases');
+        $composerPackageName = $config->get($name.'.name');
+        $providers = $config->get($name.'.providers');
+        $aliases = $config->get($name.'.aliases');
 
         if ($package == null) {
-            $output->writeln('<error>Package ' . $name . ' not found in file ' . $configPath . 'packages.php</error>');
+            $output->writeln('<error>Package '.$name.' not found in file '.$configPath.'packages.php</error>');
+
             return;
         }
 
@@ -349,16 +350,13 @@ abstract class LlumCommand extends Command
         $this->installConfigAppFile($output);
 
         foreach ($providers as $provider) {
-            $output->writeln('<info>Adding ' . $provider . ' to Laravel config/app.php file</info>');
+            $output->writeln('<info>Adding '.$provider.' to Laravel config/app.php file</info>');
             $this->addProvider($provider);
         }
 
         foreach ($aliases as $alias => $aliasClass) {
-            $output->writeln('<info>Adding ' . $alias . ' to Laravel config/app.php file</info>');
-            $this->addAlias("'" . $alias . "' => " . $aliasClass );
+            $output->writeln('<info>Adding '.$alias.' to Laravel config/app.php file</info>');
+            $this->addAlias("'".$alias."' => ".$aliasClass);
         }
-
-
     }
-
 }
