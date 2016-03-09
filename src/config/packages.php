@@ -13,7 +13,7 @@ return [
 
     'Socialite' => [
         'name'      => 'laravel/socialite',
-        'providers' => ['Laravel\Socialite\Facades\Socialite::class'],
+        'providers' => ['Laravel\Socialite\SocialiteServiceProvider::class'],
         'aliases'   => ['Socialite' => 'Laravel\Socialite\Facades\Socialite::class'],
     ],
 
