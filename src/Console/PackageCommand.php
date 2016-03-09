@@ -7,9 +7,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class AliasCommand.
+ * Class PackageCommand.
  */
-class AliasCommand extends LlumCommand
+class PackageCommand extends LlumCommand
 {
     /**
      * Configure the command options.
@@ -18,10 +18,9 @@ class AliasCommand extends LlumCommand
     {
         $this->ignoreValidationErrors();
 
-        $this->setName('alias')
-                ->setDescription('Adds a alias/facade to Laravel config/app.php file')
-                ->addArgument('aliasName', InputArgument::REQUIRED, 'the alias name')
-                ->addArgument('aliasClass', InputArgument::REQUIRED, 'the alias class');
+        $this->setName('package')
+                ->setDescription('Install laravel package from list of supported/known packages names (see config/packages.php file)')
+                ->addArgument('name', InputArgument::REQUIRED, 'the package name');
     }
 
     /**
@@ -34,8 +33,7 @@ class AliasCommand extends LlumCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $aliasName = $input->getArgument('aliasName');
-        $aliasClass = $input->getArgument('aliasClass');
-        $this->alias($output, $aliasName, $aliasClass);
+        $name = $input->getArgument('name');
+        $this->package($output, $name);
     }
 }
