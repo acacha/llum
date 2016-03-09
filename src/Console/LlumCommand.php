@@ -311,4 +311,16 @@ abstract class LlumCommand extends Command
         $this->installConfigAppFile($output);
         $this->addProvider($provider);
     }
+
+    /**
+     * Installs alias/facade in laravel config/app.php file.
+     *
+     * @param OutputInterface $output
+     */
+    protected function alias(OutputInterface $output, $aliasName, $aliasClass )
+    {
+        $this->installConfigAppFile($output);
+        $this->addAlias("'" . $aliasName . "' => " . $aliasClass);
+    }
+
 }

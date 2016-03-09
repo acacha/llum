@@ -87,6 +87,14 @@ Add a provider to config/app.php file:
 llum provider Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class
 ```
 
+##alias
+
+Add an alias/Facade to config/app.php file:
+
+```bash
+llum alias Socialite Laravel\Socialite\Facades\Socialite::class
+```
+
 ##serve
 
 Similar to php artisan serve but some enhacements:
