@@ -337,7 +337,7 @@ abstract class LlumCommand extends Command
         $package = $config->get($name);
         $composerPackageName = $config->get($name . '.name');
         $providers = $config->get($name . '.providers');
-        $aliases = $config->get($name . '.providers');
+        $aliases = $config->get($name . '.aliases');
 
         if ($package == null) {
             $output->writeln('<error>Package ' . $name . ' not found in file ' . $configPath . 'packages.php</error>');
@@ -345,6 +345,8 @@ abstract class LlumCommand extends Command
         }
 
         $this->requireComposerPackage($output, $composerPackageName);
+
+        $this->installConfigAppFile($output);
 
         foreach ($providers as $provider) {
             $output->writeln('<info>Adding ' . $provider . ' to Laravel config/app.php file</info>');
