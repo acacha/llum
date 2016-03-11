@@ -97,6 +97,23 @@ abstract class LlumCommand extends Command
      *
      * @param OutputInterface $output
      */
+    protected function OLDinstallConfigAppFile(OutputInterface $output)
+    {
+        $laravel_config_file = getcwd().'/config/app.php';
+        if (!file_exists($laravel_config_file)) {
+            $output->writeln('<error>File '.$laravel_config_file.' doesn\'t exists');
+        }
+        if (!$this->configAppFileAlreadyInstalled()) {
+            copy(__DIR__.'/stubs/app.php', $laravel_config_file);
+        }
+        $output->writeln('<info>File '.$laravel_config_file.' updated correctly</info>');
+    }
+
+    /**
+     * Install /stubs/app.php into /config/app.php.
+     *
+     * @param OutputInterface $output
+     */
     protected function installConfigAppFile(OutputInterface $output)
     {
         $laravel_config_file = getcwd().'/config/app.php';
@@ -107,6 +124,12 @@ abstract class LlumCommand extends Command
             copy(__DIR__.'/stubs/app.php', $laravel_config_file);
         }
         $output->writeln('<info>File '.$laravel_config_file.' updated correctly</info>');
+    }
+
+    private function getLineNumberToInsertMountPoint($pattern) {
+        passthru(
+            'bash ' . __DIR__ . '/../../getLineNumberToInsertMountPoint'
+        );
     }
 
     /**

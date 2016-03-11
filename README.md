@@ -20,7 +20,7 @@ composer global require "acacha/llum=~0.1"
 
 # Requirements
 
-Some commands use [GNU sed](https://www.gnu.org/software/sed/)
+Some commands use bash commands like [GNU sed](https://www.gnu.org/software/sed/) and touch.On Windows you can use [CygWin](https://www.cygwin.com/)  or see [StackOverflow](http://stackoverflow.com/questions/127318/is-there-any-sed-like-utility-for-cmd-exe)
 
 # Commands
 

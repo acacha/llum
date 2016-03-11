@@ -1,0 +1,1 @@
+LINE=$(sed -n "/'providers'/=" app.php);NLINE=$(sed -n ${LINE},\$p app.php | sed -n "/]/{=;q};");echo $(($LINE + $NLINE -1))
