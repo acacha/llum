@@ -2,15 +2,14 @@
 
 namespace Acacha\Llum\Console;
 
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class PackageCommand.
+ * Class PackageListCommand.
  * Installs Laravel Packages.
  */
-class PackageCommand extends LlumCommand
+class PackageListCommand extends LlumCommand
 {
     /**
      * Configure the command options.
@@ -19,9 +18,8 @@ class PackageCommand extends LlumCommand
     {
         $this->ignoreValidationErrors();
 
-        $this->setName('package')
-                ->setDescription('Install laravel package from list of supported/known packages names (see config/packages.php file)')
-                ->addArgument('name', InputArgument::REQUIRED, 'the package name');
+        $this->setName('package:list')
+                ->setDescription('Shows available packages to list (info taken from config/packages.php)');
     }
 
     /**
@@ -34,7 +32,6 @@ class PackageCommand extends LlumCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $name = $input->getArgument('name');
-        $this->package($output, $name);
+        $this->packageList($output);
     }
 }

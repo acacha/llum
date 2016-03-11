@@ -13,6 +13,13 @@ use Symfony\Component\Process\Process;
 abstract class LlumCommand extends Command
 {
     /**
+     * Path to config folder.
+     *
+     * @var string
+     */
+    protected $configPath = __DIR__.'/../config/';
+
+    /**
      * Touch sqlite database file.
      *
      * @param OutputInterface $output
@@ -342,14 +349,30 @@ abstract class LlumCommand extends Command
     }
 
     /**
+     * Shows list of supported packages.
+     */
+    protected function packageList(OutputInterface $output)
+    {
+        $config = $this->obtainConfig();
+        $packages = $config->all();
+        foreach ($packages as $name => $package) {
+            $output->writeln('<info>'.$name.'</info> | '.$this->parsePackageInfo($package));
+        }
+    }
+
+    private function parsePackageInfo($package)
+    {
+        return 'Composer name: '.$package['name'];
+    }
+
+    /**
      * Installs laravel package form config/packages.php file.
      *
      * @param OutputInterface $output
      */
     protected function package(OutputInterface $output, $name)
     {
-        $configPath = __DIR__.'/../config/';
-        $config = new Repository(require $configPath.'packages.php');
+        $config = $this->obtainConfig();
 
         $package = $config->get($name);
         $composerPackageName = $config->get($name.'.name');
@@ -357,7 +380,7 @@ abstract class LlumCommand extends Command
         $aliases = $config->get($name.'.aliases');
 
         if ($package == null) {
-            $output->writeln('<error>Package '.$name.' not found in file '.$configPath.'packages.php</error>');
+            $output->writeln('<error>Package '.$name.' not found in file '.$this->configPath.'packages.php</error>');
 
             return;
         }
@@ -375,5 +398,17 @@ abstract class LlumCommand extends Command
             $output->writeln('<info>Adding '.$alias.' to Laravel config/app.php file</info>');
             $this->addAlias("'".$alias."' => ".$aliasClass);
         }
+    }
+
+    /**
+     * Get config repository.
+     *
+     * @return Repository
+     */
+    protected function obtainConfig()
+    {
+        $config = new Repository(require $this->configPath.'packages.php');
+
+        return $config;
     }
 }

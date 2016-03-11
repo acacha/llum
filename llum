@@ -19,5 +19,6 @@ $app->add(new Acacha\Llum\Console\BootCommand);
 $app->add(new Acacha\Llum\Console\MigrateCommand);
 $app->add(new Acacha\Llum\Console\ProviderCommand);
 $app->add(new Acacha\Llum\Console\PackageCommand());
+$app->add(new Acacha\Llum\Console\PackageListCommand());
 
 $app->run();
