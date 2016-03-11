@@ -71,8 +71,8 @@ class LaravelPackage implements JsonSerializable
 
     /**
      * Fluent set/get name.
-     *
-     * @param null $name
+     * 
+     * @param null $composerName
      *
      * @return $this
      */

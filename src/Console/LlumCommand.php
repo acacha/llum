@@ -126,13 +126,6 @@ abstract class LlumCommand extends Command
         $output->writeln('<info>File '.$laravel_config_file.' updated correctly</info>');
     }
 
-    private function getLineNumberToInsertMountPoint($pattern)
-    {
-        passthru(
-            'bash '.__DIR__.'/../../getLineNumberToInsertMountPoint'
-        );
-    }
-
     /**
      * Check if config/app.php stub file is already installed.
      *

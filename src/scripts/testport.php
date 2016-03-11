@@ -22,7 +22,8 @@ function check_port($port, $host = '127.0.0.1')
         return true;
     } else {
         // port is open and available
-        return false;
         fclose($fp);
+
+        return false;
     }
 }
