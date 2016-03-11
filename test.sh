@@ -3,7 +3,7 @@
 . ./src/bash_scripts/llum.sh
 
 function downloadLaravelConfigAppFile(){
-    wget -O config/app.php https://raw.githubusercontent.com/laravel/laravel/master/config/app.php
+    wget --quiet -O config/app.php https://raw.githubusercontent.com/laravel/laravel/master/config/app.php
 }
 
 mkdir -p config

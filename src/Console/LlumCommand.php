@@ -126,9 +126,10 @@ abstract class LlumCommand extends Command
         $output->writeln('<info>File '.$laravel_config_file.' updated correctly</info>');
     }
 
-    private function getLineNumberToInsertMountPoint($pattern) {
+    private function getLineNumberToInsertMountPoint($pattern)
+    {
         passthru(
-            'bash ' . __DIR__ . '/../../getLineNumberToInsertMountPoint'
+            'bash '.__DIR__.'/../../getLineNumberToInsertMountPoint'
         );
     }
 
