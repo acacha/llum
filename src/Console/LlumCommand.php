@@ -191,17 +191,7 @@ abstract class LlumCommand extends Command
      */
     protected function idehelper(OutputInterface $output)
     {
-        $this->requireComposerPackage($output, 'barryvdh/laravel-ide-helper');
-        $this->installConfigAppFile($output);
-
-        $error = $this->addLaravelIdeHelperProvider();
-        if ($error !== 0) {
-            $output->writeln('<error>Error adding Laravel ide helper provider</error>');
-        } else {
-            $output->writeln('<info>Laravel ide helper provider added to config/app.php file</info>');
-        }
-
-        passthru('php artisan ide-helper:generate');
+        $this->package($output, 'barryvdh/laravel-ide-helper');
     }
 
     /**
@@ -211,23 +201,7 @@ abstract class LlumCommand extends Command
      */
     protected function debugbar(OutputInterface $output)
     {
-        $this->installConfigAppFile($output);
-        $this->requireComposerPackage($output, 'barryvdh/laravel-debugbar');
-
-        $error = $this->addLaravelDebugbarProvider();
-        if ($error  !== 0) {
-            $output->writeln('<error>Error adding Laravel Debugbar provider</error>');
-        } else {
-            $output->writeln('<info>Laravel Debugbar provider added to config/app.php file</info>');
-        }
-        $error = $this->addLaravelDebugbarAlias();
-        if ($error  !== 0) {
-            $output->writeln('<error>Error adding Laravel Debugbar alias</error>');
-        } else {
-            $output->writeln('<info>Laravel Debugbar alias added to config/app.php file</info>');
-        }
-
-        passthru('php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"');
+        $this->package($output, 'barryvdh/laravel-debugbar');
     }
 
     /**
@@ -442,6 +416,10 @@ abstract class LlumCommand extends Command
         $composerPackageName = $config->get($name.'.name');
         $providers = $config->get($name.'.providers');
         $aliases = $config->get($name.'.aliases');
+        $after = null;
+        if ($config->has($name.'.after')) {
+            $after = $config->get($name.'.after');
+        }
 
         $this->requireComposerPackage($output, $composerPackageName);
 
@@ -455,6 +433,10 @@ abstract class LlumCommand extends Command
         foreach ($aliases as $alias => $aliasClass) {
             $output->writeln('<info>Adding '.$alias.' to Laravel config/app.php file</info>');
             $this->addAlias("'".$alias."' => ".$aliasClass);
+        }
+
+        if ($after != null) {
+            passthru($after);
         }
     }
 

@@ -19,7 +19,7 @@ return [
 
     'LaravelDebugbar' => [
         'name' => 'barryvdh/laravel-debugbar',
-        'providers' => ['Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class'],
+        'providers' => ['Barryvdh\Debugbar\ServiceProvider::class'],
         'aliases' => ['Debugbar' => 'Barryvdh\Debugbar\Facade::class'],
         'after' => 'php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"',
     ],
