@@ -14,6 +14,13 @@ use Symfony\Component\Process\Process;
 abstract class LlumCommand extends Command
 {
     /**
+     * Laravel config file (config/app.php).
+     *
+     * @var string
+     */
+    protected $laravel_config_file;
+
+    /**
      * Path to config folder.
      *
      * @var string
@@ -34,6 +41,7 @@ abstract class LlumCommand extends Command
     {
         parent::__construct();
         $this->configPath = __DIR__.'/../config/';
+        $this->laravel_config_file = getcwd().'/config/app.php';
     }
 
     /**
@@ -123,17 +131,7 @@ abstract class LlumCommand extends Command
      */
     protected function installConfigAppFileWithBash(OutputInterface $output)
     {
-        $laravel_config_file = getcwd().'/config/app.php';
-        if (!file_exists($laravel_config_file)) {
-            $output->writeln('<error>File '.$laravel_config_file.' doesn\'t exists');
-            exit;
-        }
-        if (!$this->configAppFileAlreadyInstalled()) {
-            //            dd ( __DIR__ . "/../bash_scripts/iluminar.sh config/app.php");
-            passthru(__DIR__.'/../bash_scripts/iluminar.sh '.$laravel_config_file);
-        } else {
-            $output->writeln('<info>File '.$laravel_config_file.' already supports llum.</info>');
-        }
+        passthru(__DIR__.'/../bash_scripts/iluminar.sh '.$this->laravel_config_file);
     }
 
     /**
@@ -143,17 +141,12 @@ abstract class LlumCommand extends Command
      */
     protected function installConfigAppFileWithStubs(OutputInterface $output)
     {
-        $laravel_config_file = getcwd().'/config/app.php';
-        if (!file_exists($laravel_config_file)) {
-            $output->writeln('<error>File '.$laravel_config_file.' doesn\'t exists');
-            exit;
-        }
-        if (!$this->configAppFileAlreadyInstalled()) {
-            copy(__DIR__.'/stubs/app.php', $laravel_config_file);
-            $output->writeln('<info>File '.$laravel_config_file.' overwrited correctly with and stub.</info>');
-        } else {
-            $output->writeln('<info>File '.$laravel_config_file.' already supports llum.</info>');
-        }
+        copy(__DIR__.'/stubs/app.php', $this->laravel_config_file);
+    }
+
+    protected function checkIfLaravelConfigFileExists(OutputInterface $output)
+    {
+        return file_exists($this->laravel_config_file);
     }
 
     /**
@@ -163,11 +156,24 @@ abstract class LlumCommand extends Command
      */
     protected function installConfigAppFile(OutputInterface $output)
     {
-        if ($this->isNoBashActive()) {
-            $this->installConfigAppFileWithStubs($output);
+        if (!$this->checkIfLaravelConfigFileExists($output)) {
+            $output->writeln('<error>File '.$this->laravel_config_file.' doesn\'t exists');
+
+            return;
         }
 
-        $this->installConfigAppFileWithBash($output);
+        if ($this->configAppFileAlreadyInstalled()) {
+            $output->writeln('<info>File '.$this->laravel_config_file.' already supports llum.</info>');
+
+            return;
+        }
+
+        if ($this->isNoBashActive()) {
+            $this->installConfigAppFileWithStubs($output);
+        } else {
+            $this->installConfigAppFileWithBash($output);
+        }
+        $output->writeln('<info>File '.$this->laravel_config_file.' overwrited correctly with and stub.</info>');
     }
 
     /**
@@ -177,7 +183,7 @@ abstract class LlumCommand extends Command
      */
     protected function configAppFileAlreadyInstalled()
     {
-        if (strpos(file_get_contents(getcwd().'/config/app.php'), '#llum_providers') !== false) {
+        if (strpos(file_get_contents($this->laravel_config_file), '#llum_providers') !== false) {
             return true;
         }
 
@@ -226,26 +232,6 @@ abstract class LlumCommand extends Command
     }
 
     /**
-     * Add Laravel Debugbar provider to config/app.php file.
-     *
-     * @return mixed
-     */
-    private function addLaravelDebugbarProvider()
-    {
-        return $this->addProvider('Barryvdh\Debugbar\ServiceProvider::class');
-    }
-
-    /**
-     * Add Laravel Debugbar alias to config/app.php file.
-     *
-     * @return mixed
-     */
-    private function addLaravelDebugbarAlias()
-    {
-        return $this->addAlias("'Debugbar' => Barryvdh\Debugbar\Facade::class");
-    }
-
-    /**
      *  Add provider to config/app.php file.
      *
      * @param $provider
@@ -280,7 +266,7 @@ abstract class LlumCommand extends Command
     private function addTextIntoMountPoint($mountpoint, $textToAdd)
     {
         passthru(
-            'sed -i \'s/.*'.$mountpoint.'.*/ \ \ \ \ \ \ \ '.$this->scapeSingleQuotes(preg_quote($textToAdd)).',\n \ \ \ \ \ \ \ '.$mountpoint.'/\' config/app.php', $error);
+            'sed -i \'s/.*'.$mountpoint.'.*/ \ \ \ \ \ \ \ '.$this->scapeSingleQuotes(preg_quote($textToAdd)).',\n \ \ \ \ \ \ \ '.$mountpoint.'/\' '.$this->laravel_config_file, $error);
 
         return $error;
     }
@@ -426,12 +412,12 @@ abstract class LlumCommand extends Command
         $this->installConfigAppFile($output);
 
         foreach ($providers as $provider) {
-            $output->writeln('<info>Adding '.$provider.' to Laravel config/app.php file</info>');
+            $output->writeln('<info>Adding '.$provider.' to Laravel config app.php file</info>');
             $this->addProvider($provider);
         }
 
         foreach ($aliases as $alias => $aliasClass) {
-            $output->writeln('<info>Adding '.$alias.' to Laravel config/app.php file</info>');
+            $output->writeln('<info>Adding '.$alias.' to Laravel config app.php file</info>');
             $this->addAlias("'".$alias."' => ".$aliasClass);
         }
 
