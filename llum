@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+use Symfony\Component\Console\Input\InputOption;
+
 if (file_exists(__DIR__.'/../../autoload.php')) {
     require __DIR__.'/../../autoload.php';
 } else {
@@ -8,6 +10,13 @@ if (file_exists(__DIR__.'/../../autoload.php')) {
 }
 
 $app = new Symfony\Component\Console\Application('Acacha llum illuminates your laravel packages', '0.6');
+
+// Add global Options to the Application
+$app->getDefinition()->addOptions([
+    new InputOption('--no-bash', '-B', InputOption::VALUE_NONE,
+        'Does not use bash for modifying config/app.php file. Use stubs instead'),
+]);
+
 $app->add(new Acacha\Llum\Console\SqliteCommand);
 $app->add(new Acacha\Llum\Console\SqliteTouchCommand);
 $app->add(new Acacha\Llum\Console\SqliteEnvCommand);
@@ -20,5 +29,6 @@ $app->add(new Acacha\Llum\Console\MigrateCommand);
 $app->add(new Acacha\Llum\Console\ProviderCommand);
 $app->add(new Acacha\Llum\Console\PackageCommand());
 $app->add(new Acacha\Llum\Console\PackageListCommand());
+$app->add(new Acacha\Llum\Console\ConfigCommand());
 
 $app->run();

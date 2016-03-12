@@ -4,6 +4,7 @@ namespace Acacha\Llum\Console;
 
 use Illuminate\Config\Repository;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
@@ -18,6 +19,13 @@ abstract class LlumCommand extends Command
      * @var string
      */
     protected $configPath;
+
+    /**
+     * Avoids using bash using stubs instead to modify config/app.php file.
+     *
+     * @var bool
+     */
+    protected $noBash = false;
 
     /**
      * LlumCommand constructor.
@@ -109,20 +117,23 @@ abstract class LlumCommand extends Command
     }
 
     /**
-     * Install /stubs/app.php into /config/app.php.
+     * Install /config/app.php file using bash script.
      *
      * @param OutputInterface $output
      */
-    protected function OLDinstallConfigAppFile(OutputInterface $output)
+    protected function installConfigAppFileWithBash(OutputInterface $output)
     {
         $laravel_config_file = getcwd().'/config/app.php';
         if (!file_exists($laravel_config_file)) {
             $output->writeln('<error>File '.$laravel_config_file.' doesn\'t exists');
+            exit;
         }
         if (!$this->configAppFileAlreadyInstalled()) {
-            copy(__DIR__.'/stubs/app.php', $laravel_config_file);
+            //            dd ( __DIR__ . "/../bash_scripts/iluminar.sh config/app.php");
+            passthru(__DIR__.'/../bash_scripts/iluminar.sh '.$laravel_config_file);
+        } else {
+            $output->writeln('<info>File '.$laravel_config_file.' already supports llum.</info>');
         }
-        $output->writeln('<info>File '.$laravel_config_file.' updated correctly</info>');
     }
 
     /**
@@ -130,16 +141,33 @@ abstract class LlumCommand extends Command
      *
      * @param OutputInterface $output
      */
-    protected function installConfigAppFile(OutputInterface $output)
+    protected function installConfigAppFileWithStubs(OutputInterface $output)
     {
         $laravel_config_file = getcwd().'/config/app.php';
         if (!file_exists($laravel_config_file)) {
             $output->writeln('<error>File '.$laravel_config_file.' doesn\'t exists');
+            exit;
         }
         if (!$this->configAppFileAlreadyInstalled()) {
             copy(__DIR__.'/stubs/app.php', $laravel_config_file);
+            $output->writeln('<info>File '.$laravel_config_file.' overwrited correctly with and stub.</info>');
+        } else {
+            $output->writeln('<info>File '.$laravel_config_file.' already supports llum.</info>');
         }
-        $output->writeln('<info>File '.$laravel_config_file.' updated correctly</info>');
+    }
+
+    /**
+     * Install llum custom config/app.php file.
+     *
+     * @param OutputInterface $output
+     */
+    protected function installConfigAppFile(OutputInterface $output)
+    {
+        if ($this->isNoBashActive()) {
+            $this->installConfigAppFileWithStubs($output);
+        }
+
+        $this->installConfigAppFileWithBash($output);
     }
 
     /**
@@ -374,6 +402,13 @@ abstract class LlumCommand extends Command
         }
     }
 
+    /**
+     * Parse package info.
+     *
+     * @param $package
+     *
+     * @return string
+     */
     private function parsePackageInfo($package)
     {
         return 'Composer name: '.$package['name'];
@@ -425,5 +460,25 @@ abstract class LlumCommand extends Command
         $config = new Repository(require $this->configPath.'packages.php');
 
         return $config;
+    }
+
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        parent::initialize($input, $output);
+        $this->noBash = $input->getOption('no-bash');
+    }
+
+    /**
+     * Check is --no-bash option is active.
+     *
+     * @return bool
+     */
+    private function isNoBashActive()
+    {
+        return $this->noBash;
     }
 }

@@ -22,10 +22,20 @@ function abortIfLlumIsAlreadyInstalled(){
     fi
 }
 
+function abortIfFileDoesNotExists(){
+    if [ ! -f $1 ]; then
+        echo "File $1 not found!"
+        exit 1;
+    fi
+}
+
 function iluminar(){
+    abortIfFileDoesNotExists "$1";
     abortIfLlumIsAlreadyInstalled "$1";
     line=$(searchLineToInsertNewValueToEndOfPHPArray 'providers' "$1")
     insertLineIntoFile "$1" "$line" "$TEXT_TO_INSERT_TO_PROVIDERS"
     line=$(searchLineToInsertNewValueToEndOfPHPArray 'aliases' "$1")
     insertLineIntoFile "$1" "$line" "$TEXT_TO_INSERT_TO_ALIASES"
+    echo "File $1 updated correctly" ;
+    exit 0;
 }
