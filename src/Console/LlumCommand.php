@@ -424,16 +424,22 @@ abstract class LlumCommand extends Command
     {
         $config = $this->obtainConfig();
 
+        //Check if package name is a composer package name
+        if (str_contains($name, '/')) {
+            $name = $this->getPackageNameByComposerName($name);
+        }
+
         $package = $config->get($name);
-        $composerPackageName = $config->get($name.'.name');
-        $providers = $config->get($name.'.providers');
-        $aliases = $config->get($name.'.aliases');
 
         if ($package == null) {
             $output->writeln('<error>Package '.$name.' not found in file '.$this->configPath.'packages.php</error>');
 
             return;
         }
+
+        $composerPackageName = $config->get($name.'.name');
+        $providers = $config->get($name.'.providers');
+        $aliases = $config->get($name.'.aliases');
 
         $this->requireComposerPackage($output, $composerPackageName);
 
@@ -482,5 +488,22 @@ abstract class LlumCommand extends Command
     private function isNoBashActive()
     {
         return $this->noBash;
+    }
+
+    /**
+     * Get package name by composer package name.
+     * 
+     * @param $composerPackageName
+     *
+     * @return string
+     */
+    private function getPackageNameByComposerName($composerPackageName)
+    {
+        $config = $this->obtainConfig();
+        foreach ($config->all() as $key => $configItem) {
+            if ($configItem['name'] == $composerPackageName) {
+                return $key;
+            }
+        }
     }
 }
