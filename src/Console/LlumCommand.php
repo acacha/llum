@@ -17,7 +17,16 @@ abstract class LlumCommand extends Command
      *
      * @var string
      */
-    protected $configPath = __DIR__.'/../config/';
+    protected $configPath;
+
+    /**
+     * LlumCommand constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->configPath = __DIR__.'/../config/';
+    }
 
     /**
      * Touch sqlite database file.
