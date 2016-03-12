@@ -13,11 +13,11 @@ use Symfony\Component\Process\Process;
 abstract class LlumCommand extends Command
 {
     /**
-     * Path to config folder.
-     *
-     * @var string
-     */
-    protected $configPath = __DIR__.'/../config/';
+    * Path to config folder.
+    *
+    * @var string
+    */
+    protected $configPath = __DIR__ . '/../config/';
 
     /**
      * Touch sqlite database file.
