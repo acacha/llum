@@ -429,12 +429,14 @@ abstract class LlumCommand extends Command
             $name = $this->getPackageNameByComposerName($name);
         }
 
+        if ($name == null) {
+            $this->showPackageNotFoundError($output, $name);
+        }
+
         $package = $config->get($name);
 
         if ($package == null) {
-            $output->writeln('<error>Package '.$name.' not found in file '.$this->configPath.'packages.php</error>');
-
-            return;
+            $this->showPackageNotFoundError($output, $name);
         }
 
         $composerPackageName = $config->get($name.'.name');
@@ -505,5 +507,20 @@ abstract class LlumCommand extends Command
                 return $key;
             }
         }
+
+        return;
+    }
+
+    /**
+     * Show package not found error.
+     *
+     * @param OutputInterface $output
+     * @param $name
+     */
+    protected function showPackageNotFoundError(OutputInterface $output, $name)
+    {
+        $output->writeln('<error>Package '.$name.' not found in file '.$this->configPath.'packages.php</error>');
+
+        return;
     }
 }
