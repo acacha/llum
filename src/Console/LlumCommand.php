@@ -13,11 +13,11 @@ use Symfony\Component\Process\Process;
 abstract class LlumCommand extends Command
 {
     /**
-    * Path to config folder.
-    *
-    * @var string
-    */
-    protected $configPath = __DIR__ . '/../config/';
+     * Path to config folder.
+     *
+     * @var string
+     */
+    protected $configPath = __DIR__.'/../config/';
 
     /**
      * Touch sqlite database file.
@@ -330,6 +330,7 @@ abstract class LlumCommand extends Command
      * Installs provider in laravel config/app.php file.
      *
      * @param OutputInterface $output
+     * @param $provider
      */
     protected function provider(OutputInterface $output, $provider)
     {
@@ -341,6 +342,8 @@ abstract class LlumCommand extends Command
      * Installs alias/facade in laravel config/app.php file.
      *
      * @param OutputInterface $output
+     * @param $aliasName
+     * @param $aliasClass
      */
     protected function alias(OutputInterface $output, $aliasName, $aliasClass)
     {
@@ -350,6 +353,8 @@ abstract class LlumCommand extends Command
 
     /**
      * Shows list of supported packages.
+     *
+     * @param OutputInterface $output
      */
     protected function packageList(OutputInterface $output)
     {
@@ -369,6 +374,7 @@ abstract class LlumCommand extends Command
      * Installs laravel package form config/packages.php file.
      *
      * @param OutputInterface $output
+     * @param $name
      */
     protected function package(OutputInterface $output, $name)
     {
