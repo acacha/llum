@@ -1,5 +1,7 @@
 <?php
 
+namespace Acacha\Llum\Tests;
+
 /**
  * Class IlluminateBashScriptTest
  */

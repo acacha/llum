@@ -37,5 +37,4 @@ function iluminar(){
     line=$(searchLineToInsertNewValueToEndOfPHPArray 'aliases' "$1")
     insertLineIntoFile "$1" "$line" "$TEXT_TO_INSERT_TO_ALIASES"
     echo "File $1 updated correctly" ;
-    exit 0;
 }

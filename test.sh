@@ -2,17 +2,9 @@
 
 . ./src/bash_scripts/llum.sh
 
-function downloadLaravelConfigAppFile(){
-    wget --quiet -O config/app.php https://raw.githubusercontent.com/laravel/laravel/master/config/app.php
-}
-
-mkdir -p config
-downloadLaravelConfigAppFile
+./test_setup.sh
+echo "AAAA"
 iluminar "config/app.php"
 cat config/app.php
-rm -rf config
-
-
-
-
+./test_teardown.sh
 

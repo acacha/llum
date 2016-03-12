@@ -1,5 +1,7 @@
 <?php
 
+namespace Acacha\Llum\Tests;
+
 use Acacha\Llum\Console\ProviderCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;

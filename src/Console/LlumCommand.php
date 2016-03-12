@@ -469,7 +469,9 @@ abstract class LlumCommand extends Command
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         parent::initialize($input, $output);
-        $this->noBash = $input->getOption('no-bash');
+        if ($input->hasOption('no-bash')) {
+            $this->noBash = $input->getOption('no-bash');
+        }
     }
 
     /**

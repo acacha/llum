@@ -1,5 +1,7 @@
 <?php
 
+namespace Acacha\Llum\Tests;
+
 use Acacha\Llum\Console\DevToolsCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -7,7 +9,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 /**
  * Class DevToolsCommandTest
  */
-class DevToolsCommandTest extends \PHPUnit_Framework_TestCase
+class DevToolsCommandTest extends LlumCommandTest
 {
 
     protected function setUp()
@@ -67,11 +69,4 @@ class DevToolsCommandTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    private function laravelConfigFileHasContent($content) {
-        return $this->fileHasContent('/config/app.php',$content);
-    }
-
-    private function fileHasContent($file,$content) {
-        return strpos(file_get_contents(getcwd().$file), $content) != false;
-    }
 }
