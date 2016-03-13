@@ -224,7 +224,7 @@ abstract class LlumCommand extends Command
     /**
      * Add Laravel IDE Helper provider to config/app.php file.
      *
-     * @return mixed
+     * @return integer|null
      */
     protected function addLaravelIdeHelperProvider()
     {
@@ -236,7 +236,7 @@ abstract class LlumCommand extends Command
      *
      * @param $provider
      *
-     * @return mixed
+     * @return integer|null
      */
     private function addProvider($provider)
     {
@@ -246,9 +246,9 @@ abstract class LlumCommand extends Command
     /**
      * Add alias to config/app.php file.
      *
-     * @param $alias
+     * @param string $alias
      *
-     * @return mixed
+     * @return integer|null
      */
     private function addAlias($alias)
     {
@@ -258,10 +258,10 @@ abstract class LlumCommand extends Command
     /**
      * Insert text into file using mountpoint. Mountpoint is maintained at file.
      *
-     * @param $mountpoint
+     * @param string $mountpoint
      * @param $textToAdd
      *
-     * @return mixed
+     * @return integer|null
      */
     private function addTextIntoMountPoint($mountpoint, $textToAdd)
     {
@@ -274,7 +274,7 @@ abstract class LlumCommand extends Command
     /**
      * scape single quotes for sed using \x27.
      *
-     * @param $str
+     * @param string $str
      *
      * @return mixed
      */
