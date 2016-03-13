@@ -126,25 +126,21 @@ abstract class LlumCommand extends Command
 
     /**
      * Install /config/app.php file using bash script.
-     *
-     * @param OutputInterface $output
      */
-    protected function installConfigAppFileWithBash(OutputInterface $output)
+    protected function installConfigAppFileWithBash()
     {
         passthru(__DIR__.'/../bash_scripts/iluminar.sh '.$this->laravel_config_file);
     }
 
     /**
      * Install /stubs/app.php into /config/app.php.
-     *
-     * @param OutputInterface $output
      */
-    protected function installConfigAppFileWithStubs(OutputInterface $output)
+    protected function installConfigAppFileWithStubs()
     {
         copy(__DIR__.'/stubs/app.php', $this->laravel_config_file);
     }
 
-    protected function checkIfLaravelConfigFileExists(OutputInterface $output)
+    protected function checkIfLaravelConfigFileExists()
     {
         return file_exists($this->laravel_config_file);
     }
@@ -156,7 +152,7 @@ abstract class LlumCommand extends Command
      */
     protected function installConfigAppFile(OutputInterface $output)
     {
-        if (!$this->checkIfLaravelConfigFileExists($output)) {
+        if (!$this->checkIfLaravelConfigFileExists()) {
             $output->writeln('<error>File '.$this->laravel_config_file.' doesn\'t exists');
 
             return;
@@ -169,9 +165,9 @@ abstract class LlumCommand extends Command
         }
 
         if ($this->isNoBashActive()) {
-            $this->installConfigAppFileWithStubs($output);
+            $this->installConfigAppFileWithStubs();
         } else {
-            $this->installConfigAppFileWithBash($output);
+            $this->installConfigAppFileWithBash();
         }
         $output->writeln('<info>File '.$this->laravel_config_file.' overwrited correctly with and stub.</info>');
     }
@@ -491,4 +487,5 @@ abstract class LlumCommand extends Command
 
         return;
     }
+
 }
