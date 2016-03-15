@@ -136,17 +136,9 @@ abstract class LlumCommand extends Command
      */
     protected function installConfigAppFile()
     {
-        if (! $this->checkIfLaravelConfigFileExists()) {
-            $this->output->writeln('<error>File '.$this->laravel_config_file.' doesn\'t exists');
+        $this->testLaravelConfigFileExists();
 
-            return -1;
-        }
-
-        if ($this->configAppFileAlreadyInstalled()) {
-            $this->output->writeln('<info>File '.$this->laravel_config_file.' already supports llum.</info>');
-
-            return 0;
-        }
+        $this->showWarningIfLaravelConfigAlreadySupportsLlum();
 
         if ($this->isNoBashActive()) {
             $this->installConfigAppFileWithStubs();
@@ -156,6 +148,34 @@ abstract class LlumCommand extends Command
         }
 
         return 0;
+    }
+
+    /**
+     * Show warning if Laravel config file already supports llum
+     *
+     * @return int
+     */
+    private function showWarningIfLaravelConfigAlreadySupportsLlum()
+    {
+        if ($this->configAppFileAlreadyInstalled()) {
+            $this->output->writeln('<info>File '.$this->laravel_config_file.' already supports llum.</info>');
+
+            return 0;
+        }
+    }
+
+    /**
+     * Test Laravel config file exists.
+     *
+     * @return int
+     */
+    private function testLaravelConfigFileExists()
+    {
+        if (! $this->checkIfLaravelConfigFileExists()) {
+            $this->output->writeln('<error>File '.$this->laravel_config_file.' doesn\'t exists');
+
+            return -1;
+        }
     }
 
     /**
@@ -342,6 +362,25 @@ abstract class LlumCommand extends Command
      */
     protected function package($name)
     {
+        $package = $this->obtainPackage($name);
+
+        list($name, $providers, $aliases, $after) = array_fill(0, 4, null);
+        extract($package, EXTR_IF_EXISTS);
+
+        $this->requireComposerPackage($name);
+
+        $this->setupLaravelConfigFile($providers,$aliases);
+
+        $this->executeScriptAfterPackageInstallation($after);
+    }
+
+    /**
+     * Obtain package.
+     *
+     * @param $name
+     * @return array|int
+     */
+    private function obtainPackage($name){
         $package = $this->getPackageFromConfig($name);
 
         if ($package == null) {
@@ -349,12 +388,28 @@ abstract class LlumCommand extends Command
 
             return -1;
         }
+        return $package;
+    }
 
-        list($name, $providers, $aliases, $after) = array_fill(0, 4, null);
-        extract($package, EXTR_IF_EXISTS);
+    /**
+     * Execute post package installation script
+     *
+     * @param $after
+     */
+    private function executeScriptAfterPackageInstallation($after){
+        if ($after != null) {
+            passthru($after);
+        }
+    }
 
-        $this->requireComposerPackage($name);
-
+    /**
+     * Setup laravel config file adding providers and aliases.
+     *
+     * @param $providers
+     * @param $aliases
+     * @return int
+     */
+    private function setupLaravelConfigFile($providers, $aliases) {
         if ($this->installConfigAppFile() == -1) {
             return -1;
         }
@@ -362,10 +417,6 @@ abstract class LlumCommand extends Command
         $this->addProviders($providers);
 
         $this->addAliases($aliases);
-
-        if ($after != null) {
-            passthru($after);
-        }
     }
 
     /**
@@ -443,10 +494,10 @@ abstract class LlumCommand extends Command
         $name = $command->name();
         $description = $command->description();
 
-        if (!is_string($name) || !is_string($description) ) {
+        if (! is_string($name) || ! is_string($description)) {
             throw new InvalidCommandException;
         }
-        
+
         $this->setName($name)
              ->setDescription($description);
         if ($command->argument() != null) {
@@ -498,4 +549,5 @@ abstract class LlumCommand extends Command
         }
         $this->configureCommand($command);
     }
+
 }

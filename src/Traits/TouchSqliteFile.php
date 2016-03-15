@@ -1,6 +1,7 @@
 <?php
 
 namespace Acacha\Llum\Traits;
+
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**

@@ -6,8 +6,7 @@ namespace Acacha\Llum\Traits;
  * Class DevTools.
  */
 /**
- * Class DevTools
- * @package Acacha\Llum\Traits
+ * Class DevTools.
  */
 trait DevTools
 {

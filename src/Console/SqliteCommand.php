@@ -10,7 +10,7 @@ use Acacha\Llum\Traits\TouchSqliteFile;
  */
 class SqliteCommand extends LlumCommand
 {
-    use TouchSqliteFile,SqliteEnv;
+    use TouchSqliteFile, SqliteEnv;
 
     /**
      * Command name.

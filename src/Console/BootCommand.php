@@ -13,7 +13,7 @@ use Acacha\Llum\Traits\TouchSqliteFile;
  */
 class BootCommand extends LlumCommand
 {
-    use DevTools,TouchSqliteFile,SqliteEnv,Migrate,Serve;
+    use DevTools, TouchSqliteFile, SqliteEnv, Migrate, Serve;
 
     /**
      * Command name.
