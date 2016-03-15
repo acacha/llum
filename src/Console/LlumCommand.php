@@ -15,6 +15,13 @@ use Symfony\Component\Process\Process;
 abstract class LlumCommand extends Command
 {
     /**
+     * The output interface.
+     *
+     * @var OutputInterface
+     */
+    protected $output;
+
+    /**
      * Command name.
      *
      * @var string
@@ -86,16 +93,14 @@ abstract class LlumCommand extends Command
 
     /**
      * Executes boot command.
-     *
-     * @param OutputInterface $output
      */
-    protected function boot(OutputInterface $output)
+    protected function boot()
     {
-        $this->devtools($output);
-        $this->touchSqliteFile($output);
-        $this->configEnv($output);
-        $this->migrate($output);
-        $this->serve($output);
+        $this->devtools();
+        $this->touchSqliteFile();
+        $this->configEnv();
+        $this->migrate();
+        $this->serve();
     }
 
     /**
@@ -112,54 +117,50 @@ abstract class LlumCommand extends Command
     /**
      * Touch sqlite database file.
      *
-     * @param OutputInterface $output
      * @param string          $file
      */
-    protected function touchSqliteFile(OutputInterface $output, $file = 'database/database.sqlite')
+    protected function touchSqliteFile($file = 'database/database.sqlite')
     {
         passthru('touch '.$file, $error);
         if ($error !== 0) {
-            $output->writeln('<error>Error creating file'.$file.'</error>');
+            $this->output->writeln('<error>Error creating file'.$file.'</error>');
         } else {
-            $output->writeln('<info>File '.$file.' created successfully</info>');
+            $this->output->writeln('<info>File '.$file.' created successfully</info>');
         }
     }
 
     /**
      * Config .env file.
-     *
-     * @param OutputInterface $output
      */
-    protected function configEnv(OutputInterface $output)
+    protected function configEnv()
     {
         passthru('sed -i \'s/^DB_/#DB_/g\' .env ', $error);
         if ($error !== 0) {
-            $output->writeln('<error>Error commenting DB_ entries in .env file </error>');
+            $this->output->writeln('<error>Error commenting DB_ entries in .env file </error>');
         }
         passthru('sed -i \'s/.*DB_HOST.*/DB_CONNECTION=sqlite\n&/\' .env', $error);
         if ($error !== 0) {
-            $output->writeln('<error>Error adding DB_CONNECTION=sqlite to .env file </error>');
+            $this->output->writeln('<error>Error adding DB_CONNECTION=sqlite to .env file </error>');
         } else {
-            $output->writeln('.env file updated successfully');
+            $this->output->writeln('.env file updated successfully');
         }
     }
 
     /**
      * Serve command.
      *
-     * @param OutputInterface $output
-     * @param int             $port
+     * @param int $port
      */
-    protected function serve(OutputInterface $output, $port = 8000)
+    protected function serve($port = 8000)
     {
         $continue = true;
         do {
             if ($this->check_port($port)) {
-                $output->writeln('<info>Running php artisan serve --port='.$port.'</info>');
+                $this->output->writeln('<info>Running php artisan serve --port='.$port.'</info>');
                 exec('php artisan serve --port='.$port.' > /dev/null 2>&1 &');
                 sleep(1);
                 if (file_exists('/usr/bin/sensible-browser')) {
-                    $output->writeln('<info>Opening http://localhost:'.$port.' with default browser</info>');
+                    $this->output->writeln('<info>Opening http://localhost:'.$port.' with default browser</info>');
                     passthru('/usr/bin/sensible-browser http://localhost:'.$port);
                 }
                 $continue = false;
@@ -180,7 +181,7 @@ abstract class LlumCommand extends Command
     protected function check_port($port = 8000, $host = '127.0.0.1', $timeout = 3)
     {
         $fp = @fsockopen($host, $port, $errno, $errstr, $timeout);
-        if (!$fp) {
+        if (! $fp) {
             return true;
         } else {
             fclose($fp);
@@ -218,27 +219,25 @@ abstract class LlumCommand extends Command
     /**
      * Install llum custom config/app.php file.
      *
-     * @param OutputInterface $output
-     *
      * @return int
      */
-    protected function installConfigAppFile(OutputInterface $output)
+    protected function installConfigAppFile()
     {
-        if (!$this->checkIfLaravelConfigFileExists()) {
-            $output->writeln('<error>File '.$this->laravel_config_file.' doesn\'t exists');
+        if (! $this->checkIfLaravelConfigFileExists()) {
+            $this->output->writeln('<error>File '.$this->laravel_config_file.' doesn\'t exists');
 
             return -1;
         }
 
         if ($this->configAppFileAlreadyInstalled()) {
-            $output->writeln('<info>File '.$this->laravel_config_file.' already supports llum.</info>');
+            $this->output->writeln('<info>File '.$this->laravel_config_file.' already supports llum.</info>');
 
             return 0;
         }
 
         if ($this->isNoBashActive()) {
             $this->installConfigAppFileWithStubs();
-            $output->writeln('<info>File '.$this->laravel_config_file.' overwrited correctly with and stub.</info>');
+            $this->output->writeln('<info>File '.$this->laravel_config_file.' overwrited correctly with and stub.</info>');
         } else {
             $this->installConfigAppFileWithBash();
         }
@@ -262,33 +261,27 @@ abstract class LlumCommand extends Command
 
     /**
      *  Install Laravel ide helper package.
-     *
-     * @param OutputInterface $output
      */
-    protected function idehelper(OutputInterface $output)
+    protected function idehelper()
     {
-        $this->package($output, 'barryvdh/laravel-ide-helper');
+        $this->package('barryvdh/laravel-ide-helper');
     }
 
     /**
      * Install Laravel debugbar package.
-     *
-     * @param OutputInterface $output
      */
-    protected function debugbar(OutputInterface $output)
+    protected function debugbar()
     {
-        $this->package($output, 'barryvdh/laravel-debugbar');
+        $this->package('barryvdh/laravel-debugbar');
     }
 
     /**
      * Execute devtools command.
-     *
-     * @param OutputInterface $output
      */
-    protected function devtools(OutputInterface $output)
+    protected function devtools()
     {
-        $this->idehelper($output);
-        $this->debugbar($output);
+        $this->idehelper();
+        $this->debugbar();
     }
 
     /**
@@ -354,17 +347,18 @@ abstract class LlumCommand extends Command
     }
 
     /**
-     * @param OutputInterface $output
+     * Require composer package.
+     *
      * @param $package
      */
-    private function requireComposerPackage(OutputInterface $output, $package)
+    private function requireComposerPackage($package)
     {
         $composer = $this->findComposer();
 
         $process = new Process($composer.' require '.$package.'', null, null, null, null);
-        $output->writeln('<info>Running composer require '.$package.'</info>');
-        $process->run(function($type, $line) use ($output) {
-            $output->write($line);
+        $this->output->writeln('<info>Running composer require '.$package.'</info>');
+        $process->run(function ($type, $line) {
+            $this->output->write($line);
         });
     }
 
@@ -384,24 +378,21 @@ abstract class LlumCommand extends Command
 
     /**
      * Migrate database with php artisan migrate.
-     *
-     * @param $output
      */
-    protected function migrate(OutputInterface $output)
+    protected function migrate()
     {
-        $output->writeln('<info>Running php artisan migrate...</info>');
+        $this->output->writeln('<info>Running php artisan migrate...</info>');
         passthru('php artisan migrate');
     }
 
     /**
      * Installs provider in laravel config/app.php file.
      *
-     * @param OutputInterface $output
      * @param $provider
      */
-    protected function provider(OutputInterface $output, $provider)
+    protected function provider($provider)
     {
-        if ($this->installConfigAppFile($output) == -1) {
+        if ($this->installConfigAppFile() == -1) {
             return;
         }
         $this->addProvider($provider);
@@ -410,13 +401,12 @@ abstract class LlumCommand extends Command
     /**
      * Installs alias/facade in laravel config/app.php file.
      *
-     * @param OutputInterface $output
      * @param $aliasName
      * @param $aliasClass
      */
-    protected function alias(OutputInterface $output, $aliasName, $aliasClass)
+    protected function alias($aliasName, $aliasClass)
     {
-        if ($this->installConfigAppFile($output) == -1) {
+        if ($this->installConfigAppFile() == -1) {
             return;
         }
         $this->addAlias("'".$aliasName."' => ".$aliasClass);
@@ -424,14 +414,12 @@ abstract class LlumCommand extends Command
 
     /**
      * Shows list of supported packages.
-     *
-     * @param OutputInterface $output
      */
-    protected function packageList(OutputInterface $output)
+    protected function packageList()
     {
         $packages = $this->config->all();
         foreach ($packages as $name => $package) {
-            $output->writeln('<info>'.$name.'</info> | '.$this->parsePackageInfo($package));
+            $this->output->writeln('<info>'.$name.'</info> | '.$this->parsePackageInfo($package));
         }
     }
 
@@ -468,12 +456,11 @@ abstract class LlumCommand extends Command
      * Add providers to Laravel config file.
      *
      * @param $providers
-     * @param OutputInterface $output
      */
-    protected function addProviders($providers, $output)
+    protected function addProviders($providers)
     {
         foreach ($providers as $provider) {
-            $output->writeln('<info>Adding '.$provider.' to Laravel config app.php file</info>');
+            $this->output->writeln('<info>Adding '.$provider.' to Laravel config app.php file</info>');
             $this->addProvider($provider);
         }
     }
@@ -482,12 +469,11 @@ abstract class LlumCommand extends Command
      * Add aliases to Laravel config file.
      *
      * @param $aliases
-     * @param OutputInterface $output
      */
-    protected function addAliases($aliases, $output)
+    protected function addAliases($aliases)
     {
         foreach ($aliases as $alias => $aliasClass) {
-            $output->writeln('<info>Adding '.$aliasClass.' to Laravel config app.php file</info>');
+            $this->output->writeln('<info>Adding '.$aliasClass.' to Laravel config app.php file</info>');
             $this->addAlias("'$alias' => ".$aliasClass);
         }
     }
@@ -495,15 +481,14 @@ abstract class LlumCommand extends Command
     /**
      * Installs laravel package form config/packages.php file.
      *
-     * @param OutputInterface $output
      * @param $name
      */
-    protected function package(OutputInterface $output, $name)
+    protected function package($name)
     {
         $package = $this->getPackageFromConfig($name);
 
         if ($package == null) {
-            $this->showPackageNotFoundError($output, $name);
+            $this->showPackageNotFoundError($name);
 
             return;
         }
@@ -511,15 +496,15 @@ abstract class LlumCommand extends Command
         list($name, $providers, $aliases, $after) = array_fill(0, 4, null);
         extract($package, EXTR_IF_EXISTS);
 
-        $this->requireComposerPackage($output, $name);
+        $this->requireComposerPackage($name);
 
-        if ($this->installConfigAppFile($output) == -1) {
+        if ($this->installConfigAppFile() == -1) {
             return;
         }
 
-        $this->addProviders($providers, $output);
+        $this->addProviders($providers);
 
-        $this->addAliases($aliases, $output);
+        $this->addAliases($aliases);
 
         if ($after != null) {
             passthru($after);
@@ -579,12 +564,11 @@ abstract class LlumCommand extends Command
     /**
      * Show package not found error.
      *
-     * @param OutputInterface $output
      * @param $name
      */
-    protected function showPackageNotFoundError(OutputInterface $output, $name)
+    protected function showPackageNotFoundError($name)
     {
-        $output->writeln('<error>Package '.$name.' not found in file '.$this->configPath.'packages.php</error>');
+        $this->output->writeln('<error>Package '.$name.' not found in file '.$this->configPath.'packages.php</error>');
 
         return;
     }
@@ -618,15 +602,16 @@ abstract class LlumCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->output = $output;
         $method = $this->method;
         if ($this->argument != null) {
             $argument = $input->getArgument($this->argument);
-            $this->$method($output, $argument);
+            $this->$method($argument);
 
             return;
         }
 
-        $this->$method($output);
+        $this->$method();
     }
 
     /**
