@@ -2,6 +2,7 @@
 
 namespace Acacha\Llum\Console;
 
+use Acacha\Llum\Exceptions\InvalidCommandException;
 use Illuminate\Config\Repository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -433,13 +434,21 @@ abstract class LlumCommand extends Command
      * Configure the command options.
      *
      * @param ConsoleCommand $command
+     * @throws \Acacha\Llum\Exceptions\InvalidCommandException
      */
     protected function configureCommand(ConsoleCommand $command)
     {
         $this->ignoreValidationErrors();
 
-        $this->setName($command->name())
-            ->setDescription($command->description());
+        $name = $command->name();
+        $description = $command->description();
+
+        if (!is_string($name) || !is_string($description) ) {
+            throw new InvalidCommandException;
+        }
+        
+        $this->setName($name)
+             ->setDescription($description);
         if ($command->argument() != null) {
             $this->addArgument($command->argument()[ 'name' ],
                 $command->argument()[ 'type' ],

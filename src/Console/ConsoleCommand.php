@@ -37,7 +37,7 @@ class ConsoleCommand
      *
      * @param null | string $name
      *
-     * @return ConsoleCommand | void
+     * @return ConsoleCommand | string
      */
     public function name($name = null)
     {
@@ -49,7 +49,7 @@ class ConsoleCommand
      *
      * @param null | string $description
      *
-     * @return ConsoleCommand | void
+     * @return ConsoleCommand | string
      */
     public function description($description = null)
     {
@@ -61,7 +61,7 @@ class ConsoleCommand
      *
      * @param array | null $argument
      *
-     * @return ConsoleCommand | void
+     * @return ConsoleCommand | string
      */
     public function argument($argument = null)
     {
