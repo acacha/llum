@@ -1,3 +1,20 @@
+filter:
+    paths:
+        - 'app/*'
+    excluded_paths:
+        - 'app/views/*'
+        - 'app/config/*'
+        - 'app/database/*'
+checks:
+    php: true
+coding_style:
+    php:
+        spaces:
+            around_operators:
+                concatenation: false
+            within:
+                brackets: true
+build: true
 tools:
     php_cs_fixer:
         fixers:
