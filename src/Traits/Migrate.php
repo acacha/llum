@@ -2,6 +2,12 @@
 
 namespace Acacha\Llum\Traits;
 
+use Symfony\Component\Console\Output\OutputInterface;
+
+/**
+ * Class Migrate.
+ * @property OutputInterface $output
+ */
 trait Migrate
 {
     /**

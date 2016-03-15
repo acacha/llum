@@ -103,27 +103,6 @@ abstract class LlumCommand extends Command
     }
 
     /**
-     * Check if port is in use.
-     *
-     * @param int    $port
-     * @param string $host
-     * @param int    $timeout
-     *
-     * @return bool
-     */
-    protected function check_port($port = 8000, $host = '127.0.0.1', $timeout = 3)
-    {
-        $fp = @fsockopen($host, $port, $errno, $errstr, $timeout);
-        if (! $fp) {
-            return true;
-        } else {
-            fclose($fp);
-
-            return false;
-        }
-    }
-
-    /**
      * Install /config/app.php file using bash script.
      */
     protected function installConfigAppFileWithBash()

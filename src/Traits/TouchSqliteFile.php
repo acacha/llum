@@ -1,12 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sergi
- * Date: 15/03/16
- * Time: 19:29.
- */
-namespace Acacha\Llum\Traits;
 
+namespace Acacha\Llum\Traits;
+use Symfony\Component\Console\Output\OutputInterface;
+
+/**
+ * Class TouchSqliteFile.
+ * @property OutputInterface $output
+ */
 trait TouchSqliteFile
 {
     /**

@@ -5,6 +5,10 @@ namespace Acacha\Llum\Traits;
 /**
  * Class DevTools.
  */
+/**
+ * Class DevTools
+ * @package Acacha\Llum\Traits
+ */
 trait DevTools
 {
     /**
@@ -38,4 +42,12 @@ trait DevTools
     {
         return $this->package('barryvdh/laravel-debugbar');
     }
+
+    /**
+     * Installs laravel package form config/packages.php file.
+     * @see Acacha\Llum\Console\LlumCommand::package
+     * @param $package
+     * @return mixed
+     */
+    abstract protected function package($package);
 }

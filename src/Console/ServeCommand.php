@@ -1,6 +1,7 @@
 <?php
 
 namespace Acacha\Llum\Console;
+
 use Acacha\Llum\Traits\Serve;
 
 /**
