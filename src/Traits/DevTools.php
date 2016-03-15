@@ -5,9 +5,6 @@ namespace Acacha\Llum\Traits;
 /**
  * Class DevTools.
  */
-/**
- * Class DevTools.
- */
 trait DevTools
 {
     /**
