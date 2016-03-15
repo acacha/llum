@@ -2,38 +2,43 @@
 
 namespace Acacha\Llum\Console;
 
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-
 /**
  * Class ProviderCommand.
  */
 class ProviderCommand extends LlumCommand
 {
     /**
-     * Configure the command options.
+     * Command name.
+     *
+     * @var string
      */
-    protected function configure()
-    {
-        $this->ignoreValidationErrors();
-
-        $this->setName('provider')
-                ->setDescription('Adds a provider to Laravel config/app.php file')
-                ->addArgument('provider', InputArgument::REQUIRED, 'the provider to install');
-    }
+    protected $commandName = 'provider';
 
     /**
-     * Execute the command.
+     * Command description.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int|null|void
+     * @var string
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $provider = $input->getArgument('provider');
-        $this->provider($output, $provider);
-    }
+    protected $commandDescription = 'Adds a provider to Laravel config/app.php file';
+
+    /**
+     * Command argument description.
+     *
+     * @var string
+     */
+    protected $argumentDescription = 'the provider to install';
+
+    /**
+     * Command argument.
+     *
+     * @var string
+     */
+    protected $argument = 'provider';
+
+    /**
+     * Method to execute.
+     *
+     * @var string
+     */
+    protected $method = 'provider';
 }

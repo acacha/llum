@@ -4,6 +4,7 @@ namespace Acacha\Llum\Console;
 
 use Illuminate\Config\Repository;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
@@ -13,6 +14,41 @@ use Symfony\Component\Process\Process;
  */
 abstract class LlumCommand extends Command
 {
+    /**
+     * Command name.
+     *
+     * @var string
+     */
+    protected $commandName;
+
+    /**
+     * Command description.
+     *
+     * @var string
+     */
+    protected $commandDescription;
+
+    /**
+     * Command argument description.
+     *
+     * @var string
+     */
+    protected $argumentDescription;
+
+    /**
+     * Command argument.
+     *
+     * @var string
+     */
+    protected $argument;
+
+    /**
+     * Method to execute.
+     *
+     * @var string
+     */
+    protected $method;
+
     /**
      * Laravel config file (config/app.php).
      *
@@ -35,6 +71,13 @@ abstract class LlumCommand extends Command
     protected $noBash = false;
 
     /**
+     * Config repository.
+     *
+     * @var Repository
+     */
+    protected $config;
+
+    /**
      * LlumCommand constructor.
      */
     public function __construct()
@@ -42,6 +85,7 @@ abstract class LlumCommand extends Command
         parent::__construct();
         $this->configPath = __DIR__.'/../config/';
         $this->laravel_config_file = getcwd().'/config/app.php';
+        $this->config = $this->obtainConfig();
     }
 
     /**
@@ -140,6 +184,11 @@ abstract class LlumCommand extends Command
         copy(__DIR__.'/stubs/app.php', $this->laravel_config_file);
     }
 
+    /**
+     * Check if Laravel config file exists.
+     *
+     * @return bool
+     */
     protected function checkIfLaravelConfigFileExists()
     {
         return file_exists($this->laravel_config_file);
@@ -149,27 +198,31 @@ abstract class LlumCommand extends Command
      * Install llum custom config/app.php file.
      *
      * @param OutputInterface $output
+     *
+     * @return int
      */
     protected function installConfigAppFile(OutputInterface $output)
     {
         if (!$this->checkIfLaravelConfigFileExists()) {
             $output->writeln('<error>File '.$this->laravel_config_file.' doesn\'t exists');
 
-            return;
+            return -1;
         }
 
         if ($this->configAppFileAlreadyInstalled()) {
             $output->writeln('<info>File '.$this->laravel_config_file.' already supports llum.</info>');
 
-            return;
+            return 0;
         }
 
         if ($this->isNoBashActive()) {
             $this->installConfigAppFileWithStubs();
+            $output->writeln('<info>File '.$this->laravel_config_file.' overwrited correctly with and stub.</info>');
         } else {
             $this->installConfigAppFileWithBash();
         }
-        $output->writeln('<info>File '.$this->laravel_config_file.' overwrited correctly with and stub.</info>');
+
+        return 0;
     }
 
     /**
@@ -220,7 +273,7 @@ abstract class LlumCommand extends Command
     /**
      * Add Laravel IDE Helper provider to config/app.php file.
      *
-     * @return integer|null
+     * @return int|null
      */
     protected function addLaravelIdeHelperProvider()
     {
@@ -232,7 +285,7 @@ abstract class LlumCommand extends Command
      *
      * @param $provider
      *
-     * @return integer|null
+     * @return int|null
      */
     private function addProvider($provider)
     {
@@ -244,7 +297,7 @@ abstract class LlumCommand extends Command
      *
      * @param string $alias
      *
-     * @return integer|null
+     * @return int|null
      */
     private function addAlias($alias)
     {
@@ -257,7 +310,7 @@ abstract class LlumCommand extends Command
      * @param string $mountpoint
      * @param $textToAdd
      *
-     * @return integer|null
+     * @return int|null
      */
     private function addTextIntoMountPoint($mountpoint, $textToAdd)
     {
@@ -327,7 +380,9 @@ abstract class LlumCommand extends Command
      */
     protected function provider(OutputInterface $output, $provider)
     {
-        $this->installConfigAppFile($output);
+        if ($this->installConfigAppFile($output) == -1) {
+            return;
+        }
         $this->addProvider($provider);
     }
 
@@ -340,7 +395,9 @@ abstract class LlumCommand extends Command
      */
     protected function alias(OutputInterface $output, $aliasName, $aliasClass)
     {
-        $this->installConfigAppFile($output);
+        if ($this->installConfigAppFile($output) == -1) {
+            return;
+        }
         $this->addAlias("'".$aliasName."' => ".$aliasClass);
     }
 
@@ -351,8 +408,7 @@ abstract class LlumCommand extends Command
      */
     protected function packageList(OutputInterface $output)
     {
-        $config = $this->obtainConfig();
-        $packages = $config->all();
+        $packages = $this->config->all();
         foreach ($packages as $name => $package) {
             $output->writeln('<info>'.$name.'</info> | '.$this->parsePackageInfo($package));
         }
@@ -371,6 +427,51 @@ abstract class LlumCommand extends Command
     }
 
     /**
+     * get package from config.
+     *
+     * @param $name
+     *
+     * @return array
+     */
+    private function getPackageFromConfig($name)
+    {
+        //Check if package name is a composer package name
+        if (str_contains($name, '/')) {
+            return $this->config->get($this->getPackageNameByComposerName($name));
+        }
+
+        return $this->config->get($name);
+    }
+
+    /**
+     * Add providers to Laravel config file.
+     *
+     * @param $providers
+     * @param OutputInterface $output
+     */
+    protected function addProviders($providers, $output)
+    {
+        foreach ($providers as $provider) {
+            $output->writeln('<info>Adding '.$provider.' to Laravel config app.php file</info>');
+            $this->addProvider($provider);
+        }
+    }
+
+    /**
+     * Add aliases to Laravel config file.
+     *
+     * @param $aliases
+     * @param OutputInterface $output
+     */
+    protected function addAliases($aliases, $output)
+    {
+        foreach ($aliases as $alias => $aliasClass) {
+            $output->writeln('<info>Adding '.$aliasClass.' to Laravel config app.php file</info>');
+            $this->addAlias("'$alias' => ".$aliasClass);
+        }
+    }
+
+    /**
      * Installs laravel package form config/packages.php file.
      *
      * @param OutputInterface $output
@@ -378,44 +479,26 @@ abstract class LlumCommand extends Command
      */
     protected function package(OutputInterface $output, $name)
     {
-        $config = $this->obtainConfig();
-
-        //Check if package name is a composer package name
-        if (str_contains($name, '/')) {
-            $name = $this->getPackageNameByComposerName($name);
-        }
-
-        if ($name == null) {
-            $this->showPackageNotFoundError($output, $name);
-        }
-
-        $package = $config->get($name);
+        $package = $this->getPackageFromConfig($name);
 
         if ($package == null) {
             $this->showPackageNotFoundError($output, $name);
+
+            return;
         }
 
-        $composerPackageName = $config->get($name.'.name');
-        $providers = $config->get($name.'.providers');
-        $aliases = $config->get($name.'.aliases');
-        $after = null;
-        if ($config->has($name.'.after')) {
-            $after = $config->get($name.'.after');
+        list($name, $providers, $aliases, $after) = array_fill(0, 4, null);
+        extract($package, EXTR_IF_EXISTS);
+
+        $this->requireComposerPackage($output, $name);
+
+        if ($this->installConfigAppFile($output) == -1) {
+            return;
         }
 
-        $this->requireComposerPackage($output, $composerPackageName);
+        $this->addProviders($providers, $output);
 
-        $this->installConfigAppFile($output);
-
-        foreach ($providers as $provider) {
-            $output->writeln('<info>Adding '.$provider.' to Laravel config app.php file</info>');
-            $this->addProvider($provider);
-        }
-
-        foreach ($aliases as $alias => $aliasClass) {
-            $output->writeln('<info>Adding '.$alias.' to Laravel config app.php file</info>');
-            $this->addAlias("'".$alias."' => ".$aliasClass);
-        }
+        $this->addAliases($aliases, $output);
 
         if ($after != null) {
             passthru($after);
@@ -429,9 +512,7 @@ abstract class LlumCommand extends Command
      */
     protected function obtainConfig()
     {
-        $config = new Repository(require $this->configPath.'packages.php');
-
-        return $config;
+        return new Repository(require $this->configPath.'packages.php');
     }
 
     /**
@@ -465,8 +546,7 @@ abstract class LlumCommand extends Command
      */
     private function getPackageNameByComposerName($composerPackageName)
     {
-        $config = $this->obtainConfig();
-        foreach ($config->all() as $key => $configItem) {
+        foreach ($this->config->all() as $key => $configItem) {
             if ($configItem['name'] == $composerPackageName) {
                 return $key;
             }
@@ -488,4 +568,52 @@ abstract class LlumCommand extends Command
         return;
     }
 
+    /**
+     * Configure the command options.
+     *
+     * @param ConsoleCommand $command
+     */
+    protected function configureCommand(ConsoleCommand $command)
+    {
+        $this->ignoreValidationErrors();
+
+        $this->setName($command->name())
+            ->setDescription($command->description())
+            ->addArgument($command->argument()['name'],
+                $command->argument()['type'],
+                $command->argument()['description']
+            );
+    }
+
+    /**
+     * Execute the command.
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
+     * @return int|null|void
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $argument = $input->getArgument($this->argument);
+        $method = $this->method;
+        $this->$method($output, $argument);
+    }
+
+    /**
+     * Configure the command options.
+     */
+    protected function configure()
+    {
+        $command = (new ConsoleCommand())
+            ->name($this->commandName)
+            ->description($this->commandDescription)
+            ->argument([
+                'name' => $this->argument,
+                'description' => $this->argumentDescription,
+                'type' => InputArgument::REQUIRED,
+            ]);
+
+        $this->configureCommand($command);
+    }
 }
