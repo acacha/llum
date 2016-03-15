@@ -357,7 +357,7 @@ abstract class LlumCommand extends Command
      *
      * @param string $str
      *
-     * @return mixed
+     * @return string
      */
     private function scapeSingleQuotes($str)
     {
@@ -499,7 +499,7 @@ abstract class LlumCommand extends Command
     /**
      * Installs laravel package form config/packages.php file.
      *
-     * @param $name
+     * @param string $name
      */
     protected function package($name)
     {
