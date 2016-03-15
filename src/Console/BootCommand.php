@@ -2,9 +2,6 @@
 
 namespace Acacha\Llum\Console;
 
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-
 /**
  * Class BootCommand.
  */
@@ -30,5 +27,4 @@ class BootCommand extends LlumCommand
      * @var string
      */
     protected $method = 'boot';
-
 }

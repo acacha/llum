@@ -2,11 +2,15 @@
 
 namespace Acacha\Llum\Console;
 
+use Acacha\Llum\Traits\GetSetable;
+
 /**
  * Class ConsoleCommand.
  */
 class ConsoleCommand
 {
+    use GetSetable;
+
     /**
      * Command name.
      *
@@ -15,7 +19,7 @@ class ConsoleCommand
     protected $name;
 
     /**
-     * Command name.
+     * Command description.
      *
      * @var string
      */
@@ -31,54 +35,36 @@ class ConsoleCommand
     /**
      * Set/get name.
      *
-     * @param null $name
+     * @param null | string $name
      *
-     * @return mixed
+     * @return ConsoleCommand | void
      */
     public function name($name = null)
     {
-        if ($name == null) {
-            return $this->name;
-        }
-
-        $this->name = $name;
-
-        return $this;
+        return $this->getterSetter('name', $name);
     }
 
     /**
      * Set/get description.
      *
-     * @param null $description
+     * @param null | string $description
      *
-     * @return mixed
+     * @return ConsoleCommand | void
      */
     public function description($description = null)
     {
-        if ($description == null) {
-            return $this->description;
-        }
-
-        $this->description = $description;
-
-        return $this;
+        return $this->getterSetter('description', $description);
     }
 
     /**
      * Set/get argument.
      *
-     * @param null $argument
+     * @param array | null $argument
      *
-     * @return mixed
+     * @return ConsoleCommand | void
      */
     public function argument($argument = null)
     {
-        if ($argument == null) {
-            return $this->argument;
-        }
-
-        $this->argument = $argument;
-
-        return $this;
+        return $this->getterSetter('argument', $argument);
     }
 }
