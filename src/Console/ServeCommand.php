@@ -1,12 +1,15 @@
 <?php
 
 namespace Acacha\Llum\Console;
+use Acacha\Llum\Traits\Serve;
 
 /**
  * Class ServeCommand.
  */
 class ServeCommand extends LlumCommand
 {
+    use Serve;
+
     /**
      * Command name.
      *

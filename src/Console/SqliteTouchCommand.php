@@ -2,11 +2,15 @@
 
 namespace Acacha\Llum\Console;
 
+use Acacha\Llum\Traits\TouchSqliteFile;
+
 /**
  * Class SqliteTouchCommand.
  */
 class SqliteTouchCommand extends LlumCommand
 {
+    use TouchSqliteFile;
+
     /**
      * Command name.
      *

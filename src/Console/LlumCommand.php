@@ -103,79 +103,6 @@ abstract class LlumCommand extends Command
     }
 
     /**
-     * Touch sqlite database file.
-     *
-     * @param string $file
-     */
-    protected function touchSqliteFile($file = 'database/database.sqlite')
-    {
-        $this->touchFile($file);
-    }
-
-    /**
-     * Touch a file.
-     * @param string $file
-     */
-    protected function touchFile($file)
-    {
-        passthru('touch '.$file, $error);
-        if ($error !== 0) {
-            $this->output->writeln('<error>Error creating file '.$file.'</error>');
-        } else {
-            $this->output->writeln('<info>File '.$file.' created successfully</info>');
-        }
-    }
-
-    /**
-     * Config .env file.
-     */
-    protected function configEnv()
-    {
-        passthru('sed -i \'s/^DB_/#DB_/g\' .env ', $error);
-        if ($error !== 0) {
-            $this->output->writeln('<error>Error commenting DB_ entries in .env file </error>');
-        }
-        passthru('sed -i \'s/.*DB_HOST.*/DB_CONNECTION=sqlite\n&/\' .env', $error);
-        if ($error !== 0) {
-            $this->output->writeln('<error>Error adding DB_CONNECTION=sqlite to .env file </error>');
-        } else {
-            $this->output->writeln('.env file updated successfully');
-        }
-    }
-
-    /**
-     * sqlite command.
-     */
-    public function sqlite()
-    {
-        $this->touchSqliteFile();
-        $this->configEnv();
-    }
-
-    /**
-     * Serve command.
-     *
-     * @param int $port
-     */
-    protected function serve($port = 8000)
-    {
-        $continue = true;
-        do {
-            if ($this->check_port($port)) {
-                $this->output->writeln('<info>Running php artisan serve --port='.$port.'</info>');
-                exec('php artisan serve --port='.$port.' > /dev/null 2>&1 &');
-                sleep(1);
-                if (file_exists('/usr/bin/sensible-browser')) {
-                    $this->output->writeln('<info>Opening http://localhost:'.$port.' with default browser</info>');
-                    passthru('/usr/bin/sensible-browser http://localhost:'.$port);
-                }
-                $continue = false;
-            }
-            ++$port;
-        } while ($continue);
-    }
-
-    /**
      * Check if port is in use.
      *
      * @param int    $port
@@ -358,15 +285,6 @@ abstract class LlumCommand extends Command
     }
 
     /**
-     * Migrate database with php artisan migrate.
-     */
-    protected function migrate()
-    {
-        $this->output->writeln('<info>Running php artisan migrate...</info>');
-        passthru('php artisan migrate');
-    }
-
-    /**
      * Installs provider in laravel config/app.php file.
      *
      * @param $provider
@@ -391,29 +309,6 @@ abstract class LlumCommand extends Command
             return;
         }
         $this->addAlias("'".$aliasName."' => ".$aliasClass);
-    }
-
-    /**
-     * Shows list of supported packages.
-     */
-    protected function packageList()
-    {
-        $packages = $this->config->all();
-        foreach ($packages as $name => $package) {
-            $this->output->writeln('<info>'.$name.'</info> | '.$this->parsePackageInfo($package));
-        }
-    }
-
-    /**
-     * Parse package info.
-     *
-     * @param $package
-     *
-     * @return string
-     */
-    private function parsePackageInfo($package)
-    {
-        return 'Composer name: '.$package[ 'name' ];
     }
 
     /**

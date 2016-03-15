@@ -3,13 +3,18 @@
 namespace Acacha\Llum\Console;
 
 use Acacha\Llum\Traits\DevTools;
+use Acacha\Llum\Traits\Migrate;
+use Acacha\Llum\Traits\Serve;
+use Acacha\Llum\Traits\SqliteEnv;
+use Acacha\Llum\Traits\TouchSqliteFile;
 
 /**
  * Class BootCommand.
  */
 class BootCommand extends LlumCommand
 {
-    use DevTools;
+    use DevTools,TouchSqliteFile,SqliteEnv,Migrate,Serve;
+
     /**
      * Command name.
      *
@@ -40,7 +45,7 @@ class BootCommand extends LlumCommand
             return;
         }
         $this->touchSqliteFile();
-        $this->configEnv();
+        $this->sqliteEnv();
         $this->migrate();
         $this->serve();
     }

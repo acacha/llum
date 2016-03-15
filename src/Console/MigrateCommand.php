@@ -2,11 +2,15 @@
 
 namespace Acacha\Llum\Console;
 
+use Acacha\Llum\Traits\Migrate;
+
 /**
  * Class MigrateCommand.
  */
 class MigrateCommand extends LlumCommand
 {
+    use Migrate;
+
     /**
      * Command name.
      *

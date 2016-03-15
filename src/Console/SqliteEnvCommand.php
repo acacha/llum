@@ -2,11 +2,15 @@
 
 namespace Acacha\Llum\Console;
 
+use Acacha\Llum\Traits\SqliteEnv;
+
 /**
  * Class SqliteEnvCommand.
  */
 class SqliteEnvCommand extends LlumCommand
 {
+    use SqliteEnv;
+
     /**
      * Command name.
      *
@@ -26,5 +30,5 @@ class SqliteEnvCommand extends LlumCommand
      *
      * @var string
      */
-    protected $method = 'configEnv';
+    protected $method = 'sqliteEnv';
 }

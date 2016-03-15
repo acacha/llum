@@ -2,11 +2,15 @@
 
 namespace Acacha\Llum\Console;
 
+use Acacha\Llum\Traits\TouchSqliteFile;
+
 /**
  * Class SqliteCommand.
  */
 class SqliteCommand extends LlumCommand
 {
+    use TouchSqliteFile;
+
     /**
      * Command name.
      *
@@ -27,4 +31,13 @@ class SqliteCommand extends LlumCommand
      * @var string
      */
     protected $method = 'sqlite';
+
+    /**
+     * sqlite command.
+     */
+    public function sqlite()
+    {
+        $this->touchSqliteFile();
+        $this->configEnv();
+    }
 }

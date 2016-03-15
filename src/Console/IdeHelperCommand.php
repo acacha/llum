@@ -1,12 +1,15 @@
 <?php
 
 namespace Acacha\Llum\Console;
+use Acacha\Llum\Traits\DevTools;
 
 /**
  * Class IdeHelperCommand.
  */
 class IdeHelperCommand extends LlumCommand
 {
+    use DevTools;
+
     /**
      * Command name.
      *

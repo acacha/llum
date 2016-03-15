@@ -27,4 +27,27 @@ class PackageListCommand extends LlumCommand
      * @var string
      */
     protected $method = 'packageList';
+
+    /**
+     * Shows list of supported packages.
+     */
+    protected function packageList()
+    {
+        $packages = $this->config->all();
+        foreach ($packages as $name => $package) {
+            $this->output->writeln('<info>'.$name.'</info> | '.$this->parsePackageInfo($package));
+        }
+    }
+
+    /**
+     * Parse package info.
+     *
+     * @param $package
+     *
+     * @return string
+     */
+    private function parsePackageInfo($package)
+    {
+        return 'Composer name: '.$package[ 'name' ];
+    }
 }
