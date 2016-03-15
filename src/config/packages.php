@@ -27,7 +27,6 @@ return [
     'LaravelIdeHelper' => [
         'name' => 'barryvdh/laravel-ide-helper',
         'providers' => ['Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class'],
-        'aliases' => [''],
         'after' => 'php artisan ide-helper:generate',
     ],
 
