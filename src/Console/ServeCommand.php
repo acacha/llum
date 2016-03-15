@@ -2,35 +2,29 @@
 
 namespace Acacha\Llum\Console;
 
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-
 /**
  * Class ServeCommand.
  */
 class ServeCommand extends LlumCommand
 {
     /**
-     * Configure the command options.
+     * Command name.
+     *
+     * @var string
      */
-    protected function configure()
-    {
-        $this->ignoreValidationErrors();
-
-        $this->setName('serve')
-                ->setDescription('artisan serve with some improvements');
-    }
+    protected $commandName = 'serve';
 
     /**
-     * Execute the command.
+     * Command description.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int|null|void
+     * @var string
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $this->serve($output);
-    }
+    protected $commandDescription = 'artisan serve with some improvements';
+
+    /**
+     * Method to execute.
+     *
+     * @var string
+     */
+    protected $method = 'serve';
 }

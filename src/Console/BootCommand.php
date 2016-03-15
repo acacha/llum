@@ -11,30 +11,24 @@ use Symfony\Component\Console\Output\OutputInterface;
 class BootCommand extends LlumCommand
 {
     /**
-     * Configure the command options.
+     * Command name.
+     *
+     * @var string
      */
-    protected function configure()
-    {
-        $this->ignoreValidationErrors();
-
-        $this->setName('boot')
-                ->setDescription('Execute all common first tasks in laravel project');
-    }
+    protected $commandName = 'boot';
 
     /**
-     * Execute the command.
+     * Command description.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int|null|void
+     * @var string
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $this->devtools($output);
-        $this->touchSqliteFile($output);
-        $this->configEnv($output);
-        $this->migrate($output);
-        $this->serve($output);
-    }
+    protected $commandDescription = 'Execute all common first tasks in laravel project';
+
+    /**
+     * Method to execute.
+     *
+     * @var string
+     */
+    protected $method = 'boot';
+
 }

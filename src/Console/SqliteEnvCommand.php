@@ -2,32 +2,29 @@
 
 namespace Acacha\Llum\Console;
 
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-
-class SqliteEnvCommand extends SqliteCommand
+/**
+ * Class SqliteEnvCommand.
+ */
+class SqliteEnvCommand extends LlumCommand
 {
     /**
-     * Configure the command options.
+     * Command name.
+     *
+     * @var string
      */
-    protected function configure()
-    {
-        $this->ignoreValidationErrors();
-
-        $this->setName('sqlite:env')
-             ->setDescription('Config .env to use sqlite');
-    }
+    protected $commandName = 'sqlite:env';
 
     /**
-     * Execute the command.
+     * Command description.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int|null|void
+     * @var string
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $this->configEnv($output);
-    }
+    protected $commandDescription = 'Config .env to use sqlite';
+
+    /**
+     * Method to execute.
+     *
+     * @var string
+     */
+    protected $method = 'configEnv';
 }

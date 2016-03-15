@@ -11,15 +11,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 class SqliteCommand extends LlumCommand
 {
     /**
-     * Configure the command options.
+     * Command name.
+     *
+     * @var string
      */
-    protected function configure()
-    {
-        $this->ignoreValidationErrors();
+    protected $commandName = 'sqlite';
 
-        $this->setName('sqlite')
-                ->setDescription('Touch sqlite file and enable sqlite on .env');
-    }
+    /**
+     * Command description.
+     *
+     * @var string
+     */
+    protected $commandDescription = 'Touch sqlite file and enable sqlite on .env';
 
     /**
      * Execute the command.

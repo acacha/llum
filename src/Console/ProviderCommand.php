@@ -22,18 +22,18 @@ class ProviderCommand extends LlumCommand
     protected $commandDescription = 'Adds a provider to Laravel config/app.php file';
 
     /**
-     * Command argument description.
-     *
-     * @var string
-     */
-    protected $argumentDescription = 'the provider to install';
-
-    /**
      * Command argument.
      *
      * @var string
      */
     protected $argument = 'provider';
+
+    /**
+     * Command argument description.
+     *
+     * @var string
+     */
+    protected $argumentDescription = 'the provider to install';
 
     /**
      * Method to execute.

@@ -2,35 +2,29 @@
 
 namespace Acacha\Llum\Console;
 
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-
 /**
  * Class DebugBarCommand.
  */
 class DebugBarCommand extends LlumCommand
 {
     /**
-     * Configure the command options.
+     * Command name.
+     *
+     * @var string
      */
-    protected function configure()
-    {
-        $this->ignoreValidationErrors();
-
-        $this->setName('debugbar')
-                ->setDescription('Install Laravel Debugbar package');
-    }
+    protected $commandName = 'debugbar';
 
     /**
-     * Execute the command.
+     * Command description.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int|null|void
+     * @var string
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $this->debugbar($output);
-    }
+    protected $commandDescription = 'Install Laravel Debugbar package';
+
+    /**
+     * Method to execute.
+     *
+     * @var string
+     */
+    protected $method = 'debugbar';
 }

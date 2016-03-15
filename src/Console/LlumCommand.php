@@ -29,18 +29,25 @@ abstract class LlumCommand extends Command
     protected $commandDescription;
 
     /**
-     * Command argument description.
-     *
-     * @var string
-     */
-    protected $argumentDescription;
-
-    /**
      * Command argument.
      *
      * @var string
      */
     protected $argument;
+
+    /**
+     * Argument type.
+     *
+     * @var int
+     */
+    protected $argumentType = InputArgument::REQUIRED;
+
+    /**
+     * Command argument description.
+     *
+     * @var string
+     */
+    protected $argumentDescription;
 
     /**
      * Method to execute.
@@ -76,6 +83,20 @@ abstract class LlumCommand extends Command
      * @var Repository
      */
     protected $config;
+
+    /**
+     * Executes boot command.
+     *
+     * @param OutputInterface $output
+     */
+    protected function boot(OutputInterface $output)
+    {
+        $this->devtools($output);
+        $this->touchSqliteFile($output);
+        $this->configEnv($output);
+        $this->migrate($output);
+        $this->serve($output);
+    }
 
     /**
      * LlumCommand constructor.
@@ -578,11 +599,13 @@ abstract class LlumCommand extends Command
         $this->ignoreValidationErrors();
 
         $this->setName($command->name())
-            ->setDescription($command->description())
-            ->addArgument($command->argument()['name'],
+            ->setDescription($command->description());
+        if ($command->argument() != null) {
+            $this->addArgument($command->argument()['name'],
                 $command->argument()['type'],
                 $command->argument()['description']
             );
+        }
     }
 
     /**
@@ -595,9 +618,15 @@ abstract class LlumCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $argument = $input->getArgument($this->argument);
         $method = $this->method;
-        $this->$method($output, $argument);
+        if ($this->argument != null) {
+            $argument = $input->getArgument($this->argument);
+            $this->$method($output, $argument);
+
+            return;
+        }
+
+        $this->$method($output);
     }
 
     /**
@@ -605,15 +634,18 @@ abstract class LlumCommand extends Command
      */
     protected function configure()
     {
-        $command = (new ConsoleCommand())
-            ->name($this->commandName)
-            ->description($this->commandDescription)
-            ->argument([
+        $command = new ConsoleCommand();
+
+        $command->name($this->commandName)
+                ->description($this->commandDescription);
+
+        if ($this->argument != null) {
+            $command->argument([
                 'name' => $this->argument,
                 'description' => $this->argumentDescription,
-                'type' => InputArgument::REQUIRED,
+                'type' => $this->argumentType,
             ]);
-
+        }
         $this->configureCommand($command);
     }
 }

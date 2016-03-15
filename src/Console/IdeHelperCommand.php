@@ -2,35 +2,29 @@
 
 namespace Acacha\Llum\Console;
 
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-
 /**
  * Class IdeHelperCommand.
  */
 class IdeHelperCommand extends LlumCommand
 {
     /**
-     * Configure the command options.
+     * Command name.
+     *
+     * @var string
      */
-    protected function configure()
-    {
-        $this->ignoreValidationErrors();
-
-        $this->setName('idehelper')
-                ->setDescription('Install Laravel Ide Helper package');
-    }
+    protected $commandName = 'idehelper';
 
     /**
-     * Execute the command.
+     * Command description.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int|null|void
+     * @var string
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $this->idehelper($output);
-    }
+    protected $commandDescription = 'Install Laravel Ide Helper package';
+
+    /**
+     * Method to execute.
+     *
+     * @var string
+     */
+    protected $method = 'idehelper';
 }

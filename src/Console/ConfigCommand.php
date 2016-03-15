@@ -2,35 +2,29 @@
 
 namespace Acacha\Llum\Console;
 
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-
 /**
  * Class ConfigCommand.
  */
 class ConfigCommand extends LlumCommand
 {
     /**
-     * Configure the command options.
+     * Command name.
+     *
+     * @var string
      */
-    protected function configure()
-    {
-        $this->ignoreValidationErrors();
-
-        $this->setName('config')
-                ->setDescription('Install a config/app.php stub file ready to be used with acacha llum');
-    }
+    protected $commandName = 'config';
 
     /**
-     * Execute the command.
+     * Command description.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int|null|void
+     * @var string
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $this->installConfigAppFile($output);
-    }
+    protected $commandDescription = 'Install a config/app.php stub file ready to be used with acacha llum';
+
+    /**
+     * Method to execute.
+     *
+     * @var string
+     */
+    protected $method = 'installConfigAppFile';
 }
