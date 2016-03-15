@@ -92,18 +92,6 @@ abstract class LlumCommand extends Command
     protected $config;
 
     /**
-     * Executes boot command.
-     */
-    protected function boot()
-    {
-        $this->devtools();
-        $this->touchSqliteFile();
-        $this->configEnv();
-        $this->migrate();
-        $this->serve();
-    }
-
-    /**
      * LlumCommand constructor.
      */
     public function __construct()
@@ -275,31 +263,6 @@ abstract class LlumCommand extends Command
         }
 
         return false;
-    }
-
-    /**
-     *  Install Laravel ide helper package.
-     */
-    protected function idehelper()
-    {
-        $this->package('barryvdh/laravel-ide-helper');
-    }
-
-    /**
-     * Install Laravel debugbar package.
-     */
-    protected function debugbar()
-    {
-        $this->package('barryvdh/laravel-debugbar');
-    }
-
-    /**
-     * Execute devtools command.
-     */
-    protected function devtools()
-    {
-        $this->idehelper();
-        $this->debugbar();
     }
 
     /**

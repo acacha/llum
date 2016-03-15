@@ -2,11 +2,14 @@
 
 namespace Acacha\Llum\Console;
 
+use Acacha\Llum\Traits\DevTools;
+
 /**
  * Class BootCommand.
  */
 class BootCommand extends LlumCommand
 {
+    use DevTools;
     /**
      * Command name.
      *
@@ -27,4 +30,16 @@ class BootCommand extends LlumCommand
      * @var string
      */
     protected $method = 'boot';
+
+    /**
+     * Executes boot command.
+     */
+    protected function boot()
+    {
+        $this->devtools();
+        $this->touchSqliteFile();
+        $this->configEnv();
+        $this->migrate();
+        $this->serve();
+    }
 }

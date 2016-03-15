@@ -2,11 +2,15 @@
 
 namespace Acacha\Llum\Console;
 
+use Acacha\Llum\Traits\DevTools;
+
 /**
  * Class DevToolsCommand.
  */
 class DevToolsCommand extends LlumCommand
 {
+    use DevTools;
+
     /**
      * Command name.
      *
