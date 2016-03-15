@@ -7,11 +7,10 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
- * Class ProviderCommandTest
+ * Class ProviderCommandTest.
  */
 class ProviderCommandTest extends \PHPUnit_Framework_TestCase
 {
-
     protected function setUp()
     {
         passthru('mkdir config');
@@ -24,7 +23,7 @@ class ProviderCommandTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * test DevToolsCommand
+     * test DevToolsCommand.
      */
     public function testExecute()
     {
@@ -33,9 +32,9 @@ class ProviderCommandTest extends \PHPUnit_Framework_TestCase
 
         $command = $application->find('provider');
         $commandTester = new CommandTester($command);
-        $commandTester->execute(array(
+        $commandTester->execute([
             'command' => $command->getName(),
-            'provider'=> 'Acacha\AdminLTETemplateLaravel\app\Providers\AdminLTETemplateServiceProvider::class'));
+            'provider' => 'Acacha\AdminLTETemplateLaravel\app\Providers\AdminLTETemplateServiceProvider::class', ]);
 
         $this->assertFileExists('config/app.php');
         $this->assertTrue(
@@ -47,14 +46,15 @@ class ProviderCommandTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(
             $this->laravelConfigFileHasContent('Acacha\AdminLTETemplateLaravel\app\Providers\AdminLTETemplateServiceProvider::class')
         );
-
     }
 
-    private function laravelConfigFileHasContent($content) {
-        return $this->fileHasContent('/config/app.php',$content);
+    private function laravelConfigFileHasContent($content)
+    {
+        return $this->fileHasContent('/config/app.php', $content);
     }
 
-    private function fileHasContent($file,$content) {
+    private function fileHasContent($file, $content)
+    {
         return strpos(file_get_contents(getcwd().$file), $content) != false;
     }
 }

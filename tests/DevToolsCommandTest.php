@@ -7,11 +7,10 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
- * Class DevToolsCommandTest
+ * Class DevToolsCommandTest.
  */
 class DevToolsCommandTest extends LlumCommandTest
 {
-
     protected function setUp()
     {
         passthru('mkdir config');
@@ -26,7 +25,7 @@ class DevToolsCommandTest extends LlumCommandTest
     }
 
     /**
-     * test DevToolsCommand
+     * test DevToolsCommand.
      */
     public function testExecute()
     {
@@ -35,14 +34,14 @@ class DevToolsCommandTest extends LlumCommandTest
 
         $command = $application->find('devtools');
         $commandTester = new CommandTester($command);
-        $commandTester->execute(array('command' => $command->getName()));
+        $commandTester->execute(['command' => $command->getName()]);
 
         $this->assertTrue(
-            $this->fileHasContent('/composer.json','barryvdh/laravel-ide-helper')
+            $this->fileHasContent('/composer.json', 'barryvdh/laravel-ide-helper')
         );
 
         $this->assertTrue(
-            $this->fileHasContent('/composer.json','barryvdh/laravel-debugbar')
+            $this->fileHasContent('/composer.json', 'barryvdh/laravel-debugbar')
         );
 
         $this->assertFileExists('vendor/barryvdh/laravel-debugbar');
@@ -66,7 +65,5 @@ class DevToolsCommandTest extends LlumCommandTest
         $this->assertTrue(
             $this->laravelConfigFileHasContent("'Debugbar' => Barryvdh\Debugbar\Facade::class")
         );
-
     }
-
 }

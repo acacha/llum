@@ -3,11 +3,10 @@
 namespace Acacha\Llum\Tests;
 
 /**
- * Class ConfigCommandTest
+ * Class ConfigCommandTest.
  */
 abstract class LlumCommandTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * Check file config/app.php has content.
      *
@@ -28,6 +27,6 @@ abstract class LlumCommandTest extends \PHPUnit_Framework_TestCase
      */
     protected function fileHasContent($file, $content)
     {
-        return strpos(file_get_contents(getcwd() . $file), $content) != false;
+        return strpos(file_get_contents(getcwd().$file), $content) != false;
     }
 }

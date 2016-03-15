@@ -180,7 +180,7 @@ abstract class LlumCommand extends Command
     protected function check_port($port = 8000, $host = '127.0.0.1', $timeout = 3)
     {
         $fp = @fsockopen($host, $port, $errno, $errstr, $timeout);
-        if (!$fp) {
+        if (! $fp) {
             return true;
         } else {
             fclose($fp);
@@ -224,7 +224,7 @@ abstract class LlumCommand extends Command
      */
     protected function installConfigAppFile(OutputInterface $output)
     {
-        if (!$this->checkIfLaravelConfigFileExists()) {
+        if (! $this->checkIfLaravelConfigFileExists()) {
             $output->writeln('<error>File '.$this->laravel_config_file.' doesn\'t exists');
 
             return -1;

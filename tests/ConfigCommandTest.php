@@ -7,11 +7,10 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
- * Class ConfigCommandTest
+ * Class ConfigCommandTest.
  */
 class ConfigCommandTest extends LlumCommandTest
 {
-
     protected function setUp()
     {
         passthru('./test_setup.sh');
@@ -33,19 +32,16 @@ class ConfigCommandTest extends LlumCommandTest
 
         $command = $application->find('config');
         $commandTester = new CommandTester($command);
-        $commandTester->execute(array(
+        $commandTester->execute([
             'command' => $command->getName(),
-            )
+            ]
         );
 
         $this->assertTrue(
-            $this->fileHasContent('/config/app.php','#llum_providers')
+            $this->fileHasContent('/config/app.php', '#llum_providers')
         );
         $this->assertTrue(
-            $this->fileHasContent('/config/app.php','#llum_aliases')
+            $this->fileHasContent('/config/app.php', '#llum_aliases')
         );
-
     }
-
-
 }

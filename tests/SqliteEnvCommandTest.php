@@ -7,11 +7,10 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
- * Class SqliteCommandTest
+ * Class SqliteCommandTest.
  */
 class SqliteTouchCommandTest extends \PHPUnit_Framework_TestCase
 {
-
     protected function setUp()
     {
         passthru('cp src/Console/stubs/.env .');
@@ -23,7 +22,7 @@ class SqliteTouchCommandTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * test SqliteCommand
+     * test SqliteCommand.
      */
     public function testExecute()
     {
@@ -32,10 +31,9 @@ class SqliteTouchCommandTest extends \PHPUnit_Framework_TestCase
 
         $command = $application->find('sqlite:env');
         $commandTester = new CommandTester($command);
-        $commandTester->execute(array('command' => $command->getName()));
+        $commandTester->execute(['command' => $command->getName()]);
 
         $this->assertRegExp('/successfully/', $commandTester->getDisplay());
         //$this->assert ('/.../', $commandTester->getStatusCode());
-
     }
 }
