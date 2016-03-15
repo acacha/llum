@@ -243,6 +243,9 @@ trait LaravelConfigFile
      */
     protected function addAliases($aliases)
     {
+        if ($aliases == null) {
+            return;
+        }
         foreach ($aliases as $alias => $aliasClass) {
             $this->output->writeln('<info>Adding '.$aliasClass.' to Laravel config app.php file</info>');
             $this->addAlias("'$alias' => ".$aliasClass);

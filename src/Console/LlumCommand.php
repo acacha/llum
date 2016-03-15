@@ -197,8 +197,6 @@ abstract class LlumCommand extends Command
         }
     }
 
-
-
     /**
      * Get config repository.
      *
