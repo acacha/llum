@@ -118,7 +118,7 @@ abstract class LlumCommand extends Command
     protected function touchSqliteFile(OutputInterface $output, $file = 'database/database.sqlite')
     {
         passthru('touch '.$file, $error);
-        if ($error  !== 0) {
+        if ($error !== 0) {
             $output->writeln('<error>Error creating file'.$file.'</error>');
         } else {
             $output->writeln('<info>File '.$file.' created successfully</info>');
@@ -180,7 +180,7 @@ abstract class LlumCommand extends Command
     protected function check_port($port = 8000, $host = '127.0.0.1', $timeout = 3)
     {
         $fp = @fsockopen($host, $port, $errno, $errstr, $timeout);
-        if (! $fp) {
+        if (!$fp) {
             return true;
         } else {
             fclose($fp);
@@ -224,7 +224,7 @@ abstract class LlumCommand extends Command
      */
     protected function installConfigAppFile(OutputInterface $output)
     {
-        if (! $this->checkIfLaravelConfigFileExists()) {
+        if (!$this->checkIfLaravelConfigFileExists()) {
             $output->writeln('<error>File '.$this->laravel_config_file.' doesn\'t exists');
 
             return -1;
@@ -363,7 +363,7 @@ abstract class LlumCommand extends Command
 
         $process = new Process($composer.' require '.$package.'', null, null, null, null);
         $output->writeln('<info>Running composer require '.$package.'</info>');
-        $process->run(function ($type, $line) use ($output) {
+        $process->run(function($type, $line) use ($output) {
             $output->write($line);
         });
     }
@@ -444,7 +444,7 @@ abstract class LlumCommand extends Command
      */
     private function parsePackageInfo($package)
     {
-        return 'Composer name: '.$package['name'];
+        return 'Composer name: '.$package[ 'name' ];
     }
 
     /**
@@ -568,7 +568,7 @@ abstract class LlumCommand extends Command
     private function getPackageNameByComposerName($composerPackageName)
     {
         foreach ($this->config->all() as $key => $configItem) {
-            if ($configItem['name'] == $composerPackageName) {
+            if ($configItem[ 'name' ] == $composerPackageName) {
                 return $key;
             }
         }
@@ -601,9 +601,9 @@ abstract class LlumCommand extends Command
         $this->setName($command->name())
             ->setDescription($command->description());
         if ($command->argument() != null) {
-            $this->addArgument($command->argument()['name'],
-                $command->argument()['type'],
-                $command->argument()['description']
+            $this->addArgument($command->argument()[ 'name' ],
+                $command->argument()[ 'type' ],
+                $command->argument()[ 'description' ]
             );
         }
     }
