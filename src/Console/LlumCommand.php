@@ -117,9 +117,18 @@ abstract class LlumCommand extends Command
     /**
      * Touch sqlite database file.
      *
-     * @param string          $file
+     * @param string $file
      */
     protected function touchSqliteFile($file = 'database/database.sqlite')
+    {
+        $this->touchFile($file);
+    }
+
+    /**
+     * Touch a file.
+     * @param string $file
+     */
+    protected function touchFile($file)
     {
         passthru('touch '.$file, $error);
         if ($error !== 0) {
@@ -144,6 +153,15 @@ abstract class LlumCommand extends Command
         } else {
             $this->output->writeln('.env file updated successfully');
         }
+    }
+
+    /**
+     * sqlite command.
+     */
+    public function sqlite()
+    {
+        $this->touchSqliteFile();
+        $this->configEnv();
     }
 
     /**

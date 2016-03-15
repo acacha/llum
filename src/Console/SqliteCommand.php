@@ -2,9 +2,6 @@
 
 namespace Acacha\Llum\Console;
 
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-
 /**
  * Class SqliteCommand.
  */
@@ -25,16 +22,9 @@ class SqliteCommand extends LlumCommand
     protected $commandDescription = 'Touch sqlite file and enable sqlite on .env';
 
     /**
-     * Execute the command.
+     * Method to execute.
      *
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int|null|void
+     * @var string
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $this->touchSqliteFile($output);
-        $this->configEnv($output);
-    }
+    protected $method = 'sqlite';
 }

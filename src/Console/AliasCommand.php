@@ -34,8 +34,9 @@ class AliasCommand extends LlumCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->output = $output;
         $aliasName = $input->getArgument('aliasName');
         $aliasClass = $input->getArgument('aliasClass');
-        $this->alias($output, $aliasName, $aliasClass);
+        $this->alias($aliasName, $aliasClass);
     }
 }
