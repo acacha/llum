@@ -36,7 +36,9 @@ class BootCommand extends LlumCommand
      */
     protected function boot()
     {
-        $this->devtools();
+        if ($this->devtools() == -1) {
+            return;
+        }
         $this->touchSqliteFile();
         $this->configEnv();
         $this->migrate();

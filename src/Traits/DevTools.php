@@ -9,26 +9,33 @@ trait DevTools
 {
     /**
      * Execute devtools command.
+     * @return int -1 if error occurred
      */
     protected function devtools()
     {
-        $this->idehelper();
-        $this->debugbar();
+        if ($this->idehelper() == -1) {
+            return -1;
+        }
+        if ($this->debugbar() == -1) {
+            return -1;
+        }
     }
 
     /**
      *  Install Laravel ide helper package.
+     *  @return int -1 if error occurred
      */
     protected function idehelper()
     {
-        $this->package('barryvdh/laravel-ide-helper');
+        return $this->package('barryvdh/laravel-ide-helper');
     }
 
     /**
      * Install Laravel debugbar package.
+     * @return int -1 if error occurred
      */
     protected function debugbar()
     {
-        $this->package('barryvdh/laravel-debugbar');
+        return $this->package('barryvdh/laravel-debugbar');
     }
 }

@@ -120,7 +120,7 @@ abstract class LlumCommand extends Command
     {
         passthru('touch '.$file, $error);
         if ($error !== 0) {
-            $this->output->writeln('<error>Error creating file'.$file.'</error>');
+            $this->output->writeln('<error>Error creating file '.$file.'</error>');
         } else {
             $this->output->writeln('<info>File '.$file.' created successfully</info>');
         }
@@ -463,6 +463,7 @@ abstract class LlumCommand extends Command
      * Installs laravel package form config/packages.php file.
      *
      * @param string $name
+     * @return int -1 if error occurred
      */
     protected function package($name)
     {
@@ -471,7 +472,7 @@ abstract class LlumCommand extends Command
         if ($package == null) {
             $this->showPackageNotFoundError($name);
 
-            return;
+            return -1;
         }
 
         list($name, $providers, $aliases, $after) = array_fill(0, 4, null);
@@ -480,7 +481,7 @@ abstract class LlumCommand extends Command
         $this->requireComposerPackage($name);
 
         if ($this->installConfigAppFile() == -1) {
-            return;
+            return -1;
         }
 
         $this->addProviders($providers);
