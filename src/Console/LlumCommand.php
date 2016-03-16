@@ -165,7 +165,9 @@ abstract class LlumCommand extends Command
 
         $this->requireComposerPackage($name);
 
-        $this->setupLaravelConfigFile($providers, $aliases);
+        if ($this->setupLaravelConfigFile($providers, $aliases) == -1) {
+            return -1;
+        }
 
         $this->executeScriptAfterPackageInstallation($after);
     }
