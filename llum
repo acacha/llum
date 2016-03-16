@@ -17,18 +17,19 @@ $app->getDefinition()->addOptions([
         'Does not use bash for modifying config/app.php file. Use stubs instead'),
 ]);
 
-$app->add(new Acacha\Llum\Console\SqliteCommand);
-$app->add(new Acacha\Llum\Console\SqliteTouchCommand);
-$app->add(new Acacha\Llum\Console\SqliteEnvCommand);
-$app->add(new Acacha\Llum\Console\ServeCommand);
-$app->add(new Acacha\Llum\Console\DevToolsCommand);
-$app->add(new Acacha\Llum\Console\DebugBarCommand);
-$app->add(new Acacha\Llum\Console\IdeHelperCommand);
+$app->add(new Acacha\Llum\Console\AliasCommand());
 $app->add(new Acacha\Llum\Console\BootCommand);
+$app->add(new Acacha\Llum\Console\ConfigCommand());
+$app->add(new Acacha\Llum\Console\DebugBarCommand);
+$app->add(new Acacha\Llum\Console\DevToolsCommand);
+$app->add(new Acacha\Llum\Console\IdeHelperCommand);
 $app->add(new Acacha\Llum\Console\MigrateCommand);
-$app->add(new Acacha\Llum\Console\ProviderCommand);
 $app->add(new Acacha\Llum\Console\PackageCommand());
 $app->add(new Acacha\Llum\Console\PackageListCommand());
-$app->add(new Acacha\Llum\Console\ConfigCommand());
+$app->add(new Acacha\Llum\Console\ProviderCommand);
+$app->add(new Acacha\Llum\Console\ServeCommand);
+$app->add(new Acacha\Llum\Console\SqliteCommand);
+$app->add(new Acacha\Llum\Console\SqliteEnvCommand);
+$app->add(new Acacha\Llum\Console\SqliteTouchCommand);
 
 $app->run();
