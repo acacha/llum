@@ -156,6 +156,10 @@ abstract class LlumCommand extends Command
     {
         $package = $this->obtainPackage($name);
 
+        if ($package == -1) {
+            return;
+        }
+
         list($name, $providers, $aliases, $after) = array_fill(0, 4, null);
         extract($package, EXTR_IF_EXISTS);
 
