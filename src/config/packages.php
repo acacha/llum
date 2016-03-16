@@ -15,6 +15,7 @@ return [
         'name' => 'acacha/admin-lte-template-laravel',
         'providers' => ['Barryvdh\Debugbar\ServiceProvider::class'],
         'aliases' => ['AdminLTE' => 'Acacha\AdminLTETemplateLaravel\Facades\AdminLTE::class'],
+        'after' => 'php artisan vendor:publish --tag=adminlte --force'
     ],
 
     'LaravelDebugbar' => [

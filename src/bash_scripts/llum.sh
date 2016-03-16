@@ -17,7 +17,7 @@ function insertLineIntoFile(){
 function abortIfLlumIsAlreadyInstalled(){
     if grep -Fq "#llum_providers" $1
     then
-        echo "Llum is already installed. Exiting...";
+        echo "Llum is already installed. Skipping...";
         exit
     fi
 }
