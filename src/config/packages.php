@@ -37,4 +37,10 @@ return [
         'aliases' => ['Socialite' => 'Laravel\Socialite\Facades\Socialite::class'],
     ],
 
+    'AcachaSocialite' => [
+        'name' => 'acacha/acacha-socialite',
+        'providers' => ['Acacha\Socialite\Providers\AcachaSocialiteServiceProvider::class'],
+        'after' => 'php artisan vendor:publish --tag=acachasocialite --force',
+    ],
+
 ];
