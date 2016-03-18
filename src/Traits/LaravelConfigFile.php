@@ -229,7 +229,9 @@ trait LaravelConfigFile
      */
     protected function installConfigFile()
     {
-        $this->testLaravelConfigFileExists();
+        if ($this->testLaravelConfigFileExists() == -1) {
+            return;
+        }
 
         $this->showWarningIfLaravelConfigAlreadySupportsLlum();
 
