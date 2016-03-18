@@ -75,6 +75,13 @@ abstract class LlumCommand extends Command
     protected $laravel_config_file;
 
     /**
+     * Laravel services file (config/services.php).
+     *
+     * @var string
+     */
+    protected $laravel_services_file;
+
+    /**
      * Path to config folder.
      *
      * @var string
@@ -96,6 +103,7 @@ abstract class LlumCommand extends Command
         parent::__construct();
         $this->configPath = __DIR__.'/../config/';
         $this->laravel_config_file = getcwd().'/config/app.php';
+        $this->laravel_services_file = getcwd().'/config/services.php';
         $this->config = $this->obtainConfig();
     }
 

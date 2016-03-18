@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class LaravelConfigFile.
  * @property string $laravel_config_file
+ * @property string $laravel_services_file
  * @property OutputInterface $output
  */
 trait LaravelConfigFile
@@ -64,6 +65,23 @@ trait LaravelConfigFile
     }
 
     /**
+     *  Add service from file to config/services.php file.
+     *
+     * @param $file
+     *
+     * @return int|null
+     */
+    private function addService($file)
+    {
+        $result = $this->addFileIntoMountPoint('#llum_services', $file);
+        if ($result == 0) {
+            $this->output->writeln('<info>File '.$this->laravel_services_file.' updated.</info>');
+        }
+
+        return $result;
+    }
+
+    /**
      * Add alias to config/app.php file.
      *
      * @param string $alias
@@ -92,6 +110,21 @@ trait LaravelConfigFile
     }
 
     /**
+     * Insert file into file using mountpoint.
+     *
+     * @param $mountpoint
+     * @param $fileToInsert
+     * @return mixed
+     */
+    private function addFileIntoMountPoint($mountpoint, $fileToInsert)
+    {
+        passthru(
+            'sed -i \'/'.$mountpoint.'/r'.$fileToInsert.'\' '.$this->laravel_services_file, $error);
+
+        return $error;
+    }
+
+    /**
      * scape single quotes for sed using \x27.
      *
      * @param string $str
@@ -110,10 +143,23 @@ trait LaravelConfigFile
      */
     protected function provider($provider)
     {
-        if ($this->installConfigAppFile() == -1) {
+        if ($this->installConfigFile() == -1) {
             return;
         }
         $this->addProvider($provider);
+    }
+
+    /**
+     * Add service/s from file to Laravel config/services.php.
+     *
+     * @param $file
+     */
+    protected function service($file)
+    {
+        if ($this->installConfigFile() == -1) {
+            return;
+        }
+        $this->addService($file);
     }
 
     /**
@@ -125,7 +171,7 @@ trait LaravelConfigFile
      */
     private function setupLaravelConfigFile($providers, $aliases)
     {
-        if ($this->installConfigAppFile() == -1) {
+        if ($this->installConfigFile() == -1) {
             return -1;
         }
 
@@ -142,7 +188,7 @@ trait LaravelConfigFile
      */
     protected function alias($aliasName, $aliasClass)
     {
-        if ($this->installConfigAppFile() == -1) {
+        if ($this->installConfigFile() == -1) {
             return;
         }
         $this->addAlias("'".$aliasName."' => ".$aliasClass);
@@ -151,17 +197,19 @@ trait LaravelConfigFile
     /**
      * Install /config/app.php file using bash script.
      */
-    protected function installConfigAppFileWithBash()
+    protected function installConfigFileWithBash()
     {
-        passthru(__DIR__.'/../bash_scripts/iluminar.sh '.$this->laravel_config_file);
+        passthru(__DIR__.'/../bash_scripts/iluminar.sh '.$this->laravel_config_file.' '
+            .$this->laravel_services_file);
     }
 
     /**
      * Install /stubs/app.php into /config/app.php.
      */
-    protected function installConfigAppFileWithStubs()
+    protected function installConfigFileWithStubs()
     {
         copy(__DIR__.'/stubs/app.php', $this->laravel_config_file);
+        copy(__DIR__.'/stubs/services.php', $this->laravel_services_file);
     }
 
     /**
@@ -179,17 +227,17 @@ trait LaravelConfigFile
      *
      * @return int
      */
-    protected function installConfigAppFile()
+    protected function installConfigFile()
     {
         $this->testLaravelConfigFileExists();
 
         $this->showWarningIfLaravelConfigAlreadySupportsLlum();
 
         if ($this->isNoBashActive()) {
-            $this->installConfigAppFileWithStubs();
+            $this->installConfigFileWithStubs();
             $this->output->writeln('<info>File '.$this->laravel_config_file.' overwrited correctly with and stub.</info>');
         } else {
-            $this->installConfigAppFileWithBash();
+            $this->installConfigFileWithBash();
         }
 
         return 0;

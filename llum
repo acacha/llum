@@ -28,6 +28,7 @@ $app->add(new Acacha\Llum\Console\PackageCommand());
 $app->add(new Acacha\Llum\Console\PackageListCommand());
 $app->add(new Acacha\Llum\Console\ProviderCommand);
 $app->add(new Acacha\Llum\Console\ServeCommand);
+$app->add(new Acacha\Llum\Console\ServiceCommand);
 $app->add(new Acacha\Llum\Console\SqliteCommand);
 $app->add(new Acacha\Llum\Console\SqliteEnvCommand);
 $app->add(new Acacha\Llum\Console\SqliteTouchCommand);
