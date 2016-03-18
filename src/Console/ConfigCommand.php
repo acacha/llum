@@ -26,5 +26,5 @@ class ConfigCommand extends LlumCommand
      *
      * @var string
      */
-    protected $method = 'installConfigAppFile';
+    protected $method = 'installConfigFile';
 }
