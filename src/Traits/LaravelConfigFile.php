@@ -71,11 +71,13 @@ trait LaravelConfigFile
      *
      * @return int|null
      */
-    private function addService($file)
+    private function addService($file, $outputFile = null)
     {
-        $result = $this->addFileIntoMountPoint('#llum_services', $file);
+        $result = $this->addFileIntoMountPoint('#llum_services', $file, $outputFile);
+
         if ($result == 0) {
-            $this->output->writeln('<info>File '.$this->laravel_services_file.' updated.</info>');
+            $txtFile = ($outputFile == null) ? $this->laravel_services_file : $outputFile;
+            $this->output->writeln('<info>File '.$txtFile.' updated.</info>');
         }
 
         return $result;
@@ -116,10 +118,16 @@ trait LaravelConfigFile
      * @param $fileToInsert
      * @return mixed
      */
-    private function addFileIntoMountPoint($mountpoint, $fileToInsert)
+    private function addFileIntoMountPoint($mountpoint, $fileToInsert, $outputFile = null)
     {
-        passthru(
-            'sed -i \'/'.$mountpoint.'/r'.$fileToInsert.'\' '.$this->laravel_services_file, $error);
+        if ($outputFile != null) {
+            passthru(
+                'sed -e \'/'.$mountpoint.'/r'.$fileToInsert.'\' '.
+                    $this->laravel_services_file.' > '.$outputFile, $error);
+        } else {
+            passthru(
+                'sed -i \'/'.$mountpoint.'/r'.$fileToInsert.'\' '.$this->laravel_services_file, $error);
+        }
 
         return $error;
     }
@@ -154,12 +162,12 @@ trait LaravelConfigFile
      *
      * @param $file
      */
-    protected function service($file)
+    protected function service($file, $outputFile = null)
     {
         if ($this->installConfigFile() == -1) {
             return;
         }
-        $this->addService($file);
+        $this->addService($file, $outputFile);
     }
 
     /**
