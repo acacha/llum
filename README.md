@@ -22,6 +22,12 @@ composer global require "acacha/llum=~0.1"
 
 Some commands use bash commands like [GNU sed](https://www.gnu.org/software/sed/) and touch.On Windows you can use [CygWin](https://www.cygwin.com/)  or see [StackOverflow](http://stackoverflow.com/questions/127318/is-there-any-sed-like-utility-for-cmd-exe)
 
+On MAC OS use GNU sed instead of default installed BSD sed
+
+```bash
+brew install gnu-sed --with-default-names
+```
+
 # Commands
 
 ##boot
@@ -119,6 +125,37 @@ llum migrate
 #Packagist
 
 https://packagist.org/packages/acacha/admin
+
+## Troubleshooting
+
+### GNU sed on MAC OS
+
+Acacha llum need GNU sed to work so replace BSD sed with GNU sed using:
+
+```bash
+brew install gnu-sed --with-default-names
+```
+
+Check you version of sed with:
+
+```bash
+man sed
+```
+
+sed GNU version path is:
+
+```bash
+$ which sed
+/usr/local/bin/sed
+```
+
+Instead of default path of BSD sed (installed by default on MAC OS):
+
+```bash
+/usr/bin/sed
+```
+
+More info at https://github.com/acacha/adminlte-laravel/issues/58
 
 # Working notes
 
