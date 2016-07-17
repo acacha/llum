@@ -42,5 +42,14 @@ return [
         'providers' => ['Acacha\Socialite\Providers\AcachaSocialiteServiceProvider::class'],
         'after' => 'php artisan vendor:publish --tag=acachasocialite --force',
     ],
+    'LaravelcollectiveHtml' => [
+        'name' => 'laravelcollective/html',
+        'providers' => ['Collective\Html\HtmlServiceProvider::class'],
+        'aliases' => [
+            'Form' => 'Collective\Html\FormFacade::class',
+            'Html' => 'Collective\Html\HtmlFacade::class'
+        ]
+    ],
+
 
 ];
