@@ -4,3 +4,4 @@
 .php_cs.cache
 .env
 /config
+composer.lock
