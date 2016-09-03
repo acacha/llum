@@ -15,7 +15,7 @@ Speed up you laravel development workflow illuminating packages with llum:
 # Install notes
 
 ```bash
-composer global require "acacha/llum=~0.1"
+composer global require "acacha/llum=~1.0"
 ```
 
 # Requirements
