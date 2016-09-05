@@ -1,6 +1,6 @@
 # llum
 
-Speed up you laravel development workflow illuminating packages with llum:
+Speed up you Laravel development workflow illuminating packages with llum:
 
 [![asciicast](https://asciinema.org/a/bym5od3j6qtqh5liv8uwx1qy4.png)](https://asciinema.org/a/bym5od3j6qtqh5liv8uwx1qy4?speed=2&theme=solarized-dark&loop=1&autoplay=1&size=medium)
 
@@ -11,6 +11,8 @@ Speed up you laravel development workflow illuminating packages with llum:
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/acacha/llum/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/acacha/llum/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/acacha/llum/badges/build.png?b=master)](https://scrutinizer-ci.com/g/acacha/llum/build-status/master)
 [![Build Status](https://travis-ci.org/acacha/llum.svg?branch=master)](https://travis-ci.org/acacha/llum)
+
+Now supports Laravel 5.3
 
 # Install notes
 
