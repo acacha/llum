@@ -41,4 +41,11 @@ class PackageCommand extends LlumCommand
      * @var string
      */
     protected $method = 'package';
+
+    /**
+     * Install development version
+     *
+     * @var bool
+     */
+    protected $installDev = false;
 }

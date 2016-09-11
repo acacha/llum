@@ -96,6 +96,13 @@ abstract class LlumCommand extends Command
     protected $config;
 
     /**
+     * Install development version
+     *
+     * @var bool
+     */
+    protected $installDev = false;
+
+    /**
      * LlumCommand constructor.
      */
     public function __construct()
@@ -107,6 +114,16 @@ abstract class LlumCommand extends Command
         $this->config = $this->obtainConfig();
     }
 
+    /*
+     * gets dev option
+     *
+     * @return string
+     */
+    protected function getDevOption()
+    {
+        return $this->installDev ? ":dev-master"  : "";
+    }
+
     /**
      * Require composer package.
      *
@@ -116,7 +133,8 @@ abstract class LlumCommand extends Command
     {
         $composer = $this->findComposer();
 
-        $process = new Process($composer.' require '.$package.'', null, null, null, null);
+        $process = new Process($composer.' require '.$package.'' . $this->getDevOption(),
+                       null, null, null, null);
         $this->output->writeln('<info>Running composer require '.$package.'</info>');
         $process->run(function ($type, $line) {
             $this->output->write($line);
