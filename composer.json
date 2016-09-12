@@ -24,11 +24,11 @@
         "symfony/process": "~2.3|~3.0",
         "php": ">=5.5.9"
     },
+    "require-dev": {
+        "phpunit/phpunit": "~5.0"
+    },
     "scripts": {
         "fix": "php-cs-fixer fix"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "~4.0"
     },
     "bin": [
         "llum"
