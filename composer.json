@@ -3,8 +3,6 @@
     "description": "Llum (light in catalan language) illuminates your Laravel projects.",
     "keywords": ["laravel","scaffold","boilerplate"],
     "license": "MIT",
-    "prefer-stable": true,
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Sergi Tur Badenas",
