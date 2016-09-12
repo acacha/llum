@@ -22,8 +22,7 @@ class ConfigCommandTest extends LlumCommandTest
     }
 
     /**
-     * @group failing
-     * test DevToolsCommand
+     * test ConfigCommandTest
      */
     public function testExecute()
     {
