@@ -114,6 +114,20 @@ abstract class LlumCommand extends Command
         $this->config = $this->obtainConfig();
     }
 
+    /**
+     * Initialize command
+     *
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        parent::initialize($input, $output);
+        if ($input->hasOption('dev')) {
+            $this->installDev = true;
+        }
+    }
+
     /*
      * gets dev option
      *
@@ -132,10 +146,9 @@ abstract class LlumCommand extends Command
     private function requireComposerPackage($package)
     {
         $composer = $this->findComposer();
-
         $process = new Process($composer.' require '.$package.'' . $this->getDevOption(),
                        null, null, null, null);
-        $this->output->writeln('<info>Running composer require '.$package.'</info>');
+        $this->output->writeln('<info>Running composer require '.$package. $this->getDevOption().'</info>');
         $process->run(function ($type, $line) {
             $this->output->write($line);
         });

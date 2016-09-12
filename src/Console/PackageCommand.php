@@ -2,6 +2,8 @@
 
 namespace Acacha\Llum\Console;
 
+use Symfony\Component\Console\Input\InputOption;
+
 /**
  * Class PackageCommand.
  */
@@ -43,9 +45,16 @@ class PackageCommand extends LlumCommand
     protected $method = 'package';
 
     /**
-     * Install development version
-     *
-     * @var bool
+     * Configure the command options.
      */
-    protected $installDev = false;
+    protected function configure()
+    {
+        parent::configure();
+        $this->addOption(
+            'dev',
+            'd',
+            InputOption::VALUE_NONE,
+            'If set, dev-master branch of package will be installed'
+        );
+    }
 }
