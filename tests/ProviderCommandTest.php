@@ -58,6 +58,7 @@ class ProviderCommandTest extends \PHPUnit_Framework_TestCase
      * Tests if Laravel config file has content.
      *
      * @param $content
+     *
      * @return bool
      */
     private function laravelConfigFileHasContent($content)
@@ -70,6 +71,7 @@ class ProviderCommandTest extends \PHPUnit_Framework_TestCase
      *
      * @param $file
      * @param $content
+     *
      * @return bool
      */
     private function fileHasContent($file, $content)

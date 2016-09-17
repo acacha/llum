@@ -14,15 +14,15 @@ return [
     'AdminLTE' => [
         'name'      => 'acacha/admin-lte-template-laravel',
         'providers' => ['Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class'],
-        'aliases' => ['AdminLTE' => 'Acacha\AdminLTETemplateLaravel\Facades\AdminLTE::class'],
-        'after' => 'php artisan adminlte-laravel:publish --force',
+        'aliases'   => ['AdminLTE' => 'Acacha\AdminLTETemplateLaravel\Facades\AdminLTE::class'],
+        'after'     => 'php artisan adminlte-laravel:publish --force',
     ],
 
     'AdminLTEDontForce' => [
-        'name' => 'acacha/admin-lte-template-laravel',
+        'name'      => 'acacha/admin-lte-template-laravel',
         'providers' => ['Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class'],
-        'aliases' => ['AdminLTE' => 'Acacha\AdminLTETemplateLaravel\Facades\AdminLTE::class'],
-        'after' => 'php artisan adminlte-laravel:publish',
+        'aliases'   => ['AdminLTE' => 'Acacha\AdminLTETemplateLaravel\Facades\AdminLTE::class'],
+        'after'     => 'php artisan adminlte-laravel:publish',
         'aliases'   => ['AdminLTE' => 'Acacha\AdminLTETemplateLaravel\Facades\AdminLTE::class'],
         'after'     => 'php artisan adminlte-laravel:publish',
     ],
