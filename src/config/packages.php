@@ -12,42 +12,42 @@ return [
    */
 
     'AdminLTE' => [
-        'name' => 'acacha/admin-lte-template-laravel',
+        'name'      => 'acacha/admin-lte-template-laravel',
         'providers' => ['Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class'],
-        'aliases' => ['AdminLTE' => 'Acacha\AdminLTETemplateLaravel\Facades\AdminLTE::class'],
-        'after' => 'php artisan adminlte-laravel:publish',
+        'aliases'   => ['AdminLTE' => 'Acacha\AdminLTETemplateLaravel\Facades\AdminLTE::class'],
+        'after'     => 'php artisan adminlte-laravel:publish',
     ],
 
     'AdminLTEVendorPublish' => [
-        'name' => 'acacha/admin-lte-template-laravel',
+        'name'      => 'acacha/admin-lte-template-laravel',
         'providers' => ['Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class'],
-        'aliases' => ['AdminLTE' => 'Acacha\AdminLTETemplateLaravel\Facades\AdminLTE::class'],
-        'after' => 'php artisan vendor:publish --tag=adminlte --force',
+        'aliases'   => ['AdminLTE' => 'Acacha\AdminLTETemplateLaravel\Facades\AdminLTE::class'],
+        'after'     => 'php artisan vendor:publish --tag=adminlte --force',
     ],
 
     'LaravelDebugbar' => [
-        'name' => 'barryvdh/laravel-debugbar',
+        'name'      => 'barryvdh/laravel-debugbar',
         'providers' => ['Barryvdh\Debugbar\ServiceProvider::class'],
-        'aliases' => ['Debugbar' => 'Barryvdh\Debugbar\Facade::class'],
-        'after' => 'php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"',
+        'aliases'   => ['Debugbar' => 'Barryvdh\Debugbar\Facade::class'],
+        'after'     => 'php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"',
     ],
 
     'LaravelIdeHelper' => [
-        'name' => 'barryvdh/laravel-ide-helper',
+        'name'      => 'barryvdh/laravel-ide-helper',
         'providers' => ['Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class'],
-        'after' => 'php artisan ide-helper:generate',
+        'after'     => 'php artisan ide-helper:generate',
     ],
 
     'Socialite' => [
-        'name' => 'laravel/socialite',
+        'name'      => 'laravel/socialite',
         'providers' => ['Laravel\Socialite\SocialiteServiceProvider::class'],
-        'aliases' => ['Socialite' => 'Laravel\Socialite\Facades\Socialite::class'],
+        'aliases'   => ['Socialite' => 'Laravel\Socialite\Facades\Socialite::class'],
     ],
 
     'AcachaSocialite' => [
-        'name' => 'acacha/acacha-socialite',
+        'name'      => 'acacha/acacha-socialite',
         'providers' => ['Acacha\Socialite\Providers\AcachaSocialiteServiceProvider::class'],
-        'after' => 'php artisan vendor:publish --tag=acachasocialite --force',
+        'after'     => 'php artisan vendor:publish --tag=acachasocialite --force',
     ],
 
 ];

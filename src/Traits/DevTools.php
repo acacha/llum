@@ -9,6 +9,7 @@ trait DevTools
 {
     /**
      * Execute devtools command.
+     *
      * @return int -1 if error occurred
      */
     protected function devtools()
@@ -23,6 +24,7 @@ trait DevTools
 
     /**
      *  Install Laravel ide helper package.
+     *
      *  @return int -1 if error occurred
      */
     protected function idehelper()
@@ -32,6 +34,7 @@ trait DevTools
 
     /**
      * Install Laravel debugbar package.
+     *
      * @return int -1 if error occurred
      */
     protected function debugbar()
@@ -41,8 +44,11 @@ trait DevTools
 
     /**
      * Installs laravel package form config/packages.php file.
+     *
      * @see Acacha\Llum\Console\LlumCommand::package
+     *
      * @param $package
+     *
      * @return mixed
      */
     abstract protected function package($package);

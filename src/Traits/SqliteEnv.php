@@ -6,6 +6,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class SqliteEnv.
+ *
  * @property OutputInterface $output
  */
 trait SqliteEnv
