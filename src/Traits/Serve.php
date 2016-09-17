@@ -6,6 +6,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class Serve.
+ *
  * @property OutputInterface $output
  */
 trait Serve
@@ -45,7 +46,7 @@ trait Serve
     protected function check_port($port = 8000, $host = '127.0.0.1', $timeout = 3)
     {
         $fp = @fsockopen($host, $port, $errno, $errstr, $timeout);
-        if (! $fp) {
+        if (!$fp) {
             return true;
         } else {
             fclose($fp);

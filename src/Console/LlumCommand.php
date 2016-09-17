@@ -96,7 +96,7 @@ abstract class LlumCommand extends Command
     protected $config;
 
     /**
-     * Install development version
+     * Install development version.
      *
      * @var bool
      */
@@ -115,7 +115,7 @@ abstract class LlumCommand extends Command
     }
 
     /**
-     * Initialize command
+     * Initialize command.
      *
      * @param InputInterface  $input
      * @param OutputInterface $output
@@ -135,7 +135,7 @@ abstract class LlumCommand extends Command
      */
     protected function getDevOption()
     {
-        return $this->installDev ? ":dev-master"  : "";
+        return $this->installDev ? ':dev-master' : '';
     }
 
     /**
@@ -146,9 +146,9 @@ abstract class LlumCommand extends Command
     private function requireComposerPackage($package)
     {
         $composer = $this->findComposer();
-        $process = new Process($composer.' require '.$package.'' . $this->getDevOption(),
+        $process = new Process($composer.' require '.$package.''.$this->getDevOption(),
                        null, null, null, null);
-        $this->output->writeln('<info>Running composer require '.$package. $this->getDevOption().'</info>');
+        $this->output->writeln('<info>Running composer require '.$package.$this->getDevOption().'</info>');
         $process->run(function ($type, $line) {
             $this->output->write($line);
         });
@@ -189,6 +189,7 @@ abstract class LlumCommand extends Command
      * Installs laravel package form config/packages.php file.
      *
      * @param string $name
+     *
      * @return int -1 if error occurred
      */
     protected function package($name)
@@ -215,6 +216,7 @@ abstract class LlumCommand extends Command
      * Obtain package.
      *
      * @param $name
+     *
      * @return array|int
      */
     private function obtainPackage($name)
@@ -254,7 +256,7 @@ abstract class LlumCommand extends Command
 
     /**
      * Get package name by composer package name.
-     * 
+     *
      * @param $composerPackageName
      *
      * @return string
@@ -262,12 +264,10 @@ abstract class LlumCommand extends Command
     private function getPackageNameByComposerName($composerPackageName)
     {
         foreach ($this->config->all() as $key => $configItem) {
-            if ($configItem[ 'name' ] == $composerPackageName) {
+            if ($configItem['name'] == $composerPackageName) {
                 return $key;
             }
         }
-
-        return;
     }
 
     /**
@@ -278,14 +278,13 @@ abstract class LlumCommand extends Command
     protected function showPackageNotFoundError($name)
     {
         $this->output->writeln('<error>Package '.$name.' not found in file '.$this->configPath.'packages.php</error>');
-
-        return;
     }
 
     /**
      * Configure the command options.
      *
      * @param ConsoleCommand $command
+     *
      * @throws \Acacha\Llum\Exceptions\InvalidCommandException
      */
     protected function configureCommand(ConsoleCommand $command)
@@ -295,16 +294,16 @@ abstract class LlumCommand extends Command
         $name = $command->name();
         $description = $command->description();
 
-        if (! is_string($name) || ! is_string($description)) {
-            throw new InvalidCommandException;
+        if (!is_string($name) || !is_string($description)) {
+            throw new InvalidCommandException();
         }
 
         $this->setName($name)
              ->setDescription($description);
         if ($command->argument() != null) {
-            $this->addArgument($command->argument()[ 'name' ],
-                $command->argument()[ 'type' ],
-                $command->argument()[ 'description' ]
+            $this->addArgument($command->argument()['name'],
+                $command->argument()['type'],
+                $command->argument()['description']
             );
         }
     }
@@ -343,9 +342,9 @@ abstract class LlumCommand extends Command
 
         if ($this->argument != null) {
             $command->argument([
-                'name' => $this->argument,
+                'name'        => $this->argument,
                 'description' => $this->argumentDescription,
-                'type' => $this->argumentType,
+                'type'        => $this->argumentType,
             ]);
         }
         $this->configureCommand($command);

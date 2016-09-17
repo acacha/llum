@@ -9,7 +9,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 /**
  * Class SqliteCommandTest.
  */
-class SqliteEnvCommandTest extends \PHPUnit_Framework_TestCase
+class SqliteTouchCommandTest extends \PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {

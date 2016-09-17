@@ -48,6 +48,6 @@ class PackageListCommand extends LlumCommand
      */
     private function parsePackageInfo($package)
     {
-        return 'Composer name: '.$package[ 'name' ];
+        return 'Composer name: '.$package['name'];
     }
 }

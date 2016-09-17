@@ -33,7 +33,7 @@ class ProviderCommandTest extends \PHPUnit_Framework_TestCase
         $command = $application->find('provider');
         $commandTester = new CommandTester($command);
         $commandTester->execute([
-            'command' => $command->getName(),
+            'command'  => $command->getName(),
             'provider' => 'Acacha\AdminLTETemplateLaravel\app\Providers\AdminLTETemplateServiceProvider::class', ]);
 
         $this->assertFileExists('config/app.php');
