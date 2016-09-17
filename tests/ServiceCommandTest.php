@@ -41,7 +41,7 @@ class ServiceCommandTest extends \PHPUnit_Framework_TestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command' => $command->getName(),
-            'file' => __DIR__.'/stubs/socialite_services', ]);
+            'file'    => __DIR__.'/stubs/socialite_services', ]);
 
         $this->assertFileExists('config/services.php');
         $this->assertTrue(
@@ -84,8 +84,8 @@ class ServiceCommandTest extends \PHPUnit_Framework_TestCase
         $command = $application->find('service');
         $commandTester = new CommandTester($command);
         $commandTester->execute([
-            'command' => $command->getName(),
-            'file' => __DIR__.'/stubs/socialite_services',
+            'command'       => $command->getName(),
+            'file'          => __DIR__.'/stubs/socialite_services',
             '--output-file' => 'config/services-output-file.php', ], ['verbosity']);
 
         $this->assertFileExists('config/services-output-file.php');
@@ -122,6 +122,7 @@ class ServiceCommandTest extends \PHPUnit_Framework_TestCase
      * Check if Laravel Services File has an specific content.
      *
      * @param $content
+     *
      * @return bool
      */
     private function laravelServicesFileHasContent($content, $servicesFile = '/config/services.php')
@@ -131,8 +132,10 @@ class ServiceCommandTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Check if file as specific content.
+     *
      * @param $file
      * @param $content
+     *
      * @return bool
      */
     private function fileHasContent($file, $content)

@@ -6,6 +6,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class TouchSqliteFile.
+ *
  * @property OutputInterface $output
  */
 trait TouchSqliteFile
@@ -22,6 +23,7 @@ trait TouchSqliteFile
 
     /**
      * Touch a file.
+     *
      * @param string $file
      */
     protected function touchFile($file)

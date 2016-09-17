@@ -22,7 +22,7 @@ class ConfigCommandTest extends LlumCommandTest
     }
 
     /**
-     * test ConfigCommandTest
+     * test ConfigCommandTest.
      */
     public function testExecute()
     {

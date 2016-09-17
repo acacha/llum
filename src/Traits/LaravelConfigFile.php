@@ -7,6 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class LaravelConfigFile.
+ *
  * @property string $laravel_config_file
  * @property string $laravel_services_file
  * @property OutputInterface $output
@@ -116,6 +117,7 @@ trait LaravelConfigFile
      *
      * @param $mountpoint
      * @param $fileToInsert
+     *
      * @return mixed
      */
     private function addFileIntoMountPoint($mountpoint, $fileToInsert, $outputFile = null)
@@ -175,6 +177,7 @@ trait LaravelConfigFile
      *
      * @param $providers
      * @param $aliases
+     *
      * @return int
      */
     private function setupLaravelConfigFile($providers, $aliases)
@@ -260,7 +263,7 @@ trait LaravelConfigFile
      */
     private function testLaravelConfigFileExists()
     {
-        if (! $this->checkIfLaravelConfigFileExists()) {
+        if (!$this->checkIfLaravelConfigFileExists()) {
             $this->output->writeln('<error>File '.$this->laravel_config_file.' doesn\'t exists');
 
             return -1;

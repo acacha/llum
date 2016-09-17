@@ -11,6 +11,7 @@ abstract class LlumCommandTest extends \PHPUnit_Framework_TestCase
      * Check file config/app.php has content.
      *
      * @param $content
+     *
      * @return bool
      */
     protected function laravelConfigFileHasContent($content)
@@ -23,6 +24,7 @@ abstract class LlumCommandTest extends \PHPUnit_Framework_TestCase
      *
      * @param $file
      * @param $content
+     *
      * @return bool
      */
     protected function fileHasContent($file, $content)
