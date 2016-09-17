@@ -11,12 +11,18 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class ProviderCommandTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * Set up tests.
+     */
     protected function setUp()
     {
         passthru('mkdir config');
         passthru('cp src/Console/stubs/app_original.php config/app.php');
     }
 
+    /**
+     * Tear down tests.
+     */
     protected function tearDown()
     {
         passthru('rm -rf config');
@@ -48,11 +54,24 @@ class ProviderCommandTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * Tests if Laravel config file has content.
+     *
+     * @param $content
+     * @return bool
+     */
     private function laravelConfigFileHasContent($content)
     {
         return $this->fileHasContent('/config/app.php', $content);
     }
 
+    /**
+     * Test if file has content.
+     *
+     * @param $file
+     * @param $content
+     * @return bool
+     */
     private function fileHasContent($file, $content)
     {
         return strpos(file_get_contents(getcwd().$file), $content) != false;
