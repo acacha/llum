@@ -34,6 +34,13 @@ return [
         'after'     => 'php artisan vendor:publish --tag=adminlte --force',
     ],
 
+    'AdminLTEVendorPublishDontForce' => [
+        'name'      => 'acacha/admin-lte-template-laravel',
+        'providers' => ['Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class'],
+        'aliases'   => ['AdminLTE' => 'Acacha\AdminLTETemplateLaravel\Facades\AdminLTE::class'],
+        'after'     => 'php artisan vendor:publish --tag=adminlte',
+    ],
+
     'LaravelDebugbar' => [
         'name'      => 'barryvdh/laravel-debugbar',
         'providers' => ['Barryvdh\Debugbar\ServiceProvider::class'],
