@@ -66,4 +66,10 @@ return [
         'after'     => 'php artisan vendor:publish --tag=acachasocialite --force',
     ],
 
+    'LaravelPassport' => [
+        'name'      => 'acacha/passport',
+        'providers' => ['Laravel\Passport\PassportServiceProvider::class'],
+        'after'     => 'php artisan migrate;php artisan passport:install',
+    ],
+
 ];
