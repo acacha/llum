@@ -32,5 +32,9 @@ $app->add(new Acacha\Llum\Console\ServiceCommand);
 $app->add(new Acacha\Llum\Console\SqliteCommand);
 $app->add(new Acacha\Llum\Console\SqliteEnvCommand);
 $app->add(new Acacha\Llum\Console\SqliteTouchCommand);
+$app->add(
+    new Acacha\Llum\Console\InitCommand(
+        new \Acacha\Llum\Filesystem\Filesystem(),
+        new \Acacha\Llum\Compiler\RCFileCompiler()));
 
 $app->run();

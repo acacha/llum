@@ -320,6 +320,7 @@ abstract class LlumCommand extends Command
     {
         $this->output = $output;
         $method = $this->method;
+        $this->setHelperSet($this->getApplication()->getHelperSet());
         if ($this->argument != null) {
             $argument = $input->getArgument($this->argument);
             $this->$method($argument);
@@ -327,7 +328,7 @@ abstract class LlumCommand extends Command
             return;
         }
 
-        $this->$method();
+        $this->$method($input,$output);
     }
 
     /**
