@@ -164,7 +164,7 @@ class GithubInitCommand extends LlumCommand
     protected function runGitCreateRepo()
     {
         $this->showMessageRunningCommand($this->output,'llum github:repo');
-        passthru('../llum github:repo');
+        passthru('llum github:repo');
     }
 
     /**
