@@ -3,3 +3,4 @@
 [github]
 username = $GITHUB_USERNAME$
 token = $GITHUB_TOKEN$
+token_name = $GITHUB_TOKEN_NAME$

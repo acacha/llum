@@ -11,8 +11,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 
-require __DIR__ . "../passwords.php";
-
 /**
  * Class InitCommand
  * @package Acacha\Llum\Console
@@ -20,7 +18,12 @@ require __DIR__ . "../passwords.php";
 class InitCommand extends LlumCommand
 {
 
-    protected $githubapi;
+    /**
+     * Github api service class.
+     *
+     * @var GithubAPI
+     */
+    protected $api;
 
     /**
      * Filesystem.
@@ -57,22 +60,43 @@ class InitCommand extends LlumCommand
      */
     protected $method = 'init';
 
+    /**
+     * Github username
+     *
+     * @var
+     */
     protected $github_username;
 
+    /**
+     * Github token.
+     *
+     * @var string
+     */
     protected $github_token = "";
+
+    /**
+     * Get path to stub.
+     *
+     * @return string
+     */
+    protected function getStubPath() {
+        return __DIR__ . '/stubs/llumrc.stub';
+    }
+
 
     /**
      * InitCommand constructor.
      *
-     * @param $filesytem
-     * @param $compiler
+     * @param Filesystem $filesytem
+     * @param RCFileCompiler $compiler
+     * @param GithubAPI $api
      */
-    public function __construct(Filesystem $filesytem, RCFileCompiler $compiler, GithubAPI $githubapi)
+    public function __construct(Filesystem $filesytem, RCFileCompiler $compiler, GithubAPI $api)
     {
         parent::__construct();
         $this->filesytem = $filesytem;
         $this->compiler = $compiler;
-        $this->githubapi = $githubapi;
+        $this->api = $api;
     }
 
     /**
@@ -92,6 +116,12 @@ class InitCommand extends LlumCommand
         }
     }
 
+    /**
+     * Executes wizard.
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     protected function executeWizard(InputInterface $input, OutputInterface $output){
 
         $this->askGithubUsername($input,$output);
@@ -100,39 +130,53 @@ class InitCommand extends LlumCommand
         $this->data = [
             "GITHUB_USERNAME" => $this->github_username,
             "GITHUB_TOKEN" => $this->github_token,
+            "GITHUB_TOKEN_NAME" => $this->api->tokenName(),
         ];
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     public function askGithubUsername(InputInterface $input, OutputInterface $output)
     {
-        $question = new Question('Please enter your github username? ');
+        $defaultusername = $this->defaultUsername();
+        $question = new Question('<info>Please enter your github username (' . $defaultusername . ') ? </info>', $defaultusername);
         $this->github_username = $this->getHelper('question')->ask($input, $output, $question);
     }
 
+    /**
+     * @return string
+     */
+    protected function defaultUsername()
+    {
+        return get_current_user();
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     public function askGithubToken(InputInterface $input, OutputInterface $output)
     {
-        $question = new ConfirmationQuestion('Do you want to use our assistant to obtain token via Github API?', true);
+        $question = new ConfirmationQuestion('<info>Do you want to use our assistant to obtain token via Github API (Y/n)? </info>', true);
         if ($this->getHelper('question')->ask($input, $output, $question)) {
-            $this->github_token =$this->githubapi->getPersonalToken(
+            $this->github_token =$this->api->getPersonalToken(
                 $this->github_username,
                 $this->askGithubPassword($input,$output));
         }
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return mixed
+     */
     protected function askGithubPassword(InputInterface $input, OutputInterface $output) {
-        $question = new Question('What is your github password?');
+        $question = new Question('<info>Github password? </info>');
         $question->setHidden(true);
         $question->setHiddenFallback(false);
 
         return $this->getHelper('question')->ask($input, $output, $question);
-    }
-
-    /**
-     * Get path to stub.
-     *
-     * @return string
-     */
-    protected function getStubPath() {
-        return __DIR__ . '/stubs/llumrc.stub';
     }
 }

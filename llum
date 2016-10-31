@@ -35,6 +35,24 @@ $app->add(new Acacha\Llum\Console\SqliteTouchCommand);
 $app->add(
     new Acacha\Llum\Console\InitCommand(
         new \Acacha\Llum\Filesystem\Filesystem(),
-        new \Acacha\Llum\Compiler\RCFileCompiler()));
+        new \Acacha\Llum\Compiler\RCFileCompiler(),
+        new \Acacha\Llum\Github\GithubAPI(
+            new \Acacha\Llum\Filesystem\Filesystem()
+        )));
+$app->add(
+    new Acacha\Llum\Console\GithubRepoCommand(
+        new \Acacha\Llum\Github\GithubAPI(
+            new \Acacha\Llum\Filesystem\Filesystem()
+        ),
+        new \Acacha\Llum\Parser\LlumRCParser(
+            new \Acacha\Llum\LlumRCFile()
+        )));
+
+$app->add(
+    new Acacha\Llum\Console\GithubInitCommand(
+        new \Acacha\Llum\Parser\LlumRCParser(
+            new \Acacha\Llum\LlumRCFile()
+        )
+    ));
 
 $app->run();

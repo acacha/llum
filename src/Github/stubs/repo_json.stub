@@ -1,0 +1,4 @@
+{
+  "name": "$REPO_NAME$",
+  "description": "$REPO_DESCRIPTION$"
+}

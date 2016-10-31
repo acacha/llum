@@ -9,6 +9,8 @@ use Acacha\Llum\Github\GithubAPI;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
+include __DIR__ . "/../passwords.php";
+
 /**
  * Class InitCommandTest.
  */

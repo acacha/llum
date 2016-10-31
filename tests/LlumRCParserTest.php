@@ -33,4 +33,18 @@ class LlumRCParserTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('token', $result);
 
     }
+
+    /**
+     * test get credentials.
+     */
+    public function testGetCredentials()
+    {
+        $this->createsampleRCFile();
+
+        $parser = new LlumRCParser(new LlumRCFile());
+        $credentials = $parser->getCredentials();
+        $this->assertTrue(is_array($credentials));
+        $this->assertEquals('acacha', $credentials[0]);
+        $this->assertEquals('abcdefgh12345678', $credentials[1]);
+    }
 }
