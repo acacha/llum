@@ -2,6 +2,8 @@
 
 namespace Acacha\Llum\Traits;
 
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -16,8 +18,9 @@ trait Serve
      *
      * @param int $port
      */
-    protected function serve($port = 8000)
+    protected function serve(InputInterface $input, OutputInterface $output)
     {
+        $port = $this->port($input);
         $continue = true;
         do {
             if ($this->check_port($port)) {
@@ -54,4 +57,29 @@ trait Serve
             return false;
         }
     }
+
+    /**
+     * Configure command.
+     */
+    public function configure()
+    {
+        parent::configure();
+
+        $this
+            // configure an argument
+            ->addArgument('port', InputArgument::OPTIONAL, 'Port number')
+        ;
+    }
+
+    /**
+     * Obtain port.
+     *
+     * @param InputInterface $input
+     * @return mixed|string
+     */
+    protected function port(InputInterface $input) {
+        $name = $input->getArgument('port');
+        return isset($name) ? $name : 8080;
+    }
+
 }
