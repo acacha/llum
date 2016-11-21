@@ -80,7 +80,7 @@ trait Serve
      */
     protected function port(InputInterface $input) {
         $name = $input->getArgument('port');
-        return isset($name) ? (int)$name : 8080;
+        return isset($name) ? (int) $name : 8080;
     }
 
     /**
