@@ -30,7 +30,7 @@ class InitCommand extends LlumCommand
      *
      * @var Filesystem
      */
-    protected $filesytem;
+    protected $filesystem;
 
     /**
      * Compiler for llumrc file.
@@ -87,14 +87,14 @@ class InitCommand extends LlumCommand
     /**
      * InitCommand constructor.
      *
-     * @param Filesystem $filesytem
+     * @param Filesystem $filesystem
      * @param RCFileCompiler $compiler
      * @param GithubAPI $api
      */
-    public function __construct(Filesystem $filesytem, RCFileCompiler $compiler, GithubAPI $api)
+    public function __construct(Filesystem $filesystem, RCFileCompiler $compiler, GithubAPI $api)
     {
         parent::__construct();
-        $this->filesytem = $filesytem;
+        $this->filesystem = $filesystem;
         $this->compiler = $compiler;
         $this->api = $api;
     }
@@ -106,10 +106,10 @@ class InitCommand extends LlumCommand
     {
         try {
             $this->executeWizard($input,$output);
-            $this->filesytem->overwrite(
+            $this->filesystem->overwrite(
                 (new LlumRCFile())->path(),
                 $this->compiler->compile(
-                    $this->filesytem->get($this->getStubPath()),
+                    $this->filesystem->get($this->getStubPath()),
                     $this->data));
         } catch (\Exception $e) {
             print_r($e->xdebug_message);
