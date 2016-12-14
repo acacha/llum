@@ -16,7 +16,8 @@ trait Serve
     /**
      * Serve command.
      *
-     * @param int $port
+     * @param InputInterface $input
+     * @param OutputInterface $output
      */
     protected function serve(InputInterface $input, OutputInterface $output)
     {
@@ -75,11 +76,22 @@ trait Serve
      * Obtain port.
      *
      * @param InputInterface $input
-     * @return mixed|string
+     * @return integer
      */
     protected function port(InputInterface $input) {
         $name = $input->getArgument('port');
-        return isset($name) ? $name : 8080;
+        return isset($name) ? (int) $name : 8080;
     }
 
+    /**
+     * Method provided from \Symfony\Component\Console\Command\Command.
+     *
+     * @param string $name        The argument name
+     * @param int    $mode        The argument mode: InputArgument::REQUIRED or InputArgument::OPTIONAL
+     * @param string $description A description text
+     * @param mixed  $default     The default value (for InputArgument::OPTIONAL mode only)
+     *
+     * @return Command The current instance
+     */
+    abstract public function addArgument($name, $mode = null, $description = '', $default = null);
 }
