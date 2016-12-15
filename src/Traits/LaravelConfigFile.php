@@ -173,7 +173,7 @@ trait LaravelConfigFile
     }
 
     /**
-     * Setup laravel config file adding providers and aliases.
+     * Setup Laravel config file adding providers and aliases.
      *
      * @param $providers
      * @param $aliases
