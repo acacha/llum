@@ -8,7 +8,7 @@ TEXT_TO_SEARCH_PACKAGE_SERVICE_PROVIDERS="Package Service Providers..."
 function searchLineToInsertPackageServiceProviders()
 {
     local line=$(sed -n "/$TEXT_TO_SEARCH_PACKAGE_SERVICE_PROVIDERS/=" $1);
-    echo "$(($line -2))"
+    echo "$(($line -1))"
 }
 
 function searchLineToInsertNewValueToEndOfPHPArray()
