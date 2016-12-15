@@ -67,9 +67,35 @@ return [
     ],
 
     'LaravelPassport' => [
-        'name'      => 'acacha/passport',
+        'name'      => 'laravel/passport',
         'providers' => ['Laravel\Passport\PassportServiceProvider::class'],
         'after'     => 'php artisan migrate;php artisan passport:install',
+    ],
+
+    'Passport' => [
+        'name'      => 'laravel/passport',
+        'providers' => ['Laravel\Passport\PassportServiceProvider::class'],
+        'after'     => 'php artisan migrate;php artisan passport:install',
+    ],
+
+    'Menu' => [
+        'name'      => 'spatie/laravel-menu',
+        'providers' => ['Spatie\Menu\Laravel\MenuServiceProvider::class'],
+        'aliases'   => [
+            'Menu' => 'Spatie\Menu\Laravel\MenuFacade::class',
+            'Link' => 'Spatie\Menu\Link::class',
+            'Html' => 'Spatie\Menu\Html::class'
+        ]
+    ],
+
+    'laravel-menu' => [
+        'name'      => 'spatie/laravel-menu',
+        'providers' => ['Spatie\Menu\Laravel\MenuServiceProvider::class'],
+        'aliases'   => [
+            'Menu' => 'Spatie\Menu\Laravel\MenuFacade::class',
+            'Link' => 'Spatie\Menu\Link::class',
+            'Html' => 'Spatie\Menu\Html::class'
+        ]
     ],
 
 ];
