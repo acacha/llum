@@ -3,6 +3,13 @@
 TEXT_TO_INSERT_TO_PROVIDERS="        /*\n\         * Acacha Llum Service Providers...\n         *\n         * See: https://github.com/acacha/llum\n         */\n        #llum_providers\n"
 TEXT_TO_INSERT_TO_ALIASES="        /*\n\         * Acacha Llum Aliases...\n         *\n         * See: https://github.com/acacha/llum\n         */\n        #llum_aliases\n"
 TEXT_TO_INSERT_TO_SERVICES="\n    /*\n\    | Acacha Llum services...\n    |\n    | See: https://github.com/acacha/llum\n    |\n    */\n    #llum_services\n"
+TEXT_TO_SEARCH_PACKAGE_SERVICE_PROVIDERS="Package Service Providers..."
+
+function searchLineToInsertPackageServiceProviders()
+{
+    local line=$(sed -n "/$TEXT_TO_SEARCH_PACKAGE_SERVICE_PROVIDERS/=" $1);
+    echo "$(($line -2))"
+}
 
 function searchLineToInsertNewValueToEndOfPHPArray()
 {
@@ -39,7 +46,7 @@ function abortIfFileDoesNotExists(){
 function iluminar(){
     abortIfFileDoesNotExists "$1";
     abortIfLlumIsAlreadyInstalled "$1";
-    line=$(searchLineToInsertNewValueToEndOfPHPArray 'providers' "$1")
+    line=$(searchLineToInsertPackageServiceProviders "$1")
     insertLineIntoFile "$1" "$line" "$TEXT_TO_INSERT_TO_PROVIDERS"
     line=$(searchLineToInsertNewValueToEndOfPHPArray 'aliases' "$1")
     insertLineIntoFile "$1" "$line" "$TEXT_TO_INSERT_TO_ALIASES"
