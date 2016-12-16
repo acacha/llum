@@ -123,8 +123,10 @@ abstract class LlumCommand extends Command
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
         parent::initialize($input, $output);
-        if (($input->getOption('dev'))) {
-            $this->installDev = true;
+        if (($input->hasOption('dev'))) {
+            if (($input->getOption('dev'))) {
+                $this->installDev = true;
+            }
         }
     }
 
