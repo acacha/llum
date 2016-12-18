@@ -83,8 +83,8 @@ return [
         'providers' => ['Spatie\Menu\Laravel\MenuServiceProvider::class'],
         'aliases'   => [
             'Menu' => 'Spatie\Menu\Laravel\MenuFacade::class',
-            'Link' => 'Spatie\Menu\Link::class',
-            'Html' => 'Spatie\Menu\Html::class'
+            'Link' => 'Spatie\Menu\Laravel\Link::class',
+            'Html' => 'Spatie\Menu\Laravel\Html::class'
         ]
     ],
 
@@ -93,8 +93,8 @@ return [
         'providers' => ['Spatie\Menu\Laravel\MenuServiceProvider::class'],
         'aliases'   => [
             'Menu' => 'Spatie\Menu\Laravel\MenuFacade::class',
-            'Link' => 'Spatie\Menu\Link::class',
-            'Html' => 'Spatie\Menu\Html::class'
+            'Link' => 'Spatie\Menu\Laravel\Link::class',
+            'Html' => 'Spatie\Menu\Laravel\Html::class'
         ]
     ],
 
