@@ -98,4 +98,13 @@ return [
         ]
     ],
 
+    'l5-repository' => [
+        'name'      => 'prettus/l5-repository',
+        'providers' => ['Prettus\Repository\Providers\RepositoryServiceProvider::class']
+    ],
+
+    'acacha-l5-repository' => [
+        'name'      => 'acacha/l5-repository',
+        'providers' => ['Prettus\Repository\Providers\RepositoryServiceProvider::class']
+    ],
 ];
