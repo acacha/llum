@@ -37,7 +37,7 @@ brew install gnu-sed --with-default-names
 
 Execute:
 
-```
+```bash
 llum init
 Please enter your github username (sergi) ? 
 Do you want to use our assistant to obtain token via Github API (Y/n)?Y
@@ -45,7 +45,7 @@ Github password?
 ```
 To configure your Bithub user and obtain a token to interact with github using llum commands (see github command section below). This command creates file `~/.llumrc` , an example:
 
-```
+```bash
 ~ cat .llumrc 
 ; Llum configuration file
 
@@ -67,7 +67,7 @@ You can avoid providing password creating manually this file an putting your per
 
 This commands initializes a Github repo, create a first commit, create a Github repo and syncs local content with Github repo. The commands executed are:
 
-```
+```bash
 git init
 git add .
 git commit -a -m "Initial version"
@@ -78,7 +78,7 @@ git push origin master
 
 Example:
 
-```
+```bash
 $ cd myproject
 $ llum github:init
 Running command git init...
@@ -107,14 +107,14 @@ To git@github.com:acacha/myproject.git
 
 Create a new Github repo:
 
-```
+```bash
 mkdir && cd newrepo
 llum github:repo
 ```
 
 This create a new Github repo called `{yourgithubusername}/newrepo` (the current folder name is used) . You can provide a name for the repo with:
 
-```
+```bash
 llum github:repo reponame
 ```
 
