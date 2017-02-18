@@ -61,7 +61,7 @@ You can avoid providing password creating manually this file an putting your per
 
 **IMPORTANT**: Requires previous execution of `llum init` command to work.
 
-### init
+### github:init
 
 **IMPORTANT**: Requires previous execution of `llum init` command to work.
 
@@ -101,7 +101,7 @@ To git@github.com:acacha/myproject.git
  * [new branch]      master -> master
 ```
  
-### repo
+### github:repo
 
 **IMPORTANT**: Requires previous execution of `llum init` command to work.
 
