@@ -2,6 +2,7 @@
 
 namespace Acacha\Llum\Traits;
 
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -163,9 +164,12 @@ trait LaravelConfigFile
      * Add service/s from file to Laravel config/services.php.
      *
      * @param $file
+     * @param null $outputFile
+     * @throws FileNotFoundException
      */
     protected function service($file, $outputFile = null)
     {
+        if (!file_exists($file)) throw new FileNotFoundException($file);
         if ($this->installConfigFile() == -1) {
             return;
         }
