@@ -12,6 +12,7 @@ Speed up you Github/Laravel development workflow illuminating packages with llum
 [![Build Status](https://scrutinizer-ci.com/g/acacha/llum/badges/build.png?b=master)](https://scrutinizer-ci.com/g/acacha/llum/build-status/master)
 [![StyleCI](https://styleci.io/repos/51069439/shield?branch=master)](https://styleci.io/repos/51069439)
 [![Build Status](https://travis-ci.org/acacha/llum.svg?branch=master)](https://travis-ci.org/acacha/llum)
+[![Dependency Status](https://www.versioneye.com/user/projects/58adc5f59ceb4500372646cd/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/58adc5f59ceb4500372646cd)
 
 Now supports Laravel 5.3
 
