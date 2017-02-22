@@ -60,12 +60,6 @@ return [
         'aliases'   => ['Socialite' => 'Laravel\Socialite\Facades\Socialite::class'],
     ],
 
-    'AcachaSocialite' => [
-        'name'      => 'acacha/acacha-socialite',
-        'providers' => ['Acacha\Socialite\Providers\AcachaSocialiteServiceProvider::class'],
-        'after'     => 'php artisan vendor:publish --tag=acachasocialite --force',
-    ],
-
     'LaravelPassport' => [
         'name'      => 'laravel/passport',
         'providers' => ['Laravel\Passport\PassportServiceProvider::class'],
@@ -106,5 +100,17 @@ return [
     'acacha-l5-repository' => [
         'name'      => 'acacha/l5-repository',
         'providers' => ['Prettus\Repository\Providers\RepositoryServiceProvider::class']
+    ],
+
+    'laravel-social' => [
+        'name'      => 'acacha/laravel-social',
+        'providers' => ['Acacha\LaravelSocial\Providers\LaravelSocialServiceProvider::class'],
+        'after'     => 'php artisan make:social',
+    ],
+
+    'LaravelSocial' => [
+        'name'      => 'acacha/laravel-social',
+        'providers' => ['Acacha\LaravelSocial\Providers\LaravelSocialServiceProvider::class'],
+        'after'     => 'php artisan make:social',
     ],
 ];
