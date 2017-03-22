@@ -1,8 +1,34 @@
 <?php
 
-use Symfony\CS\Config\Config;
-use Symfony\CS\FixerInterface;
-use Symfony\CS\Finder\DefaultFinder;
+if (class_exists('PhpCsFixer\Finder')) {    // PHP-CS-Fixer 2.x
+    $finder = PhpCsFixer\Finder::create()
+        ->in(__DIR__);
+
+    return PhpCsFixer\Config::create()
+        ->setRules(array(
+            '@PSR2' => true,
+        ))
+        ->setFinder($finder);
+}
+
+if (class_exists('PhpCsFixer\Finder')) {    // PHP-CS-Fixer 2.x
+    $finder = PhpCsFixer\Finder::create()
+        ->in(__DIR__);
+
+    return PhpCsFixer\Config::create()
+        ->setRules(array(
+            '@PSR2' => true,
+        ))
+        ->setFinder($finder);
+} elseif (class_exists('Symfony\CS\Finder\DefaultFinder')) {  // PHP-CS-Fixer 1.x
+    $finder = Symfony\CS\Finder\DefaultFinder::create()
+        ->in(__DIR__);
+
+    return Symfony\CS\Config\Config::create()
+        ->level(Symfony\CS\FixerInterface::PSR2_LEVEL)
+        ->fixers(['-psr0'])
+        ->finder($finder);
+}
 
 $fixers = [
     'blankline_after_open_tag',
