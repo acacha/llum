@@ -1,6 +1,6 @@
 # llum
 
-Speed up you Laravel development workflow illuminating packages with llum:
+Speed up you Github/Laravel development workflow illuminating packages with llum:
 
 [![asciicast](https://asciinema.org/a/bym5od3j6qtqh5liv8uwx1qy4.png)](https://asciinema.org/a/bym5od3j6qtqh5liv8uwx1qy4?speed=2&theme=solarized-dark&loop=1&autoplay=1&size=medium)
 
@@ -12,6 +12,7 @@ Speed up you Laravel development workflow illuminating packages with llum:
 [![Build Status](https://scrutinizer-ci.com/g/acacha/llum/badges/build.png?b=master)](https://scrutinizer-ci.com/g/acacha/llum/build-status/master)
 [![StyleCI](https://styleci.io/repos/51069439/shield?branch=master)](https://styleci.io/repos/51069439)
 [![Build Status](https://travis-ci.org/acacha/llum.svg?branch=master)](https://travis-ci.org/acacha/llum)
+[![Dependency Status](https://www.versioneye.com/user/projects/58adc5f59ceb4500372646cd/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/58adc5f59ceb4500372646cd)
 
 Now supports Laravel 5.3
 
@@ -32,6 +33,91 @@ brew install gnu-sed --with-default-names
 ```
 
 # Commands
+
+# init
+
+Execute:
+
+```bash
+llum init
+Please enter your github username (sergi) ? 
+Do you want to use our assistant to obtain token via Github API (Y/n)?Y
+Github password?
+```
+To configure your Bithub user and obtain a token to interact with github using llum commands (see github command section below). This command creates file `~/.llumrc` , an example:
+
+```bash
+~ cat .llumrc 
+; Llum configuration file
+
+[github]
+username = acacha
+token = token_here
+token_name = your token name here
+```
+
+You can avoid providing password creating manually this file an putting your personal Github acces token (https://github.com/settings/tokens) on `~/.llumrc` file.
+
+##Github
+
+**IMPORTANT**: Requires previous execution of `llum init` command to work.
+
+### github:init
+
+**IMPORTANT**: Requires previous execution of `llum init` command to work.
+
+This commands initializes a Github repo, create a first commit, create a Github repo and syncs local content with Github repo. The commands executed are:
+
+```bash
+git init
+git add .
+git commit -a -m "Initial version"
+llum github:repo
+git pull origin master
+git push origin master
+```
+
+Example:
+
+```bash
+$ cd myproject
+$ llum github:init
+Running command git init...
+S'ha inicialitzat un buit dipòsit de Git a /home/sergi/myproject/.git/
+Running command git add ....
+Running command git commit -a -m "Initial version"...
+[master (comissió d'arrel) 563473d] Initial version
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ ...
+Running command llum github:repo...
+Repository myproject created
+Running command git remote add origin git@github.com:acacha/myproject.git...
+Running command git pull origin master...
+fatal: Couldn't find remote ref master
+Running command git push origin master...
+Comptant els objectes: 3, fet.
+Escrivint els objectes: 100% (3/3), 216 bytes | 0 bytes/s, fet.
+Total 3 (delta 0), reused 0 (delta 0)
+To git@github.com:acacha/myproject.git
+ * [new branch]      master -> master
+```
+ 
+### github:repo
+
+**IMPORTANT**: Requires previous execution of `llum init` command to work.
+
+Create a new Github repo:
+
+```bash
+mkdir && cd newrepo
+llum github:repo
+```
+
+This create a new Github repo called `{yourgithubusername}/newrepo` (the current folder name is used) . You can provide a name for the repo with:
+
+```bash
+llum github:repo reponame
+```
 
 ##boot
 
