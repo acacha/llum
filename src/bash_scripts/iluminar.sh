@@ -7,9 +7,9 @@ fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-. ${DIR}/llum.sh
+. "${DIR}"/llum.sh
 
 
-iluminar $1
+iluminar "$1"
 
-iluminarServices $2
+iluminarServices "$2"

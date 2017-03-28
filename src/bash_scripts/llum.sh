@@ -7,19 +7,19 @@ TEXT_TO_SEARCH_PACKAGE_SERVICE_PROVIDERS="Package Service Providers..."
 
 function searchLineToInsertPackageServiceProviders()
 {
-    local line=$(sed -n "/$TEXT_TO_SEARCH_PACKAGE_SERVICE_PROVIDERS/=" $1);
+    local line=$(sed -n "/$TEXT_TO_SEARCH_PACKAGE_SERVICE_PROVIDERS/=" "$1");
     echo "$(($line -1))"
 }
 
 function searchLineToInsertNewValueToEndOfPHPArray()
 {
-    local line=$(sed -n "/'$1'/=" $2);
-    nline=$(sed -n ${line},\$p $2 | sed -n "/]/{=;q};");
+    local line=$(sed -n "/'$1'/=" "$2");
+    nline=$(sed -n ${line},\$p "$2" | sed -n "/]/{=;q};");
     echo "$(($line + $nline -1))"
 }
 
 function searchLineOfLastCommandInFile(){
-    local line=$(sed -n "/],/=" $1 | tail -1);
+    local line=$(sed -n "/],/=" "$1" | tail -1);
     echo "$(($line + 1))"
 }
 
@@ -29,7 +29,7 @@ function insertLineIntoFile(){
 
 function abortIfLlumIsAlreadyInstalled(){
     needle=${2:-#llum_providers}
-    if grep -Fq "$needle" $1
+    if grep -Fq "$needle" "$1"
     then
         echo "Llum is already installed. Skipping...";
         exit
@@ -37,7 +37,7 @@ function abortIfLlumIsAlreadyInstalled(){
 }
 
 function abortIfFileDoesNotExists(){
-    if [ ! -f $1 ]; then
+    if [ ! -f "$1" ]; then
         echo "File $1 not found!"
         exit 1;
     fi
