@@ -108,7 +108,7 @@ trait LaravelConfigFile
     private function addTextIntoMountPoint($mountpoint, $textToAdd)
     {
         passthru(
-            'sed -i \'s/.*'.$mountpoint.'.*/ \ \ \ \ \ \ \ '.$this->scapeSingleQuotes(preg_quote($textToAdd)).',\n \ \ \ \ \ \ \ '.$mountpoint.'/\' '.$this->laravel_config_file, $error);
+            'sed -i \'s/.*'.$mountpoint.'.*/ \ \ \ \ \ \ \ '.$this->scapeSingleQuotes(preg_quote($textToAdd)).',\n \ \ \ \ \ \ \ '.$mountpoint.'/\' '.str_replace(" ", "\ ", $this->laravel_config_file), $error);
 
         return $error;
     }
@@ -126,10 +126,10 @@ trait LaravelConfigFile
         if ($outputFile != null) {
             passthru(
                 'sed -e \'/'.$mountpoint.'/r'.$fileToInsert.'\' '.
-                    $this->laravel_services_file.' > '.$outputFile, $error);
+                    str_replace(" ", "\ ", $this->laravel_services_file).' > '.$outputFile, $error);
         } else {
             passthru(
-                'sed -i \'/'.$mountpoint.'/r'.$fileToInsert.'\' '.$this->laravel_services_file, $error);
+                'sed -i \'/'.$mountpoint.'/r'.$fileToInsert.'\' '.str_replace(" ", "\ ", $this->laravel_services_file), $error);
         }
 
         return $error;
@@ -214,8 +214,8 @@ trait LaravelConfigFile
      */
     protected function installConfigFileWithBash()
     {
-        passthru(__DIR__.'/../bash_scripts/iluminar.sh '.$this->laravel_config_file.' '
-            .$this->laravel_services_file);
+        passthru(str_replace(" ", "\ ", __DIR__).'/../bash_scripts/iluminar.sh '. str_replace(" ", "\ ", $this->laravel_config_file) .' '
+            . str_replace(" ", "\ ", $this->laravel_services_file));
     }
 
     /**
