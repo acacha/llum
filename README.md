@@ -203,7 +203,7 @@ Running php artisan serve --port=8002
 Opening http://localhost:8002 with default browser
  ```
  
-##migrate
+## migrate
 
 Runs php artisan migrate
 
@@ -211,7 +211,7 @@ Runs php artisan migrate
 llum migrate
 ```
 
-#Packagist
+# Packagist
 
 https://packagist.org/packages/acacha/admin
 
