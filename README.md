@@ -58,7 +58,7 @@ token_name = your token name here
 
 You can avoid providing password creating manually this file an putting your personal Github acces token (https://github.com/settings/tokens) on `~/.llumrc` file.
 
-##Github
+## Github
 
 **IMPORTANT**: Requires previous execution of `llum init` command to work.
 
@@ -119,7 +119,7 @@ This create a new Github repo called `{yourgithubusername}/newrepo` (the current
 llum github:repo reponame
 ```
 
-##boot
+## boot
 
 Execute commands:
 
@@ -130,7 +130,7 @@ Execute commands:
 
 And your are ready to go!
 
-##devtools
+## devtools
 
 Install and configure amazing debug tools [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar) and [Laravel-ide-helper](https://github.com/barryvdh/laravel-ide-helper)
 
@@ -138,7 +138,7 @@ Install and configure amazing debug tools [Laravel Debugbar](https://github.com/
 llum devtools
 ```
 
-#debugbar
+# debugbar
 
 You can install only [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar) devtool with:
 
@@ -146,7 +146,7 @@ You can install only [Laravel Debugbar](https://github.com/barryvdh/laravel-debu
 llum debugbar
 ```
 
-#idehelper
+# idehelper
 
 You can install only [Laravel-ide-helper](https://github.com/barryvdh/laravel-ide-helper) devtool with:
 
@@ -154,7 +154,7 @@ You can install only [Laravel-ide-helper](https://github.com/barryvdh/laravel-id
 llum idehelper
 ```
 
-##sqlite
+## sqlite
 
 Once you've installed a new laravel project use sqlite command to active sqlite
 
@@ -174,7 +174,7 @@ Migrated: 2014_10_12_000000_create_users_table
 Migrated: 2014_10_12_100000_create_password_resets_table
 ```
 
-##provider
+## provider
 
 Add a provider to config/app.php file:
 
@@ -182,7 +182,7 @@ Add a provider to config/app.php file:
 llum provider Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class
 ```
 
-##alias
+## alias
 
 Add an alias/Facade to config/app.php file:
 
@@ -190,7 +190,7 @@ Add an alias/Facade to config/app.php file:
 llum alias Socialite Laravel\Socialite\Facades\Socialite::class
 ```
 
-##serve
+## serve
 
 Similar to php artisan serve but some enhacements:
 
