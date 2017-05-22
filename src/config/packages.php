@@ -71,6 +71,15 @@ return [
         'providers' => ['Laravel\Passport\PassportServiceProvider::class'],
         'after'     => 'php artisan migrate;php artisan passport:install',
     ],
+    'LaravelcollectiveHtml' => [
+        'name' => 'laravelcollective/html',
+        'providers' => ['Collective\Html\HtmlServiceProvider::class'],
+        'aliases' => [
+            'Form' => 'Collective\Html\FormFacade::class',
+            'Html' => 'Collective\Html\HtmlFacade::class'
+        ]
+    ],
+
 
     'Menu' => [
         'name'      => 'spatie/laravel-menu',
