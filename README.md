@@ -12,7 +12,11 @@ Speed up you Github/Laravel development workflow illuminating packages with llum
 [![Build Status](https://travis-ci.org/acacha/llum.svg?branch=master)](https://travis-ci.org/acacha/llum)
 [![Dependency Status](https://www.versioneye.com/user/projects/58adc5f59ceb4500372646cd/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/58adc5f59ceb4500372646cd)
 
-Now supports Laravel 5.3
+Now supports Laravel 5.4.
+
+See also:
+
+- https://medium.com/@sergiturbadenas/developer-workflow-automation-with-laravel-and-github-using-acacha-llum-part-1-a5b3e89dedd9
 
 # Install notes
 
