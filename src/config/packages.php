@@ -11,6 +11,12 @@ return [
    |
    */
 
+    // PD: Laravel 5.5 Package discovery
+    'AdminLTEPD' => [
+        'name'      => 'acacha/admin-lte-template-laravel',
+        'after'     => 'php artisan adminlte-laravel:publish --force',
+    ],
+
     'AdminLTE' => [
         'name'      => 'acacha/admin-lte-template-laravel',
         'providers' => ['Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class'],
