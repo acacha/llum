@@ -9,9 +9,12 @@ return [
    |
    | This file store a list of laravel packages acacha/llum can install.
    |
+   | Note: Take into account that Laravel 5.5 introduces Package autodiscovery so
+   | llum package command it could be only useful for Laravel 5.4 or minor
+   | or in some especial packages that use after command.
    */
 
-    // PD: Laravel 5.5 Package discovery
+
     'AdminLTEPD' => [
         'name'      => 'acacha/admin-lte-template-laravel',
         'after'     => 'php artisan adminlte-laravel:publish --force',
